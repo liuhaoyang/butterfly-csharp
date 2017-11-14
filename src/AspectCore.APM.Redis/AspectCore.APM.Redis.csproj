@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+
+  <PropertyGroup>
+    <Description>Redis client profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.Redis</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>AspectCore.APM.Redis</AssemblyName>
+    <PackageId>AspectCore.APM.Redis</PackageId>
+    <PackageTags>Redis;Profiler;RedisProfiler;AspectCore;AOP</PackageTags>
+    <PackageReleaseNotes>Redis client profiler system for AspectCore APM.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Core" Version="0.2.3" />
+    <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
+  </ItemGroup>
+
+</Project>
