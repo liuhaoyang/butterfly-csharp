@@ -19,7 +19,6 @@ namespace AspectCore.APM.RedisProfiler
             }
             connectionMultiplexer.RegisterProfiler(new AspectRedisDatabaseProfiler());
             services.AddInstance<IConnectionMultiplexer>(connectionMultiplexer);
-            services.AddType<IRedisProfilerCallbackHandler, RedisProfilerCallbackHandler>();
             services.Configure(ConfigureRedisProfiler);
             return services;
         }

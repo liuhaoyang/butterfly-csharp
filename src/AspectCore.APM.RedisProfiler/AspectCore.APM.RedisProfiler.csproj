@@ -19,4 +19,8 @@
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.ProfilerAbstractions\AspectCore.APM.ProfilerAbstractions.csproj" />
+  </ItemGroup>
+
 </Project>

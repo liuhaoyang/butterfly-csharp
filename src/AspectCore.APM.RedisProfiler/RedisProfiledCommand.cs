@@ -15,12 +15,26 @@ namespace AspectCore.APM.RedisProfiler
 
         public TimeSpan Elapsed { get; private set; }
 
+        public TimeSpan CreationToEnqueued { get; private set; }
+
+        public TimeSpan EnqueuedToSending { get; private set; }
+
+        public TimeSpan SentToResponse { get; private set; }
+
+        public TimeSpan ResponseToCompletion { get; private set; }
+
+        public long OperationCount { get; private set; }
+
+        public string CliengName { get; private set; }
+
         public override string ToString()
         {
             return $"server-{Server}  db-{Db}  command-{Command}  elapsed-{Elapsed}";
         }
 
-        internal static RedisProfiledCommand Create(string command, EndPoint server, int db, DateTime commandCreated, TimeSpan elapsed)
+        internal static RedisProfiledCommand Create(string command, EndPoint server, int db, DateTime commandCreated,
+            TimeSpan creationToEnqueued, TimeSpan enqueuedToSending, TimeSpan sentToResponse, TimeSpan responseToCompletion, TimeSpan elapsed,
+            string clientName, long operationCount)
         {
             var redisProfiledCommand = new RedisProfiledCommand();
             redisProfiledCommand.Command = command;
@@ -28,6 +42,12 @@ namespace AspectCore.APM.RedisProfiler
             redisProfiledCommand.Db = db;
             redisProfiledCommand.CommandCreated = commandCreated;
             redisProfiledCommand.Elapsed = elapsed;
+            redisProfiledCommand.CreationToEnqueued = creationToEnqueued;
+            redisProfiledCommand.EnqueuedToSending = enqueuedToSending;
+            redisProfiledCommand.SentToResponse = enqueuedToSending;
+            redisProfiledCommand.ResponseToCompletion = responseToCompletion;
+            redisProfiledCommand.CliengName = clientName;
+            redisProfiledCommand.OperationCount = operationCount;
             return redisProfiledCommand;
         }
     }
