@@ -4,8 +4,7 @@ using System.Text;
 
 namespace AspectCore.APM.Collector
 {
-    public interface ICollectDispatcher
+    public interface IPayload : IReadOnlyList<IPoint>
     {
-
     }
 }
