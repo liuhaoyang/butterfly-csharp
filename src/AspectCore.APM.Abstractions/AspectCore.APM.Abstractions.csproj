@@ -18,8 +18,4 @@
     <PackageReference Include="AspectCore.Abstractions" Version="0.2.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Transport\" />
-  </ItemGroup>
-
 </Project>

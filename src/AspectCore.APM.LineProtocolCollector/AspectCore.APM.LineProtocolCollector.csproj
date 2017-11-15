@@ -18,4 +18,8 @@
     <PackageReference Include="InfluxDB.LineProtocol" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
