@@ -1,4 +1,4 @@
-﻿using AspectCore.APM.ProfilerAbstractions;
+﻿using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.RedisProfiler
 {

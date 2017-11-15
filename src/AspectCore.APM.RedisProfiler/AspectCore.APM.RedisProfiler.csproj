@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspectCore.APM.ProfilerAbstractions\AspectCore.APM.ProfilerAbstractions.csproj" />
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

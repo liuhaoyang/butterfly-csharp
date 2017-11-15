@@ -1,4 +1,4 @@
-﻿namespace AspectCore.APM.ProfilerAbstractions
+﻿namespace AspectCore.APM.Profiler
 {
     public interface IProfiledCallbackContext
     {

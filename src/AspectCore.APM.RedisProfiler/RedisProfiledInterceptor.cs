@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using AspectCore.APM.ProfilerAbstractions;
+using AspectCore.APM.Profiler;
 using AspectCore.DynamicProxy;
 using AspectCore.Injector;
 using StackExchange.Redis;

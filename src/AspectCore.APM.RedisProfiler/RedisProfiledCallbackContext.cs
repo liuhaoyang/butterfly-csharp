@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AspectCore.APM.ProfilerAbstractions;
+using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.RedisProfiler
 {
