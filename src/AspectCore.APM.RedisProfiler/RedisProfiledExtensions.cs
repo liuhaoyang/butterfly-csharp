@@ -7,6 +7,26 @@ namespace AspectCore.APM.RedisProfiler
 {
     public static class RedisProfiledExtensions
     {
+        public static IServiceContainer AddRedisProfiler(this IServiceContainer services, string configuration)
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+            return AddRedisProfiler(services, ConnectionMultiplexer.Connect(configuration));
+        }
+
+        public static IServiceContainer AddRedisProfiler(this IServiceContainer services, Action<ConfigurationOptions> configure)
+        {
+            if (configure == null)
+            {
+                throw new ArgumentNullException(nameof(configure));
+            }
+            var configuration = new ConfigurationOptions();
+            configure(configuration);
+            return AddRedisProfiler(services, ConnectionMultiplexer.Connect(configuration));
+        }
+
         public static IServiceContainer AddRedisProfiler(this IServiceContainer services, IConnectionMultiplexer connectionMultiplexer)
         {
             if (services == null)
