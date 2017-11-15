@@ -3,7 +3,7 @@
 namespace AspectCore.APM.Collector
 {
     [NonAspect]
-    public interface ICustomTagsProvider
+    public interface ITagsProvider
     {
         TagCollection GetTags();
     }
