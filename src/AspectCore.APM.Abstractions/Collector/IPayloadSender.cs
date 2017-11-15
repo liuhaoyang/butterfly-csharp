@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AspectCore.APM.Collector;
 using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Transport
+namespace AspectCore.APM.Collector
 {
     [NonAspect]
     public interface IPayloadSender

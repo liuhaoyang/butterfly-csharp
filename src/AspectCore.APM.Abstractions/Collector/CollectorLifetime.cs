@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using AspectCore.APM.Logger;
+using AspectCore.APM.Common;
 
 namespace AspectCore.APM.Collector
 {

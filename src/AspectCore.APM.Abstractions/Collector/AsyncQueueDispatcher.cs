@@ -2,8 +2,8 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using AspectCore.APM.Logger;
-using AspectCore.APM.Transport;
+using AspectCore.APM.Common;
+using AspectCore.APM.Collector;
 
 namespace AspectCore.APM.Collector
 {

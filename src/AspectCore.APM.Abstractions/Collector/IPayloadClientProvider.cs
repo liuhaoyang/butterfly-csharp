@@ -1,6 +1,6 @@
 ﻿using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Transport
+namespace AspectCore.APM.Collector
 {
     [NonAspect]
     public interface IPayloadClientProvider

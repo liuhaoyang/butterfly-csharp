@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AspectCore.APM.Collector;
 
-namespace AspectCore.APM.Transport
+namespace AspectCore.APM.Collector
 {
     public sealed class PayloadSender : IPayloadSender
     {
