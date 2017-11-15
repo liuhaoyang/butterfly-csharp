@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+
+  <PropertyGroup>
+    <Description>Abstraction profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.ProfilerAbstractions</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>AspectCore.APM.ProfilerAbstractions</AssemblyName>
+    <PackageId>AspectCore.APM.ProfilerAbstractions</PackageId>
+    <PackageTags>APM;Profiler;AspectCore;AOP</PackageTags>
+    <PackageReleaseNotes>Abstraction profiler system for AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM.ProfilerAbstractions</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Abstractions" Version="0.2.3" />
+  </ItemGroup>
+
+</Project>

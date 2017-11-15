@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7037F0CE-E070-4028-98B7-9491FE69201A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "profilers", "profilers", "{E82AEEFE-C9EF-40F0-8163-48E766050769}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.APM.ProfilerAbstractions", "src\AspectCore.APM.ProfilerAbstractions\AspectCore.APM.ProfilerAbstractions.csproj", "{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.APM.RedisProfiler", "src\AspectCore.APM.RedisProfiler\AspectCore.APM.RedisProfiler.csproj", "{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E82AEEFE-C9EF-40F0-8163-48E766050769} = {7037F0CE-E070-4028-98B7-9491FE69201A}
+		{1C8A8A9F-DD5D-41C9-AB76-F04995C16E49} = {E82AEEFE-C9EF-40F0-8163-48E766050769}
+		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB} = {E82AEEFE-C9EF-40F0-8163-48E766050769}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3762C3AE-0522-4F7B-A1CA-D5527F797D3D}
+	EndGlobalSection
+EndGlobal
