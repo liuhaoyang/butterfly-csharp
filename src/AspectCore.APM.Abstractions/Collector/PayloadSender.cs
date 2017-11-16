@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AspectCore.APM.Collector;
 
 namespace AspectCore.APM.Collector
 {
     public sealed class PayloadSender : IPayloadSender
     {
-        private readonly IPayloadClient _payloadClient;
+        private readonly IEnumerable<IPayloadClientProvider> _payloadClientProviders;
 
-        public PayloadSender(IPayloadClientProvider payloadClientProvider)
+        public PayloadSender(IEnumerable<IPayloadClientProvider> payloadClientProviders)
         {
-            _payloadClient = payloadClientProvider?.GetPayloadClient() ?? throw new ArgumentNullException(nameof(payloadClientProvider));
+            _payloadClientProviders = payloadClientProviders ?? throw new ArgumentNullException(nameof(payloadClientProviders));
         }
 
-        public Task SendAsync(IPayload payload, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task SendAsync(IPayload payload, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return _payloadClient.WriteAsync(payload, cancellationToken);
+            foreach (var provider in _payloadClientProviders)
+                await provider.GetPayloadClient().WriteAsync(payload, cancellationToken);
         }
     }
 }
