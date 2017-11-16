@@ -1,4 +1,5 @@
 ﻿using System;
+using AspectCore.APM.Profiler;
 using AspectCore.Configuration;
 using AspectCore.Injector;
 using StackExchange.Redis;
@@ -24,6 +25,7 @@ namespace AspectCore.APM.RedisProfiler
             }
             var configuration = new ConfigurationOptions();
             configure(configuration);
+            configuration.SyncTimeout = 10000;
             return AddRedisProfiler(services, ConnectionMultiplexer.Connect(configuration));
         }
 
@@ -37,9 +39,11 @@ namespace AspectCore.APM.RedisProfiler
             {
                 throw new ArgumentNullException(nameof(connectionMultiplexer));
             }
+            
             connectionMultiplexer.RegisterProfiler(new AspectRedisDatabaseProfiler());
             services.AddInstance<IConnectionMultiplexer>(connectionMultiplexer);
             services.Configure(ConfigureRedisProfiler);
+            services.AddType<IProfiledCallback<RedisProfiledCallbackContext>, RedisProfiledCallback>(Lifetime.Singleton);
             return services;
         }
 
