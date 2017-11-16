@@ -4,10 +4,10 @@
     {
         public const string ApplicationName = "application_name";
 
-        public const string Environment = "environment";
+        public const string Environment = "application_environment";
 
-        public const string Host = "host";
+        public const string Host = "application_host";
 
-        public const string Urls = "urls";
+        public const string Urls = "application_urls";
     }
 }
