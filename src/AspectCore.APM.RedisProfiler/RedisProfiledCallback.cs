@@ -25,15 +25,15 @@ namespace AspectCore.APM.RedisProfiler
             {
                 var redisProfiledFields = new FieldCollection();
                 var redisProfiledTags = new TagCollection();
-                redisProfiledFields.Add(nameof(command.Elapsed), command.Elapsed.Milliseconds);
-                redisProfiledFields.Add(nameof(command.OperationCount), command.OperationCount.ToString());
-                redisProfiledTags.Add(nameof(_apmOptions.ApplicationName), _apmOptions.ApplicationName);
-                redisProfiledTags.Add(nameof(_apmOptions.Environment), _apmOptions.Environment);
-                redisProfiledTags.Add(nameof(_apmOptions.Host), _apmOptions.Host);
-                redisProfiledTags.Add(nameof(command.ClientName), command.ClientName);
-                redisProfiledTags.Add(nameof(command.Command), command.Command);
-                redisProfiledTags.Add(nameof(command.Db), command.Db.ToString());
-                redisProfiledTags.Add(nameof(command.Server), command.Server.ToString());
+                redisProfiledFields.Add(RedisProfiledConstants.Elapsed, command.Elapsed.Milliseconds);
+                redisProfiledFields.Add(RedisProfiledConstants.OperationCount, command.OperationCount.ToString());
+                redisProfiledTags.Add(ProfiledConstants.ApplicationName, _apmOptions.ApplicationName);
+                redisProfiledTags.Add(ProfiledConstants.Environment, _apmOptions.Environment);
+                redisProfiledTags.Add(ProfiledConstants.Host, _apmOptions.Host);
+                redisProfiledTags.Add(RedisProfiledConstants.ClientName, command.ClientName);
+                redisProfiledTags.Add(RedisProfiledConstants.Command, command.Command);
+                redisProfiledTags.Add(RedisProfiledConstants.Db, command.Db.ToString());
+                redisProfiledTags.Add(RedisProfiledConstants.Server, command.Server.ToString());
                 points.Add(new Point(callbackContext.ProfiledContext.ProfilerName, redisProfiledFields, redisProfiledTags));
             }
             return Task.FromResult(_collector.Push(new Payload(points)));
