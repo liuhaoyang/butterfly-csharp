@@ -6,7 +6,7 @@ namespace AspectCore.APM.RedisProfiler
 {
     internal static class RedisProfiledConstants
     {
-        public const string Elapsed = "executed_elapsed";
+        public const string Elapsed = "elapsed";
 
         public const string OperationCount = "operation_count";
 
