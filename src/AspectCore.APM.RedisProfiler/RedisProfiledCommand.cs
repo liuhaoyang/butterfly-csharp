@@ -25,7 +25,7 @@ namespace AspectCore.APM.RedisProfiler
 
         public long OperationCount { get; private set; }
 
-        public string CliengName { get; private set; }
+        public string ClientName { get; private set; }
 
         public override string ToString()
         {
@@ -46,7 +46,7 @@ namespace AspectCore.APM.RedisProfiler
             redisProfiledCommand.EnqueuedToSending = enqueuedToSending;
             redisProfiledCommand.SentToResponse = enqueuedToSending;
             redisProfiledCommand.ResponseToCompletion = responseToCompletion;
-            redisProfiledCommand.CliengName = clientName;
+            redisProfiledCommand.ClientName = clientName;
             redisProfiledCommand.OperationCount = operationCount;
             return redisProfiledCommand;
         }
