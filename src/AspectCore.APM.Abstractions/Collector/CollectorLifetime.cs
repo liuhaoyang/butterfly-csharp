@@ -16,6 +16,9 @@ namespace AspectCore.APM.Collector
             _logger = logger;
         }
 
+        public Action Started { get; set; }
+        public Action Stopped { get; set; }
+
         public bool Push(IPayload payload)
         {
             if (!_payloadDispatcher.Dispatch(payload))
@@ -32,6 +35,7 @@ namespace AspectCore.APM.Collector
             {
                 _payloadDispatcher.Start();
                 _logger?.LogInformation($"AspectCore APM collector started.Use {_payloadDispatcher.Name}.");
+                Started?.Invoke();
                 return true;
             }
 
@@ -44,6 +48,7 @@ namespace AspectCore.APM.Collector
             {
                 _payloadDispatcher.Stop();
                 _logger?.LogInformation("AspectCore APM collector stopped.");
+                Stopped?.Invoke();
             }
         }
     }
