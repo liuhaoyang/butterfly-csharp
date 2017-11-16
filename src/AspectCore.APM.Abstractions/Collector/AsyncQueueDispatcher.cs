@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 using AspectCore.APM.Common;
-using AspectCore.APM.Collector;
 
 namespace AspectCore.APM.Collector
 {
@@ -13,26 +12,28 @@ namespace AspectCore.APM.Collector
         const int _timeoutOnStopMs = 3000;
 
         private readonly IPayloadSender _payloadSender;
-        private readonly ILogger _logger;
+        private readonly IInternalLogger _logger;
 
         private readonly ConcurrentQueue<IPayload> _queue;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly ManualResetEventSlim _eventSlim;
-        private readonly Task _processQueueTask;
+        private Task _processQueueTask;
+        private bool _status = false;
 
-        public AsyncQueueDispatcher(IPayloadSender payloadSender, ILogger logger = null)
+        public AsyncQueueDispatcher(IPayloadSender payloadSender, IInternalLogger logger = null)
         {
             _payloadSender = payloadSender ?? throw new ArgumentNullException(nameof(payloadSender));
             _logger = logger;
             _queue = new ConcurrentQueue<IPayload>();
             _cancellationTokenSource = new CancellationTokenSource();
             _eventSlim = new ManualResetEventSlim(false, spinCount: 1);
-            _processQueueTask = Task.Factory.StartNew(Consumer, _cancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
         private void Consumer()
         {
             _logger?.LogInformation($"Start {Name}.");
+
+            _status = true;
 
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
@@ -66,7 +67,7 @@ namespace AspectCore.APM.Collector
 
         public bool Dispatch(IPayload payload)
         {
-            if (!_cancellationTokenSource.IsCancellationRequested && _queue.Count < _maxCapacity)
+            if (_status && !_cancellationTokenSource.IsCancellationRequested && _queue.Count < _maxCapacity)
             {
                 _queue.Enqueue(payload);
                 if (!_eventSlim.IsSet)
@@ -81,8 +82,14 @@ namespace AspectCore.APM.Collector
         public void Stop()
         {
             _cancellationTokenSource.Cancel(throwOnFirstException: false);
-            _processQueueTask.Wait(_timeoutOnStopMs);
+            _processQueueTask?.Wait(_timeoutOnStopMs);
             _logger?.LogInformation($"Stop {Name}.");
+            _status = false;
+        }
+
+        public void Start()
+        {
+            _processQueueTask = Task.Factory.StartNew(Consumer, _cancellationTokenSource.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
     }
 }

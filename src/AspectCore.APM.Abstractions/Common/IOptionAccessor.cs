@@ -4,8 +4,8 @@ using System.Text;
 
 namespace AspectCore.APM.Common
 {
-    public interface IOptionAccessor<TOption>
+    public interface IOptionAccessor<TOptions> where TOptions : class, new()
     {
-        TOption Value { get; set; }
+        TOptions Value { get; }
     }
 }

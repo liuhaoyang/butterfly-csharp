@@ -4,7 +4,7 @@ using AspectCore.DynamicProxy;
 namespace AspectCore.APM.Common
 {
     [NonAspect]
-    public interface ILogger
+    public interface IInternalLogger
     {
         void LogInformation(string message);
         void LogWarning(string message);

@@ -12,6 +12,8 @@ namespace AspectCore.APM.Collector
 
         bool Dispatch(IPayload payload);
 
+        void Start();
+
         void Stop();
     }
 }
