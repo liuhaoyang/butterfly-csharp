@@ -7,9 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7037F0CE-E07
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.APM.RedisProfiler", "src\AspectCore.APM.RedisProfiler\AspectCore.APM.RedisProfiler.csproj", "{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspectCore.APM.Abstractions", "src\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj", "{70B747A2-FD56-4AD8-91E7-3964ACB8F8E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.APM.Abstractions", "src\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj", "{70B747A2-FD56-4AD8-91E7-3964ACB8F8E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspectCore.APM.LineProtocolCollector", "src\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj", "{EF935C75-348D-4C28-B2A6-B7226FBA6454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.APM.LineProtocolCollector", "src\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj", "{EF935C75-348D-4C28-B2A6-B7226FBA6454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspectCore.APM.AspNetCore", "src\AspectCore.APM.AspNetCore\AspectCore.APM.AspNetCore.csproj", "{027CFBB4-2A19-4304-B768-63F9048164A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{EF935C75-348D-4C28-B2A6-B7226FBA6454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF935C75-348D-4C28-B2A6-B7226FBA6454}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF935C75-348D-4C28-B2A6-B7226FBA6454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{027CFBB4-2A19-4304-B768-63F9048164A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027CFBB4-2A19-4304-B768-63F9048164A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027CFBB4-2A19-4304-B768-63F9048164A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027CFBB4-2A19-4304-B768-63F9048164A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{F334DE99-6D11-4C00-AF2A-D9584C7E4AEB} = {7037F0CE-E070-4028-98B7-9491FE69201A}
 		{70B747A2-FD56-4AD8-91E7-3964ACB8F8E4} = {7037F0CE-E070-4028-98B7-9491FE69201A}
 		{EF935C75-348D-4C28-B2A6-B7226FBA6454} = {7037F0CE-E070-4028-98B7-9491FE69201A}
+		{027CFBB4-2A19-4304-B768-63F9048164A1} = {7037F0CE-E070-4028-98B7-9491FE69201A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3762C3AE-0522-4F7B-A1CA-D5527F797D3D}

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="0.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+    <ProjectReference Include="..\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj" />
+    <ProjectReference Include="..\AspectCore.APM.RedisProfiler\AspectCore.APM.RedisProfiler.csproj" />
+  </ItemGroup>
+
+</Project>
