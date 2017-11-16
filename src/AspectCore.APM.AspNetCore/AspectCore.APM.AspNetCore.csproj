@@ -1,7 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\..\build\common.props" />
+  
   <PropertyGroup>
+    <Description>AspNetCore profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.AspNetCore</AssemblyTitle>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>AspectCore.APM.AspNetCore</AssemblyName>
+    <PackageId>AspectCore.APM.AspNetCore</PackageId>
+    <PackageTags>AspNetCore;Profiler;AspectCore;AOP</PackageTags>
+    <PackageReleaseNotes>AspNetCore profiler system for AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM.AspNetCore</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
