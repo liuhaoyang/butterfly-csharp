@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using AspectCore.APM.Common;
 using AspectCore.APM.HttpProfiler;
 using AspectCore.APM.Profiler;
 using AspectCore.Injector;
@@ -12,7 +11,6 @@ namespace AspectCore.APM.AspNetCore
     public class HttpProfiledMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ApplicationOptions _options;
 
         public HttpProfiledMiddleware(RequestDelegate next)
         {
