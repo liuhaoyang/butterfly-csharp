@@ -26,7 +26,7 @@ namespace AspectCore.APM.HttpProfiler
 
         public const string HttpMethod = "http_method";
 
-        public const string HttpPath = "Http_path";
+        public const string HttpPath = "http_path";
 
         public const string HttpProtocol = "http_protocol";
 

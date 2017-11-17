@@ -12,7 +12,8 @@ namespace AspectCore.APM.Common
         public ApmComponentOptions()
         {
             Services = new ServiceContainer();
-            var collection = (ICollection<ServiceDefinition>)typeof(ServiceContainer).GetTypeInfo().GetField("_collection").GetReflector().GetValue(Services);
+            var collection = (ICollection<ServiceDefinition>)typeof(ServiceContainer).GetTypeInfo().
+                GetField("_collection", BindingFlags.NonPublic | BindingFlags.Instance).GetReflector().GetValue(Services);
             collection.Clear();
         }
     }
