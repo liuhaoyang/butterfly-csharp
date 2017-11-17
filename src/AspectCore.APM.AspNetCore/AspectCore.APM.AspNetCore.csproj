@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  
+  <PropertyGroup>
+    <Description>AspNetCore profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.AspNetCore</AssemblyTitle>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>AspectCore.APM.AspNetCore</AssemblyName>
+    <PackageId>AspectCore.APM.AspNetCore</PackageId>
+    <PackageTags>AspNetCore;Profiler;AspectCore;AOP;APM</PackageTags>
+    <PackageReleaseNotes>AspNetCore profiler system for AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM.AspNetCore</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="0.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+    <ProjectReference Include="..\AspectCore.APM.HttpProfiler\AspectCore.APM.HttpProfiler.csproj" />
+  </ItemGroup>
+
+</Project>

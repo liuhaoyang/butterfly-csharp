@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+
+  <PropertyGroup>
+    <Description>The abstract design of the AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.Abstractions</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>AspectCore.APM.Abstractions</AssemblyName>
+    <PackageId>AspectCore.APM.Abstractions</PackageId>
+    <PackageTags>APM;AspectCore;AOP</PackageTags>
+    <PackageReleaseNotes>The abstract design of the AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectCore.Core" Version="0.2.3" />
+  </ItemGroup>
+
+</Project>

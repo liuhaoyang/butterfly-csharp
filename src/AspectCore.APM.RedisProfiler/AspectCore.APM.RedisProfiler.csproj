@@ -9,7 +9,7 @@
     <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <AssemblyName>AspectCore.APM.RedisProfiler</AssemblyName>
     <PackageId>AspectCore.APM.RedisProfiler</PackageId>
-    <PackageTags>Redis;Profiler;RedisProfiler;AspectCore;AOP</PackageTags>
+    <PackageTags>Redis;Profiler;RedisProfiler;AspectCore;APM</PackageTags>
     <PackageReleaseNotes>Redis client profiler system for AspectCore APM.</PackageReleaseNotes>
     <RootNamespace>AspectCore.APM.RedisProfiler</RootNamespace>
   </PropertyGroup>
@@ -17,6 +17,10 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Core" Version="0.2.3" />
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

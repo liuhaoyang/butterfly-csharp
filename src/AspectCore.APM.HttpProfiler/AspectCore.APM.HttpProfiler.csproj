@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+
+  <PropertyGroup>
+    <Description>Http profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.HttpProfiler</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>AspectCore.APM.HttpProfiler</AssemblyName>
+    <PackageId>AspectCore.APM.HttpProfiler</PackageId>
+    <PackageTags>Http;Profiler;Metric;AspectCore;APM</PackageTags>
+    <PackageReleaseNotes>Http profiler system for AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM.HttpProfiler</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
