@@ -9,9 +9,9 @@ namespace AspectCore.APM.HttpProfiler
     public class HttpProfiledCallback : IProfiledCallback<HttpProfiledCallbackContext>
     {
         private readonly ICollector _collector;
-        private readonly APMOptions _apmOptions;
+        private readonly ApplicationOptions _apmOptions;
 
-        public HttpProfiledCallback(ICollector collector, IOptionAccessor<APMOptions> optionAccessor)
+        public HttpProfiledCallback(ICollector collector, IOptionAccessor<ApplicationOptions> optionAccessor)
         {
             _collector = collector ?? throw new ArgumentNullException(nameof(collector));
             _apmOptions = optionAccessor.Value;

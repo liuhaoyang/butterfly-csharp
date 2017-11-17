@@ -12,7 +12,7 @@ namespace AspectCore.APM.AspNetCore
     public class HttpProfiledMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly APMOptions _options;
+        private readonly ApplicationOptions _options;
 
         public HttpProfiledMiddleware(RequestDelegate next)
         {

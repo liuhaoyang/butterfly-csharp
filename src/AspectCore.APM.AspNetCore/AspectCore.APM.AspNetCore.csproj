@@ -23,8 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
     <ProjectReference Include="..\AspectCore.APM.HttpProfiler\AspectCore.APM.HttpProfiler.csproj" />
-    <ProjectReference Include="..\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj" />
-    <ProjectReference Include="..\AspectCore.APM.RedisProfiler\AspectCore.APM.RedisProfiler.csproj" />
   </ItemGroup>
 
 </Project>

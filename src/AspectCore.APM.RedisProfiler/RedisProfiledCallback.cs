@@ -10,9 +10,9 @@ namespace AspectCore.APM.RedisProfiler
     public class RedisProfiledCallback : IProfiledCallback<RedisProfiledCallbackContext>
     {
         private readonly ICollector _collector;
-        private readonly APMOptions _apmOptions;
+        private readonly ApplicationOptions _apmOptions;
 
-        public RedisProfiledCallback(ICollector collector, IOptionAccessor<APMOptions> optionAccessor)
+        public RedisProfiledCallback(ICollector collector, IOptionAccessor<ApplicationOptions> optionAccessor)
         {
             _collector = collector ?? throw new ArgumentNullException(nameof(collector));
             _apmOptions = optionAccessor.Value;

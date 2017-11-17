@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AspectCore.APM.Common
+﻿namespace AspectCore.APM.Common
 {
-    public class APMOptions
+    public class ApplicationOptions : IOptionAccessor<ApplicationOptions>
     {
         public string ApplicationName { get; set; }
 
@@ -13,5 +9,7 @@ namespace AspectCore.APM.Common
         public string Host { get; set; }
 
         public string Urls { get; set; }
+
+        public ApplicationOptions Value => this;
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AspectCore.APM.Common;
 
 namespace AspectCore.APM.LineProtocolCollector
 {
-    public class LineProtocolClientOptions
+    public class LineProtocolClientOptions : IOptionAccessor<LineProtocolClientOptions>
     {
         public string ServerAddress { get; set; }
 
@@ -13,5 +11,7 @@ namespace AspectCore.APM.LineProtocolCollector
         public string UserName { get; set; }
 
         public string Password { get; set; }
+
+        public LineProtocolClientOptions Value => this;
     }
 }
