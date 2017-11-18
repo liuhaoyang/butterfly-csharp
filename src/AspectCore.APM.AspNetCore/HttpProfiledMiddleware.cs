@@ -43,7 +43,7 @@ namespace AspectCore.APM.AspNetCore
                 ResponseContentType = httpContext.Response.ContentType,
                 StatusCode = httpContext.Response.StatusCode.ToString()
             };
-            foreach (var callback in callbacks)
+             foreach (var callback in callbacks)
                 await callback.Invoke(callbackContext);
         }
     }

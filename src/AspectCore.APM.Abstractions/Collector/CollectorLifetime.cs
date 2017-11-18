@@ -34,7 +34,7 @@ namespace AspectCore.APM.Collector
             if (Interlocked.CompareExchange(ref _status, 0, 1) == 1)
             {
                 _payloadDispatcher.Start();
-                _logger?.LogInformation($"AspectCore APM collector started.Use {_payloadDispatcher.Name}.");
+                _logger?.LogInformation($"AspectCore APM collector started.");
                 Started?.Invoke();
                 return true;
             }
