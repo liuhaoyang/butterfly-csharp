@@ -5,8 +5,8 @@ using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.HttpProfiler
 {
-    internal class HttpProfiledContext : IProfiledContext
+    internal class HttpProfilingContext : IProfilingContext
     {
-        public string ProfilerName => "http_pipeline";
+        public string ProfilerName => "http_timer";
     }
 }

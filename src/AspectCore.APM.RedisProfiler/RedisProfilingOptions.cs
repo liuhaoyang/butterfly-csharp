@@ -8,9 +8,9 @@ using StackExchange.Redis;
 
 namespace AspectCore.APM.RedisProfiler
 {
-    public class RedisConfigurationOptions : IOptionAccessor<RedisConfigurationOptions>
+    public class RedisProfilingOptions : IOptionAccessor<RedisProfilingOptions>
     {
-        public RedisConfigurationOptions Value => this;
+        public RedisProfilingOptions Value => this;
 
         public List<string> Servers { get; set; }
 
@@ -64,12 +64,12 @@ namespace AspectCore.APM.RedisProfiler
 
         public CommandMap CommandMap { get; set; }
 
-        public RedisConfigurationOptions()
+        public RedisProfilingOptions()
         {
             Servers = new List<string>();
         }
 
-        internal ConfigurationOptions Copy()
+        internal ConfigurationOptions GetConfigurationOptions()
         {
             ConfigurationOptions configurationOptions = new ConfigurationOptions()
             {

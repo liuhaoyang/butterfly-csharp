@@ -9,7 +9,7 @@ namespace AspectCore.APM.AspNetCore
     {
         public static IApplicationBuilder UseHttpProfiling(this IApplicationBuilder app)
         {
-            return app.UseMiddleware<HttpProfiledMiddleware>();
+            return app.UseMiddleware<HttpProfilingMiddleware>();
         }
 
         public static IApplicationBuilder UseAspectCoreAPM(this IApplicationBuilder app)

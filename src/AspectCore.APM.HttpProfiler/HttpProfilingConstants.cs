@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AspectCore.APM.HttpProfiler
 {
-    public static class HttpProfiledConstants
+    public static class HttpProfilingConstants
     {
         public const string IdentityAuthenticationType = "identity_authentication_type";
 

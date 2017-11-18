@@ -2,7 +2,7 @@
 
 namespace AspectCore.APM.RedisProfiler
 {
-    internal sealed class RedisProfiledContext : IProfiledContext
+    internal sealed class RedisProfilingContext : IProfilingContext
     {
         public string ProfilerName => "redis_client";
     }

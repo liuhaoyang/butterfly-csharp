@@ -13,7 +13,7 @@ namespace AspectCore.APM.HttpProfiler
             {
                 throw new ArgumentNullException(nameof(apmComponent));
             }
-            apmComponent.Services.AddType<IProfiledCallback<HttpProfiledCallbackContext>, HttpProfiledCallback>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IProfilingCallback<HttpProfilingCallbackContext>, HttpProfilingCallback>(Lifetime.Singleton);
             return apmComponent;
         }
     }

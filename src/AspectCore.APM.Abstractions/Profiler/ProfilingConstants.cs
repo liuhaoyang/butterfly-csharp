@@ -1,6 +1,6 @@
 ﻿namespace AspectCore.APM.Profiler
 {
-    public static class ProfiledConstants
+    public static class ProfilingConstants
     {
         public const string ApplicationName = "application_name";
 

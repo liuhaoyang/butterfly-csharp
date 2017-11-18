@@ -2,9 +2,9 @@
 
 namespace AspectCore.APM.HttpProfiler
 {
-    public class HttpProfiledCallbackContext : IProfiledCallbackContext
+    public class HttpProfilingCallbackContext : IProfilingCallbackContext
     {
-        public IProfiledContext ProfiledContext { get; } = new HttpProfiledContext();
+        public IProfilingContext ProfilingContext { get; } = new HttpProfilingContext();
 
         public string IdentityAuthenticationType { get; set; }
 

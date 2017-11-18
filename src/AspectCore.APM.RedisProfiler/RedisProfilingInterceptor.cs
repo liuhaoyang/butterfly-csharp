@@ -9,11 +9,11 @@ using StackExchange.Redis;
 
 namespace AspectCore.APM.RedisProfiler
 {
-    public sealed class RedisProfiledInterceptor : AbstractInterceptor
+    public sealed class RedisProfilingInterceptor : AbstractInterceptor
     {
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
-            var callbacks = context.ServiceProvider.ResolveMany<IProfiledCallback<RedisProfiledCallbackContext>>();
+            var callbacks = context.ServiceProvider.ResolveMany<IProfilingCallback<RedisProfilingCallbackContext>>();
             if (callbacks.Any())
             {
                 var connectionMultiplexer = context.ServiceProvider.ResolveRequired<IConnectionMultiplexer>();
@@ -23,13 +23,13 @@ namespace AspectCore.APM.RedisProfiler
                 await context.Invoke(next);
                 var profiledResult = connectionMultiplexer.FinishProfiling(profilerContext);
                 var redisProfiledCommands = profiledResult.Select(x =>
-                    RedisProfiledCommand.Create(
+                    RedisProfilingCommand.Create(
                         x.Command, x.EndPoint, x.Db, x.CommandCreated, x.CreationToEnqueued,
                         x.EnqueuedToSending, x.SentToResponse, x.ResponseToCompletion, x.ElapsedTime, 
                         connectionMultiplexer.ClientName, connectionMultiplexer.OperationCount)).ToArray();
                 foreach (var callback in callbacks)
                 {
-                    callback.Invoke(new RedisProfiledCallbackContext(redisProfiledCommands));
+                    callback.Invoke(new RedisProfilingCallbackContext(redisProfiledCommands));
                 }
                 AspectRedisDatabaseProfilerContext.Context = null;
             }

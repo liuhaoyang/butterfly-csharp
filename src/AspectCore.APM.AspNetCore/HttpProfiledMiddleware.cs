@@ -8,18 +8,18 @@ using Microsoft.AspNetCore.Http;
 
 namespace AspectCore.APM.AspNetCore
 {
-    public class HttpProfiledMiddleware
+    public class HttpProfilingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public HttpProfiledMiddleware(RequestDelegate next)
+        public HttpProfilingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
-            var callbacks = httpContext.RequestServices.ResolveMany<IProfiledCallback<HttpProfiledCallbackContext>>();
+            var callbacks = httpContext.RequestServices.ResolveMany<IProfilingCallback<HttpProfilingCallbackContext>>();
             if (!callbacks.Any())
             {
                 await _next(httpContext);
@@ -28,7 +28,7 @@ namespace AspectCore.APM.AspNetCore
             Stopwatch stopwatch = Stopwatch.StartNew();
             await _next(httpContext);
             stopwatch.Stop();
-            var callbackContext = new HttpProfiledCallbackContext
+            var callbackContext = new HttpProfilingCallbackContext
             {
                 Elapsed = stopwatch.ElapsedMilliseconds,
                 HttpHost = httpContext.Request.Host.Host,

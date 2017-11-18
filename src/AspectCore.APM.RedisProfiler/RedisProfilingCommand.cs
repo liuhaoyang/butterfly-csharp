@@ -3,7 +3,7 @@ using System.Net;
 
 namespace AspectCore.APM.RedisProfiler
 {
-    public sealed class RedisProfiledCommand
+    public sealed class RedisProfilingCommand
     {
         public EndPoint Server { get; private set; }
 
@@ -32,23 +32,23 @@ namespace AspectCore.APM.RedisProfiler
             return $"server-{Server}  db-{Db}  command-{Command}  elapsed-{Elapsed}";
         }
 
-        internal static RedisProfiledCommand Create(string command, EndPoint server, int db, DateTime commandCreated,
+        internal static RedisProfilingCommand Create(string command, EndPoint server, int db, DateTime commandCreated,
             TimeSpan creationToEnqueued, TimeSpan enqueuedToSending, TimeSpan sentToResponse, TimeSpan responseToCompletion, TimeSpan elapsed,
             string clientName, long operationCount)
         {
-            var redisProfiledCommand = new RedisProfiledCommand();
-            redisProfiledCommand.Command = command;
-            redisProfiledCommand.Server = server;
-            redisProfiledCommand.Db = db;
-            redisProfiledCommand.CommandCreated = commandCreated;
-            redisProfiledCommand.Elapsed = elapsed;
-            redisProfiledCommand.CreationToEnqueued = creationToEnqueued;
-            redisProfiledCommand.EnqueuedToSending = enqueuedToSending;
-            redisProfiledCommand.SentToResponse = enqueuedToSending;
-            redisProfiledCommand.ResponseToCompletion = responseToCompletion;
-            redisProfiledCommand.ClientName = clientName;
-            redisProfiledCommand.OperationCount = operationCount;
-            return redisProfiledCommand;
+            var redisProfilingCommand = new RedisProfilingCommand();
+            redisProfilingCommand.Command = command;
+            redisProfilingCommand.Server = server;
+            redisProfilingCommand.Db = db;
+            redisProfilingCommand.CommandCreated = commandCreated;
+            redisProfilingCommand.Elapsed = elapsed;
+            redisProfilingCommand.CreationToEnqueued = creationToEnqueued;
+            redisProfilingCommand.EnqueuedToSending = enqueuedToSending;
+            redisProfilingCommand.SentToResponse = enqueuedToSending;
+            redisProfilingCommand.ResponseToCompletion = responseToCompletion;
+            redisProfilingCommand.ClientName = clientName;
+            redisProfilingCommand.OperationCount = operationCount;
+            return redisProfilingCommand;
         }
     }
 }

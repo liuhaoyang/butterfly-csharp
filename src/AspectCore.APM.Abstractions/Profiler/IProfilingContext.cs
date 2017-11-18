@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AspectCore.APM.Profiler
 {
-    public interface IProfiledContext
+    public interface IProfilingContext
     {
         string ProfilerName { get; }
     }

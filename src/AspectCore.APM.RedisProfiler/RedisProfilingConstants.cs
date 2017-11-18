@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AspectCore.APM.RedisProfiler
 {
-    internal static class RedisProfiledConstants
+    internal static class RedisProfilingConstants
     {
         public const string Elapsed = "elapsed";
 
