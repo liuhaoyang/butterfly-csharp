@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspectCore.APM.AspNetCore.Sample.Models;
 using System.Threading;
+using AspectCore.APM.Collector;
 
 namespace AspectCore.APM.AspNetCore.Sample.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index([FromServices]ICollector collector)
         {
             return View();
         }

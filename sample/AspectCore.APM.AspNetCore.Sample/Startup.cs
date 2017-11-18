@@ -30,8 +30,6 @@ namespace AspectCore.APM.AspNetCore.Sample
                 component.AddHttpProfiler();
             });
 
-           // services.AddSingleton<IPayloadDispatcher, AsyncActionBlockDispatcher>();
-
             return services.BuildAspectCoreServiceProvider();
         }
 

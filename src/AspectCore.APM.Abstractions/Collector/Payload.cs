@@ -13,6 +13,11 @@ namespace AspectCore.APM.Collector
             _pointes = points ?? throw new ArgumentNullException(nameof(points));
         }
 
+        public Payload(params IPoint[] points)
+            : this((IEnumerable<IPoint>)points)
+        {
+        }
+
         public IEnumerator<IPoint> GetEnumerator()
         {
             return _pointes.GetEnumerator();
