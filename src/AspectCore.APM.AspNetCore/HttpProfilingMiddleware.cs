@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AspectCore.APM.HttpProfiler;
 using AspectCore.APM.Profiler;
 using AspectCore.Injector;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AspectCore.APM.AspNetCore
 {
@@ -41,9 +44,9 @@ namespace AspectCore.APM.AspNetCore
                 IdentityName = httpContext.User.Identity.Name,
                 RequestContentType = httpContext.Request.ContentType,
                 ResponseContentType = httpContext.Response.ContentType,
-                StatusCode = httpContext.Response.StatusCode.ToString()
+                StatusCode = httpContext.Response.StatusCode.ToString(),
             };
-             foreach (var callback in callbacks)
+            foreach (var callback in callbacks)
                 await callback.Invoke(callbackContext);
         }
     }

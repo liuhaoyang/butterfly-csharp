@@ -38,6 +38,10 @@ namespace AspectCore.APM.HttpProfiler
 
         public const string Elapsed = "elapsed";
 
+        public const string RequestContentLength = "req_content_length";
+
+        public const string ResponseContentLength = "resp_content_length";
+
         public const string UserAgent = "user_agent";
     }
 }

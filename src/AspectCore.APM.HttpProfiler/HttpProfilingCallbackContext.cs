@@ -28,6 +28,10 @@ namespace AspectCore.APM.HttpProfiler
 
         public string StatusCode { get; set; }
 
-        public long Elapsed { get; set; }
+        public float Elapsed { get; set; }
+
+        public long? RequestContentLength { get; set; }
+
+        public long? ResponseContentLength { get; set; }
     }
 }
