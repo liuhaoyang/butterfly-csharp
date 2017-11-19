@@ -14,8 +14,8 @@ namespace AspectCore.APM.LineProtocolCollector
 {
     public class LineProtocolPayloadClient : IPayloadClient, IDisposable
     {
-        const int _defaultInterval = 5;
-        const int _defaultBlockCapacity = 500;
+        const int _defaultInterval = 10;
+        const int _defaultBlockCapacity = 1000;
 
         private readonly ConcurrentDictionary<PointState, object> _pointMap;
         private readonly LineProtocolClient _lineProtocolClient;
@@ -35,6 +35,7 @@ namespace AspectCore.APM.LineProtocolCollector
             _blockCapacity = lineProtocolClientOptions.BlockCapacity.GetValueOrDefault(_defaultBlockCapacity);
             _pointMap = new ConcurrentDictionary<PointState, object>();
             _flushTimer = new Timer(async state => await FlushCallback(state), null, TimeSpan.FromSeconds(interval), TimeSpan.FromSeconds(interval));
+            _logger?.LogInformation("Start LineProtocolCollector.");
         }
 
         public Task WriteAsync(IPayload payload, CancellationToken cancellationToken = default(CancellationToken))
@@ -87,6 +88,7 @@ namespace AspectCore.APM.LineProtocolCollector
         public void Dispose()
         {
             _flushTimer.Dispose();
+            _logger?.LogInformation("Stop LineProtocolCollector.");
         }
 
         private IEnumerable<IEnumerable<PointState>> Chunked(IEnumerable<PointState> source)

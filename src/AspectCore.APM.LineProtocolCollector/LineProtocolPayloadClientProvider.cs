@@ -8,13 +8,13 @@ namespace AspectCore.APM.LineProtocolCollector
     {
         private readonly IPayloadClient _payloadClient;
 
-        public LineProtocolPayloadClientProvider(IOptionAccessor<LineProtocolClientOptions> optionAccessor)
+        public LineProtocolPayloadClientProvider(IOptionAccessor<LineProtocolClientOptions> optionAccessor, IInternalLogger logger = null)
         {
             if (optionAccessor == null)
             {
                 throw new ArgumentNullException(nameof(optionAccessor));
             }
-            _payloadClient = new LineProtocolPayloadClient(optionAccessor.Value);
+            _payloadClient = new LineProtocolPayloadClient(optionAccessor.Value, logger);
         }
 
         public IPayloadClient GetPayloadClient()
