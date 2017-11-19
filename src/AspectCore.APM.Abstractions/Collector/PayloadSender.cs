@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AspectCore.APM.Collector
 {
-    internal sealed class PayloadSender : IPayloadSender
+    public sealed class PayloadSender : IPayloadSender
     {
         private readonly IEnumerable<IPayloadClientProvider> _payloadClientProviders;
 

@@ -1,9 +1,9 @@
 ﻿using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Collector
+namespace AspectCore.APM.Profiler
 {
     [NonAspect]
-    public interface ICollectorLifetime
+    public interface IProfilingSetup
     {
         bool Start();
 

@@ -6,7 +6,7 @@ using AspectCore.APM.Common;
 
 namespace AspectCore.APM.Collector
 {
-    internal class AsyncQueueDispatcher : IPayloadDispatcher
+    public class AsyncQueueDispatcher : IPayloadDispatcher
     {
         const int _maxCapacity = 10000;
         const int _timeoutOnStopMs = 3000;

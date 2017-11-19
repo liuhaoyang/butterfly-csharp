@@ -15,8 +15,8 @@ namespace AspectCore.APM.Common
             }
             apmComponent.Services.AddType<IPayloadDispatcher, AsyncQueueDispatcher>(Lifetime.Singleton);
             apmComponent.Services.AddType<ICollectorLifetime, CollectorLifetime>(Lifetime.Singleton);
-            apmComponent.Services.AddDelegate<ICollector>(r => r.Resolve<ICollectorLifetime>());
-            apmComponent.Services.AddType<IPayloadSender, PayloadSender>();
+            apmComponent.Services.AddType<ICollector, AsyncCollertor>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IPayloadSender, PayloadSender>(Lifetime.Singleton);
             return apmComponent;
         }
 

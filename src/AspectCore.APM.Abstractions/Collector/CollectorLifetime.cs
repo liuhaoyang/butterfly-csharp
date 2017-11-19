@@ -1,41 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using AspectCore.APM.Common;
+using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.Collector
 {
-    internal class CollectorLifetime : ICollector, ICollectorLifetime
+    public class CollectorLifetime : ICollectorLifetime
     {
         private readonly IInternalLogger _logger;
         private readonly IPayloadDispatcher _payloadDispatcher;
+        private readonly IEnumerable<IProfilingSetup> _profilingSetups;
         private int _status = 1; // 0. started 1. stopped
 
-        public CollectorLifetime(IPayloadDispatcher payloadDispatcher, IInternalLogger logger = null)
+        public CollectorLifetime(IPayloadDispatcher payloadDispatcher, IEnumerable<IProfilingSetup> profilingSetups, IInternalLogger logger = null)
         {
             _payloadDispatcher = payloadDispatcher ?? throw new ArgumentNullException(nameof(payloadDispatcher));
+            _profilingSetups = profilingSetups ?? throw new ArgumentNullException(nameof(profilingSetups));
             _logger = logger;
-        }
-
-        public Action Started { get; set; }
-        public Action Stopped { get; set; }
-
-        public bool Push(IPayload payload)
-        {
-            if (!_payloadDispatcher.Dispatch(payload))
-            {
-                _logger?.LogWarning("Couldn't dispatch payload, actor may be blocked by another operation.");
-                return false;
-            }
-            return true;
         }
 
         public bool Start()
         {
             if (Interlocked.CompareExchange(ref _status, 0, 1) == 1)
             {
-                _payloadDispatcher.Start();
                 _logger?.LogInformation($"AspectCore APM collector started.");
-                Started?.Invoke();
+                _payloadDispatcher.Start();
+                foreach (var profilingSetup in _profilingSetups)
+                    profilingSetup.Start();
                 return true;
             }
 
@@ -46,9 +38,10 @@ namespace AspectCore.APM.Collector
         {
             if (Interlocked.CompareExchange(ref _status, 1, 0) == 0)
             {
+                foreach (var profilingSetup in _profilingSetups)
+                    profilingSetup.Stop();
                 _payloadDispatcher.Stop();
                 _logger?.LogInformation("AspectCore APM collector stopped.");
-                Stopped?.Invoke();
             }
         }
     }
