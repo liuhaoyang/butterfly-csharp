@@ -14,9 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\AspectCore.APM.ApplicationProfiler\AspectCore.APM.ApplicationProfiler.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.AspNetCore\AspectCore.APM.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.HttpProfiler\AspectCore.APM.HttpProfiler.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="新文件夹\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>

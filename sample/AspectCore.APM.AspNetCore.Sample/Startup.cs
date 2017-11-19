@@ -3,6 +3,7 @@ using AspectCore.APM.Collector;
 using AspectCore.APM.HttpProfiler;
 using AspectCore.APM.LineProtocolCollector;
 using AspectCore.Extensions.DependencyInjection;
+using AspectCore.APM.ApplicationProfiler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,8 +27,9 @@ namespace AspectCore.APM.AspNetCore.Sample
 
             services.AddAspectCoreAPM(component =>
             {
-                component.AddLineProtocolCollector(options => Configuration.GetLineProtocolSection().Bind(options));
-                component.AddHttpProfiler();
+                component.AddLineProtocolCollector(options => Configuration.GetLineProtocolSection().Bind(options))
+                         .AddHttpProfiler()
+                         .AddApplicationProfiler();
             });
 
             return services.BuildAspectCoreServiceProvider();
@@ -37,16 +39,6 @@ namespace AspectCore.APM.AspNetCore.Sample
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseHttpProfiling();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
             app.UseStaticFiles();
 

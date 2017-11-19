@@ -24,10 +24,10 @@ namespace AspectCore.APM.Collector
         {
             if (Interlocked.CompareExchange(ref _status, 0, 1) == 1)
             {
-                _logger?.LogInformation($"AspectCore APM collector started.");
                 _payloadDispatcher.Start();
                 foreach (var profilingSetup in _profilingSetups)
                     profilingSetup.Start();
+                _logger?.LogInformation($"AspectCore APM collector started.");
                 return true;
             }
 

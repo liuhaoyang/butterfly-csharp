@@ -24,7 +24,6 @@ namespace AspectCore.APM.HttpProfiler
             httpProfilingFields.Add(HttpProfilingConstants.Elapsed, callbackContext.Elapsed);
             httProfilingTags.Add(ProfilingConstants.ApplicationName, _apmOptions.ApplicationName);
             httProfilingTags.Add(ProfilingConstants.Environment, _apmOptions.Environment);
-            httProfilingTags.Add(ProfilingConstants.Host, _apmOptions.Host);
             httProfilingTags.Add(HttpProfilingConstants.HttpHost, callbackContext.HttpHost);
             httProfilingTags.Add(HttpProfilingConstants.HttpMethod, callbackContext.HttpMethod);
             httProfilingTags.Add(HttpProfilingConstants.HttpPath, callbackContext.HttpPath);

@@ -12,7 +12,7 @@ namespace AspectCore.APM.AspNetCore.Sample.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index([FromServices]ICollector collector)
+        public IActionResult Index()
         {
             return View();
         }

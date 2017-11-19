@@ -14,7 +14,7 @@ namespace AspectCore.APM.LineProtocolCollector
 {
     public class LineProtocolPayloadClient : IPayloadClient, IDisposable
     {
-        const int _defaultInterval = 10;
+        const int _defaultInterval = 5;
         const int _defaultBlockCapacity = 1000;
 
         private readonly ConcurrentDictionary<PointState, object> _pointMap;
@@ -59,28 +59,37 @@ namespace AspectCore.APM.LineProtocolCollector
         private async Task FlushCallback(object obj)
         {
             var utcNow = DateTime.UtcNow;
+
             var oldPointStates = _pointMap.Keys.Where(x => x.UtcTimeStamp < utcNow && x.Status == PointStatus.Untreated).ToList();
+
             oldPointStates.ForEach(state => state.Status = PointStatus.Sending);
-            foreach (var currentStates in Chunked(oldPointStates))
+
+            foreach (var chunkedStates in Chunked(oldPointStates))
             {
-                var states = currentStates.ToList();
-                var lineProtocolPayload = new LineProtocolPayload();
+                var measurementStates = chunkedStates.GroupBy(x => x.LineProtocolPoint.Measurement);
 
-                foreach (var state in states.OrderByDescending(x => x.UtcTimeStamp))
-                    lineProtocolPayload.Add(state.LineProtocolPoint);
+                foreach(var currentStates in measurementStates)
+                {
+                    var states = currentStates.Select(x => x).ToList();
 
-                try
-                {
-                    await _lineProtocolClient.WriteAsync(lineProtocolPayload);
-                }
-                catch (Exception ex)
-                {
-                    _logger?.LogError(ex.Message, ex);
-                }
-                finally
-                {
-                    foreach (var state in states)
-                        _pointMap.TryRemove(state, out _);
+                    var lineProtocolPayload = new LineProtocolPayload();
+
+                    foreach (var state in states.OrderByDescending(x => x.UtcTimeStamp))
+                        lineProtocolPayload.Add(state.LineProtocolPoint);
+
+                    try
+                    {
+                        await _lineProtocolClient.WriteAsync(lineProtocolPayload);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogError(currentStates.Key + "__" + currentStates.Count() + "__" + ex.Message, ex);
+                    }
+                    finally
+                    {
+                        foreach (var state in states)
+                            _pointMap.TryRemove(state, out _);
+                    }
                 }
             }
         }

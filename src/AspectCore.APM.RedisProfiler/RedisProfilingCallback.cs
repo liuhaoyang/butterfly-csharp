@@ -29,7 +29,6 @@ namespace AspectCore.APM.RedisProfiler
                 redisProfilingFields.Add(RedisProfilingConstants.OperationCount, command.OperationCount.ToString());
                 redisProfilingTags.Add(ProfilingConstants.ApplicationName, _apmOptions.ApplicationName);
                 redisProfilingTags.Add(ProfilingConstants.Environment, _apmOptions.Environment);
-                redisProfilingTags.Add(ProfilingConstants.Host, _apmOptions.Host);
                 redisProfilingTags.Add(RedisProfilingConstants.ClientName, command.ClientName);
                 redisProfilingTags.Add(RedisProfilingConstants.Command, command.Command);
                 redisProfilingTags.Add(RedisProfilingConstants.Db, command.Db.ToString());
