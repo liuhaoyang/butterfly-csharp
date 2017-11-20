@@ -20,6 +20,8 @@ namespace AspectCore.APM.Collector
             _logger = logger;
         }
 
+        public bool Started => _status == 0;
+
         public bool Start()
         {
             if (Interlocked.CompareExchange(ref _status, 0, 1) == 1)
