@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AspectCore.APM.Collector;
 using AspectCore.DynamicProxy;
 
 namespace AspectCore.APM.Collector

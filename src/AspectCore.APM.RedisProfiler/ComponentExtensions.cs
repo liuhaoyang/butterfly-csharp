@@ -9,7 +9,7 @@ namespace AspectCore.APM.RedisProfiler
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddRedisProfiler(this ApmComponentOptions apmComponent,Action<RedisConfigurationOptions> configure)
+        public static ApmComponentOptions AddRedisProfiler(this ApmComponentOptions apmComponent,Action<RedisProfilingOptions> configure)
         {
             if (apmComponent == null)
             {
@@ -19,13 +19,13 @@ namespace AspectCore.APM.RedisProfiler
             {
                 throw new ArgumentNullException(nameof(configure));
             }
-            var redisConfigurationOptions = new RedisConfigurationOptions();
+            var redisConfigurationOptions = new RedisProfilingOptions();
             configure(redisConfigurationOptions);
-            apmComponent.Services.AddInstance<IOptionAccessor<RedisConfigurationOptions>>(redisConfigurationOptions);
+            apmComponent.Services.AddInstance<IOptionAccessor<RedisProfilingOptions>>(redisConfigurationOptions);
             apmComponent.Services.AddType<IConnectionMultiplexerProvider, ConnectionMultiplexerProvider>(Lifetime.Singleton);
             apmComponent.Services.AddDelegate<IConnectionMultiplexer>(r => r.ResolveRequired<IConnectionMultiplexerProvider>().ConnectionMultiplexer, Lifetime.Singleton);
             apmComponent.Services.Configure(ConfigureRedisProfiler);
-            apmComponent.Services.AddType<IProfiledCallback<RedisProfiledCallbackContext>, RedisProfiledCallback>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IProfiler<RedisProfilingContext>, RedisProfiler>(Lifetime.Singleton);
             return apmComponent;
         }
 
@@ -35,7 +35,7 @@ namespace AspectCore.APM.RedisProfiler
             {
                 throw new ArgumentNullException(nameof(configuration));
             }
-            configuration.Interceptors.AddTyped<RedisProfiledInterceptor>(
+            configuration.Interceptors.AddTyped<RedisProfilingInterceptor>(
                 Predicates.ForService(typeof(IRedis).FullName),
                 Predicates.ForService(typeof(IRedisAsync).FullName),
                 Predicates.ForService(typeof(IDatabase).FullName),

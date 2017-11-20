@@ -7,9 +7,9 @@ namespace AspectCore.APM.AspNetCore
 {
     public static class MiddlewareExtensions
     {
-        public static IApplicationBuilder UseHttpProfiling(this IApplicationBuilder app)
+        public static IApplicationBuilder UseHttpProfiler(this IApplicationBuilder app)
         {
-            return app.UseMiddleware<HttpProfiledMiddleware>();
+            return app.UseMiddleware<HttpProfilerMiddleware>();
         }
 
         public static IApplicationBuilder UseAspectCoreAPM(this IApplicationBuilder app)

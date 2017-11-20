@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>AspectCore.APM.Sample.ConsoleApp</RootNamespace>
+    <AssemblyName>AspectCore.APM.Sample.ConsoleApp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\AspectCore.APM.ApplicationProfiler\AspectCore.APM.ApplicationProfiler.csproj" />
+    <ProjectReference Include="..\..\src\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj" />
+  </ItemGroup>
+
+</Project>
