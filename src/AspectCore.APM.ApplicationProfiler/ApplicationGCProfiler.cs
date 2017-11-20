@@ -31,7 +31,7 @@ namespace AspectCore.APM.ApplicationProfiler
             profilingTags.Add(ProfilingConstants.ApplicationName, _applicationOptions.ApplicationName);
             profilingTags.Add(ProfilingConstants.Environment, _applicationOptions.Environment);
             profilingTags.Add(ApplicationProfilingConstants.GCLatencyMode, profilingContext.GCLatencyMode);
-            profilingTags.Add(ApplicationProfilingConstants.GCMode,"Server");
+            profilingTags.Add(ApplicationProfilingConstants.GCMode, profilingContext.GCMode);
 
             var point = new Point(profilingContext.ProfilerName, profilingFields, profilingTags, DateTime.UtcNow);
             return Task.FromResult(_collector.Push(new Payload(point)));

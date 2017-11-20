@@ -12,6 +12,7 @@ namespace AspectCore.APM.ApplicationProfiler
         const int _defaultInterval = 5;
 
         private readonly IEnumerable<IProfiler<ApplicationGCProfilingContext>> _gcProfilers;
+        private readonly IEnumerable<IProfiler<ApplicationThreadingProfilingContext>> _threadingprofilers;
         private readonly ApplicationProfilingOptions _profilingOptions;
         private readonly IInternalLogger _logger;
         private readonly int _interval;
@@ -19,11 +20,13 @@ namespace AspectCore.APM.ApplicationProfiler
 
         public ApplicationProfilerSetup(
             IEnumerable<IProfiler<ApplicationGCProfilingContext>> gcProfilers,
+            IEnumerable<IProfiler<ApplicationThreadingProfilingContext>> threadingprofilers,
             IOptionAccessor<ApplicationProfilingOptions> optionAccessor, IInternalLogger logger = null)
         {
             _profilingOptions = optionAccessor.Value;
             _logger = logger;
             _gcProfilers = gcProfilers ?? throw new ArgumentNullException(nameof(gcProfilers));
+            _threadingprofilers = threadingprofilers ?? throw new ArgumentNullException(nameof(threadingprofilers));
             _interval = _profilingOptions.Interval.HasValue && _profilingOptions.Interval.Value > 0 ? _profilingOptions.Interval.Value : _defaultInterval;
         }
 
@@ -36,9 +39,10 @@ namespace AspectCore.APM.ApplicationProfiler
 
         private async Task Callback(object state)
         {
-            foreach (var callback in _gcProfilers)
-                await callback.Invoke(ApplicationGCProfilingContext.GetSnapshot());
-
+            foreach (var profiler in _gcProfilers)
+                await profiler.Invoke(ApplicationGCProfilingContext.GetSnapshot());
+            foreach (var profiler in _threadingprofilers)
+                await profiler.Invoke(ApplicationThreadingProfilingContext.GetSnapshot());
         }
 
         public void Stop()

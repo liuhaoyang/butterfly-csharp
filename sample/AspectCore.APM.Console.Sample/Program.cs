@@ -19,7 +19,7 @@ namespace AspectCore.APM.Sample.ConsoleApp
              {
                  component.AddLineProtocolCollector(options =>
                  {
-                     options.Server = "http://192.168.3.4:8086";
+                     options.Server = "http://localhost:8186";
                      options.Database = "aspectcore_apm";
                  });
                  component.AddApplicationProfiler(op => op.Interval = 1);

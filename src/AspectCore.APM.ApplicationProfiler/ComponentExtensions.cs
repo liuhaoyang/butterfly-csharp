@@ -12,6 +12,7 @@ namespace AspectCore.APM.ApplicationProfiler
             return AddApplicationProfiler(apmComponent, null);
         }
 
+
         public static ApmComponentOptions AddApplicationProfiler(this ApmComponentOptions apmComponent, Action<ApplicationProfilingOptions> configure)
         {
             if (apmComponent == null)
@@ -23,6 +24,7 @@ namespace AspectCore.APM.ApplicationProfiler
             apmComponent.Services.AddType<IOptionAccessor<ApplicationProfilingOptions>, ApplicationProfilingOptions>(Lifetime.Singleton);
             apmComponent.Services.AddType<IProfilerSetup, ApplicationProfilerSetup>(Lifetime.Singleton);
             apmComponent.Services.AddType<IProfiler<ApplicationGCProfilingContext>, ApplicationGCProfiler>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IProfiler<ApplicationThreadingProfilingContext>, ApplicationThreadingProfiler>(Lifetime.Singleton);
             return apmComponent;
         }
     }

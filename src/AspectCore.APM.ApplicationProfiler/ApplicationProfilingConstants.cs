@@ -25,5 +25,21 @@ namespace AspectCore.APM.ApplicationProfiler
         public const string GCMode = "gc_mode";
 
         public const string GCLatencyMode = "gc_latency_mode";
+
+        public const string AvailableWorkerThreads = "available_worker_threads";
+
+        public const string AvailableCompletionPortThreads = "available_completion_port_threads";
+
+        public const string MinWorkerThreads = "min_worker_threads";
+
+        public const string MinCompletionPortThreads = "min_completion_port_threads";
+
+        public const string MaxWorkerThreads = "max_worker_threads";
+
+        public const string MaxCompletionPortThreads = "max_completion_port_threads";
+
+        public const string RunningCompletionPortThreads = "running_completion_port_threads";
+
+        public const string RunningWorkerThreads = "running_worker_threads";
     }
 }

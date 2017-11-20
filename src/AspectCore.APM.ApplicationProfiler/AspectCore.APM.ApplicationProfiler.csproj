@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Description>Application profiler system for AspectCore APM.</Description>
     <AssemblyTitle>AspectCore.APM.ApplicationProfiler</AssemblyTitle>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <AssemblyName>AspectCore.APM.ApplicationProfiler</AssemblyName>
     <PackageId>AspectCore.APM.ApplicationProfile</PackageId>
     <PackageTags>ApplicationProfiler;Profiler;Metric;AspectCore;APM</PackageTags>
