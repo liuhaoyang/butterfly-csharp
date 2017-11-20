@@ -25,7 +25,7 @@ namespace AspectCore.APM.RedisProfiler
             apmComponent.Services.AddType<IConnectionMultiplexerProvider, ConnectionMultiplexerProvider>(Lifetime.Singleton);
             apmComponent.Services.AddDelegate<IConnectionMultiplexer>(r => r.ResolveRequired<IConnectionMultiplexerProvider>().ConnectionMultiplexer, Lifetime.Singleton);
             apmComponent.Services.Configure(ConfigureRedisProfiler);
-            apmComponent.Services.AddType<IProfilingCallback<RedisProfilingCallbackContext>, RedisProfilingCallback>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IProfiler<RedisProfilingContext>, RedisProfiler>(Lifetime.Singleton);
             return apmComponent;
         }
 

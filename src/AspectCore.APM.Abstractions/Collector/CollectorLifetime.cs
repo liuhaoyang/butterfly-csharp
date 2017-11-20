@@ -10,13 +10,13 @@ namespace AspectCore.APM.Collector
     {
         private readonly IInternalLogger _logger;
         private readonly IPayloadDispatcher _payloadDispatcher;
-        private readonly IEnumerable<IProfilingSetup> _profilingSetups;
+        private readonly IEnumerable<IProfilerSetup> _profilerSetups;
         private int _status = 1; // 0. started 1. stopped
 
-        public CollectorLifetime(IPayloadDispatcher payloadDispatcher, IEnumerable<IProfilingSetup> profilingSetups, IInternalLogger logger = null)
+        public CollectorLifetime(IPayloadDispatcher payloadDispatcher, IEnumerable<IProfilerSetup> profilerSetups, IInternalLogger logger = null)
         {
             _payloadDispatcher = payloadDispatcher ?? throw new ArgumentNullException(nameof(payloadDispatcher));
-            _profilingSetups = profilingSetups ?? throw new ArgumentNullException(nameof(profilingSetups));
+            _profilerSetups = profilerSetups ?? throw new ArgumentNullException(nameof(profilerSetups));
             _logger = logger;
         }
 
@@ -25,8 +25,8 @@ namespace AspectCore.APM.Collector
             if (Interlocked.CompareExchange(ref _status, 0, 1) == 1)
             {
                 _payloadDispatcher.Start();
-                foreach (var profilingSetup in _profilingSetups)
-                    profilingSetup.Start();
+                foreach (var profilerSetup in _profilerSetups)
+                    profilerSetup.Start();
                 _logger?.LogInformation($"AspectCore APM collector started.");
                 return true;
             }
@@ -38,8 +38,8 @@ namespace AspectCore.APM.Collector
         {
             if (Interlocked.CompareExchange(ref _status, 1, 0) == 0)
             {
-                foreach (var profilingSetup in _profilingSetups)
-                    profilingSetup.Stop();
+                foreach (var profilerSetup in _profilerSetups)
+                    profilerSetup.Stop();
                 _payloadDispatcher.Stop();
                 _logger?.LogInformation("AspectCore APM collector stopped.");
             }

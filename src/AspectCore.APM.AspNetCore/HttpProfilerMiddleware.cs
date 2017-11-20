@@ -1,29 +1,26 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AspectCore.APM.HttpProfiler;
 using AspectCore.APM.Profiler;
 using AspectCore.Injector;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AspectCore.APM.AspNetCore
 {
-    public class HttpProfilingMiddleware
+    public class HttpProfilerMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public HttpProfilingMiddleware(RequestDelegate next)
+        public HttpProfilerMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
-            var callbacks = httpContext.RequestServices.ResolveMany<IProfilingCallback<HttpProfilingCallbackContext>>();
-            if (!callbacks.Any())
+            var profilers = httpContext.RequestServices.ResolveMany<IProfiler<HttpProfilingContext>>();
+            if (!profilers.Any())
             {
                 await _next(httpContext);
                 return;
@@ -31,7 +28,7 @@ namespace AspectCore.APM.AspNetCore
             Stopwatch stopwatch = Stopwatch.StartNew();
             await _next(httpContext);
             stopwatch.Stop();
-            var callbackContext = new HttpProfilingCallbackContext
+            var context = new HttpProfilingContext
             {
                 Elapsed = stopwatch.ElapsedMilliseconds,
                 HttpHost = httpContext.Request.Host.Host,
@@ -46,8 +43,8 @@ namespace AspectCore.APM.AspNetCore
                 ResponseContentType = httpContext.Response.ContentType,
                 StatusCode = httpContext.Response.StatusCode.ToString(),
             };
-            foreach (var callback in callbacks)
-                await callback.Invoke(callbackContext);
+            foreach (var profiler in profilers)
+                await profiler.Invoke(context);
         }
     }
 }

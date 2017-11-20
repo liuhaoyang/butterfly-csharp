@@ -3,7 +3,7 @@
 namespace AspectCore.APM.Profiler
 {
     [NonAspect]
-    public interface IProfilingSetup
+    public interface IProfilerSetup
     {
         bool Start();
 

@@ -7,21 +7,21 @@ using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.RedisProfiler
 {
-    public class RedisProfilingCallback : IProfilingCallback<RedisProfilingCallbackContext>
+    public class RedisProfiler : IProfiler<RedisProfilingContext>
     {
         private readonly ICollector _collector;
         private readonly ApplicationOptions _apmOptions;
 
-        public RedisProfilingCallback(ICollector collector, IOptionAccessor<ApplicationOptions> optionAccessor)
+        public RedisProfiler(ICollector collector, IOptionAccessor<ApplicationOptions> optionAccessor)
         {
             _collector = collector ?? throw new ArgumentNullException(nameof(collector));
             _apmOptions = optionAccessor.Value;
         }
 
-        public Task Invoke(RedisProfilingCallbackContext callbackContext)
+        public Task Invoke(RedisProfilingContext profilingContext)
         {
             var points = new List<Point>();
-            foreach(var command in callbackContext.ProfilingCommands)
+            foreach(var command in profilingContext.ProfilingCommands)
             {
                 var redisProfilingFields = new FieldCollection();
                 var redisProfilingTags = new TagCollection();
@@ -33,7 +33,7 @@ namespace AspectCore.APM.RedisProfiler
                 redisProfilingTags.Add(RedisProfilingConstants.Command, command.Command);
                 redisProfilingTags.Add(RedisProfilingConstants.Db, command.Db.ToString());
                 redisProfilingTags.Add(RedisProfilingConstants.Server, command.Server.ToString());
-                points.Add(new Point(callbackContext.ProfilingContext.ProfilerName, redisProfilingFields, redisProfilingTags));
+                points.Add(new Point(profilingContext.ProfilerName, redisProfilingFields, redisProfilingTags));
             }
             return Task.FromResult(_collector.Push(new Payload(points)));
         }

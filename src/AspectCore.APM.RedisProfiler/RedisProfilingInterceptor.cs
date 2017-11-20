@@ -13,8 +13,8 @@ namespace AspectCore.APM.RedisProfiler
     {
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
-            var callbacks = context.ServiceProvider.ResolveMany<IProfilingCallback<RedisProfilingCallbackContext>>();
-            if (callbacks.Any())
+            var profilers = context.ServiceProvider.ResolveMany<IProfiler<RedisProfilingContext>>();
+            if (profilers.Any())
             {
                 var connectionMultiplexer = context.ServiceProvider.ResolveRequired<IConnectionMultiplexer>();
                 var profilerContext = new object();
@@ -27,9 +27,9 @@ namespace AspectCore.APM.RedisProfiler
                         x.Command, x.EndPoint, x.Db, x.CommandCreated, x.CreationToEnqueued,
                         x.EnqueuedToSending, x.SentToResponse, x.ResponseToCompletion, x.ElapsedTime, 
                         connectionMultiplexer.ClientName, connectionMultiplexer.OperationCount)).ToArray();
-                foreach (var callback in callbacks)
+                foreach (var profiler in profilers)
                 {
-                    callback.Invoke(new RedisProfilingCallbackContext(redisProfiledCommands));
+                    profiler.Invoke(new RedisProfilingContext(redisProfiledCommands));
                 }
                 AspectRedisDatabaseProfilerContext.Context = null;
             }

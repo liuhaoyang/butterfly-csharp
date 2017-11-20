@@ -7,23 +7,23 @@ using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.ApplicationProfiler
 {
-    public class ApplicationProfilingSetup : IProfilingSetup
+    public class ApplicationProfilerSetup : IProfilerSetup
     {
         const int _defaultInterval = 5;
 
-        private readonly IEnumerable<IProfilingCallback<ApplicationGCProfilingCallbackContext>> _gcProfilingCallbacks;
+        private readonly IEnumerable<IProfiler<ApplicationGCProfilingContext>> _gcProfilers;
         private readonly ApplicationProfilingOptions _profilingOptions;
         private readonly IInternalLogger _logger;
         private readonly int _interval;
         private Timer _callbackTimer;
 
-        public ApplicationProfilingSetup(
-            IEnumerable<IProfilingCallback<ApplicationGCProfilingCallbackContext>> gcProfilingCallbacks,
+        public ApplicationProfilerSetup(
+            IEnumerable<IProfiler<ApplicationGCProfilingContext>> gcProfilers,
             IOptionAccessor<ApplicationProfilingOptions> optionAccessor, IInternalLogger logger = null)
         {
             _profilingOptions = optionAccessor.Value;
             _logger = logger;
-            _gcProfilingCallbacks = gcProfilingCallbacks ?? throw new ArgumentNullException(nameof(gcProfilingCallbacks));
+            _gcProfilers = gcProfilers ?? throw new ArgumentNullException(nameof(gcProfilers));
             _interval = _profilingOptions.Interval.HasValue && _profilingOptions.Interval.Value > 0 ? _profilingOptions.Interval.Value : _defaultInterval;
         }
 
@@ -36,8 +36,8 @@ namespace AspectCore.APM.ApplicationProfiler
 
         private async Task Callback(object state)
         {
-            foreach (var callback in _gcProfilingCallbacks)
-                await callback.Invoke(ApplicationGCProfilingCallbackContext.Current);
+            foreach (var callback in _gcProfilers)
+                await callback.Invoke(ApplicationGCProfilingContext.GetSnapshot());
 
         }
 
