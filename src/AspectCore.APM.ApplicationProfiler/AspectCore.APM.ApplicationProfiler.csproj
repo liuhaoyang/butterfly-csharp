@@ -8,7 +8,7 @@
     <AssemblyTitle>AspectCore.APM.ApplicationProfiler</AssemblyTitle>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <AssemblyName>AspectCore.APM.ApplicationProfiler</AssemblyName>
-    <PackageId>AspectCore.APM.ApplicationProfile</PackageId>
+    <PackageId>AspectCore.APM.ApplicationProfiler</PackageId>
     <PackageTags>ApplicationProfiler;Profiler;Metric;AspectCore;APM</PackageTags>
     <PackageReleaseNotes>Application profiler system for AspectCore APM.</PackageReleaseNotes>
     <RootNamespace>AspectCore.APM.ApplicationProfiler</RootNamespace>
