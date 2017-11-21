@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Common
+namespace AspectCore.APM.Core
 {
     [NonAspect]
     public interface IOptionAccessor<TOptions> where TOptions : class, new()

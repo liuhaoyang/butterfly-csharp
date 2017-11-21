@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.APM.Profiler;
 using AspectCore.Injector;
 
@@ -7,13 +7,13 @@ namespace AspectCore.APM.ApplicationProfiler
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddApplicationProfiler(this ApmComponentOptions apmComponent)
+        public static ComponentOptions AddApplicationProfiler(this ComponentOptions apmComponent)
         {
             return AddApplicationProfiler(apmComponent, null);
         }
 
 
-        public static ApmComponentOptions AddApplicationProfiler(this ApmComponentOptions apmComponent, Action<ApplicationProfilingOptions> configure)
+        public static ComponentOptions AddApplicationProfiler(this ComponentOptions apmComponent, Action<ApplicationProfilingOptions> configure)
         {
             if (apmComponent == null)
             {

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using AspectCore.Extensions.Reflection;
 using AspectCore.Injector;
 
-namespace AspectCore.APM.Common
+namespace AspectCore.APM.Core
 {
-    public class ApmComponentOptions
+    public class ComponentOptions
     {
         public IServiceContainer Services { get; }
 
-        public ApmComponentOptions()
+        public ComponentOptions()
         {
             Services = new ServiceContainer();
             var collection = (ICollection<ServiceDefinition>)typeof(ServiceContainer).GetTypeInfo().

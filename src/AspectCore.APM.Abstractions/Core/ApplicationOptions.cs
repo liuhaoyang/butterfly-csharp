@@ -1,4 +1,4 @@
-﻿namespace AspectCore.APM.Common
+﻿namespace AspectCore.APM.Core
 {
     public class ApplicationOptions : IOptionAccessor<ApplicationOptions>
     {

@@ -1,9 +1,9 @@
 ﻿using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Collector
+namespace AspectCore.APM.Core
 {
     [NonAspect]
-    public interface ICollectorLifetime
+    public interface IComponentLifetime
     {
         bool Started { get; }
 

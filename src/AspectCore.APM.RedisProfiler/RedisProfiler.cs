@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspectCore.APM.Collector;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.APM.Profiler;
 
 namespace AspectCore.APM.RedisProfiler

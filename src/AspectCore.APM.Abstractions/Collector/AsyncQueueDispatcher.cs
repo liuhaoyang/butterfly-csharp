@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 
 namespace AspectCore.APM.Collector
 {

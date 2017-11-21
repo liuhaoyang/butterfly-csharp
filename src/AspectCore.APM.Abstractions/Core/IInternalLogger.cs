@@ -1,7 +1,7 @@
 ﻿using System;
 using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Common
+namespace AspectCore.APM.Core
 {
     [NonAspect]
     public interface IInternalLogger
