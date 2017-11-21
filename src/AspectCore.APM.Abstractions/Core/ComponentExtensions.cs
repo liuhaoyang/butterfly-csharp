@@ -33,7 +33,7 @@ namespace AspectCore.APM.Core
             configure?.Invoke(applicationOptions);
 
             if (applicationOptions.ApplicationName == null)
-                applicationOptions.ApplicationName = Assembly.GetEntryAssembly().GetName().Name;
+                applicationOptions.ApplicationName = Assembly.GetEntryAssembly()?.GetName()?.Name;
             if (applicationOptions.Environment == null)
                 applicationOptions.Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Environment.GetEnvironmentVariable("ENVIRONMENT");
 

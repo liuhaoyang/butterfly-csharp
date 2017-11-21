@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using AspectCore.APM.Collector;
 using AspectCore.APM.Core;
 
@@ -7,7 +6,7 @@ namespace AspectCore.APM.LineProtocolCollector
 {
     public class LineProtocolPayloadClientProvider : IPayloadClientProvider
     {
-        private readonly Lazy<IPayloadClient> _payloadClient;
+        private readonly IPayloadClient _payloadClient;
 
         public LineProtocolPayloadClientProvider(IOptionAccessor<LineProtocolClientOptions> optionAccessor, IInternalLogger logger = null)
         {
@@ -15,12 +14,12 @@ namespace AspectCore.APM.LineProtocolCollector
             {
                 throw new ArgumentNullException(nameof(optionAccessor));
             }
-            _payloadClient = new Lazy<IPayloadClient>(() => new LineProtocolPayloadClient(optionAccessor.Value, logger), LazyThreadSafetyMode.ExecutionAndPublication);
+            _payloadClient = new LineProtocolPayloadClient(optionAccessor.Value, logger);
         }
 
         public IPayloadClient GetPayloadClient()
         {
-            return _payloadClient.Value;
+            return _payloadClient;
         }
     }
 }
