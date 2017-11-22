@@ -17,6 +17,9 @@ namespace AspectCore.APM.Core
             apmComponent.Services.AddType<IComponentLifetime, ComponentLifetime>(Lifetime.Singleton);
             apmComponent.Services.AddType<ICollector, AsyncCollertor>(Lifetime.Singleton);
             apmComponent.Services.AddType<IPayloadSender, PayloadSender>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IGlobalTagProvider, ApplicationTagsProvider>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IGlobalFieldReader, GlobalFieldReader>();
+            apmComponent.Services.AddType<IGlobalTagReader, GlobalTagReader>();
             return apmComponent;
         }
 
