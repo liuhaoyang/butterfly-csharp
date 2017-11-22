@@ -1,6 +1,7 @@
-﻿using AspectCore.DynamicProxy;
+﻿using AspectCore.APM.Collector;
+using AspectCore.DynamicProxy;
 
-namespace AspectCore.APM.Collector
+namespace AspectCore.APM.Core
 {
     [NonAspect]
     public interface IGlobalFieldProvider

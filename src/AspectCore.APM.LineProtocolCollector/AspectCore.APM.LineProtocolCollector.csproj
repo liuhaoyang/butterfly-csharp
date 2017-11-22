@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="InfluxDB.LineProtocol" Version="1.0.0" />
+    <PackageReference Include="InfluxDB.LineProtocol.StrongName" Version="1.0.1-dev-10100" />
   </ItemGroup>
 
   <ItemGroup>
