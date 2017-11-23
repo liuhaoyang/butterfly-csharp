@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.APM.Profiler;
 using AspectCore.Injector;
 
@@ -7,7 +7,7 @@ namespace AspectCore.APM.HttpProfiler
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddHttpProfiler(this ApmComponentOptions apmComponent)
+        public static ComponentOptions AddHttpProfiler(this ComponentOptions apmComponent)
         {
             if (apmComponent == null)
             {

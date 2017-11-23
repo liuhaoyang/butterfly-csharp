@@ -1,6 +1,6 @@
 ﻿using System;
 using AspectCore.APM.Collector;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 
 namespace AspectCore.APM.LineProtocolCollector
 {

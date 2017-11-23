@@ -3,24 +3,27 @@ using System.Reflection;
 using AspectCore.APM.Collector;
 using AspectCore.Injector;
 
-namespace AspectCore.APM.Common
+namespace AspectCore.APM.Core
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddAPMCore(this ApmComponentOptions apmComponent)
+        public static ComponentOptions AddAPMCore(this ComponentOptions apmComponent)
         {
             if (apmComponent == null)
             {
                 throw new ArgumentNullException(nameof(apmComponent));
             }
             apmComponent.Services.AddType<IPayloadDispatcher, AsyncQueueDispatcher>(Lifetime.Singleton);
-            apmComponent.Services.AddType<ICollectorLifetime, CollectorLifetime>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IComponentLifetime, ComponentLifetime>(Lifetime.Singleton);
             apmComponent.Services.AddType<ICollector, AsyncCollertor>(Lifetime.Singleton);
             apmComponent.Services.AddType<IPayloadSender, PayloadSender>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IGlobalTagProvider, ApplicationTagsProvider>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IGlobalFieldReader, GlobalFieldReader>();
+            apmComponent.Services.AddType<IGlobalTagReader, GlobalTagReader>();
             return apmComponent;
         }
 
-        public static ApmComponentOptions AddAPMCore(this ApmComponentOptions apmComponent, Action<ApplicationOptions> configure)
+        public static ComponentOptions AddAPMCore(this ComponentOptions apmComponent, Action<ApplicationOptions> configure)
         {
             if (apmComponent == null)
             {
@@ -33,7 +36,7 @@ namespace AspectCore.APM.Common
             configure?.Invoke(applicationOptions);
 
             if (applicationOptions.ApplicationName == null)
-                applicationOptions.ApplicationName = Assembly.GetEntryAssembly().GetName().Name;
+                applicationOptions.ApplicationName = Assembly.GetEntryAssembly()?.GetName()?.Name;
             if (applicationOptions.Environment == null)
                 applicationOptions.Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Environment.GetEnvironmentVariable("ENVIRONMENT");
 
@@ -43,7 +46,7 @@ namespace AspectCore.APM.Common
         }
 
 
-        public static IServiceContainer AddAspectCoreAPM(this IServiceContainer services, Action<ApmComponentOptions> componentOptions, Action<ApplicationOptions> applicationOptions = null)
+        public static IServiceContainer AddAspectCoreAPM(this IServiceContainer services, Action<ComponentOptions> componentOptions, Action<ApplicationOptions> applicationOptions = null)
         {
             if (services == null)
             {
@@ -53,7 +56,7 @@ namespace AspectCore.APM.Common
             {
                 throw new ArgumentNullException(nameof(componentOptions));
             }
-            var apmComponent = new ApmComponentOptions();
+            var apmComponent = new ComponentOptions();
             apmComponent.AddAPMCore(applicationOptions);
             componentOptions(apmComponent);
             foreach (var service in apmComponent.Services)

@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using StackExchange.Redis;
 
 namespace AspectCore.APM.RedisProfiler

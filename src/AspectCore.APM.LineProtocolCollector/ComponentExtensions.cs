@@ -1,13 +1,13 @@
 ﻿using System;
 using AspectCore.APM.Collector;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.Injector;
 
 namespace AspectCore.APM.LineProtocolCollector
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddLineProtocolCollector(this ApmComponentOptions apmComponent, Action<LineProtocolClientOptions> configure)
+        public static ComponentOptions AddLineProtocolCollector(this ComponentOptions apmComponent, Action<LineProtocolClientOptions> configure)
         {
             if (apmComponent == null)
             {

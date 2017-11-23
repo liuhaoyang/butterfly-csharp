@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using Microsoft.Extensions.Logging;
 
 namespace AspectCore.APM.AspNetCore

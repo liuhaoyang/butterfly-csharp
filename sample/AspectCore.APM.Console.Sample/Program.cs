@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.APM.LineProtocolCollector;
 using AspectCore.APM.ApplicationProfiler;
 using AspectCore.APM.Collector;
@@ -15,7 +15,7 @@ namespace AspectCore.APM.Sample.ConsoleApp
 
             services.AddType<IInternalLogger, ConsoleLogger>();
 
-            Action<ApmComponentOptions> componentOptions = component =>
+            Action<ComponentOptions> componentOptions = component =>
              {
                  component.AddLineProtocolCollector(options =>
                  {
@@ -34,7 +34,7 @@ namespace AspectCore.APM.Sample.ConsoleApp
 
             var serviceResolver = services.Build();
 
-            var collectorLifetime = serviceResolver.Resolve<ICollectorLifetime>();
+            var collectorLifetime = serviceResolver.Resolve<IComponentLifetime>();
 
             collectorLifetime.Start();
 
@@ -44,7 +44,7 @@ namespace AspectCore.APM.Sample.ConsoleApp
         }
     }
 
-    public class ConsoleLogger : AspectCore.APM.Common.IInternalLogger
+    public class ConsoleLogger : AspectCore.APM.Core.IInternalLogger
     {
         public void LogError(string message, Exception exception)
         {

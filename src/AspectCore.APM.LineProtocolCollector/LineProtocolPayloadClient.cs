@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using AspectCore.APM.Collector;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using InfluxDB.LineProtocol.Client;
 using InfluxDB.LineProtocol.Payload;
 
@@ -35,7 +35,7 @@ namespace AspectCore.APM.LineProtocolCollector
             _blockCapacity = lineProtocolClientOptions.BlockCapacity.GetValueOrDefault(_defaultBlockCapacity);
             _pointMap = new ConcurrentDictionary<PointState, object>();
             _flushTimer = new Timer(async state => await FlushCallback(state), null, TimeSpan.FromSeconds(interval), TimeSpan.FromSeconds(interval));
-            _logger?.LogInformation("Start LineProtocolCollector.");
+            _logger?.LogInformation("LineProtocolCollector initializing.");
         }
 
         public Task WriteAsync(IPayload payload, CancellationToken cancellationToken = default(CancellationToken))

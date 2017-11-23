@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using AspectCore.APM.Common;
+using AspectCore.APM.Collector;
 using AspectCore.APM.Profiler;
 
-namespace AspectCore.APM.Collector
+namespace AspectCore.APM.Core
 {
-    public class CollectorLifetime : ICollectorLifetime
+    public class ComponentLifetime : IComponentLifetime
     {
         private readonly IInternalLogger _logger;
         private readonly IPayloadDispatcher _payloadDispatcher;
         private readonly IEnumerable<IProfilerSetup> _profilerSetups;
         private int _status = 1; // 0. started 1. stopped
 
-        public CollectorLifetime(IPayloadDispatcher payloadDispatcher, IEnumerable<IProfilerSetup> profilerSetups, IInternalLogger logger = null)
+        public ComponentLifetime(IPayloadDispatcher payloadDispatcher, IEnumerable<IProfilerSetup> profilerSetups, IInternalLogger logger = null)
         {
             _payloadDispatcher = payloadDispatcher ?? throw new ArgumentNullException(nameof(payloadDispatcher));
             _profilerSetups = profilerSetups ?? throw new ArgumentNullException(nameof(profilerSetups));
             _logger = logger;
         }
+
+        public bool Started => _status == 0;
 
         public bool Start()
         {
@@ -27,7 +29,7 @@ namespace AspectCore.APM.Collector
                 _payloadDispatcher.Start();
                 foreach (var profilerSetup in _profilerSetups)
                     profilerSetup.Start();
-                _logger?.LogInformation($"AspectCore APM collector started.");
+                _logger?.LogInformation($"AspectCore APM started.");
                 return true;
             }
 
@@ -41,7 +43,7 @@ namespace AspectCore.APM.Collector
                 foreach (var profilerSetup in _profilerSetups)
                     profilerSetup.Stop();
                 _payloadDispatcher.Stop();
-                _logger?.LogInformation("AspectCore APM collector stopped.");
+                _logger?.LogInformation("AspectCore APM stopped.");
             }
         }
     }

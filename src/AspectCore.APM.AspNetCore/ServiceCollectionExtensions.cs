@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.Extensions.DependencyInjection;
 using AspectCore.Injector;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +8,7 @@ namespace AspectCore.APM.AspNetCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddAspectCoreAPM(this IServiceCollection services, Action<ApmComponentOptions> componentOptions, Action<ApplicationOptions> applicationOptions = null)
+        public static IServiceCollection AddAspectCoreAPM(this IServiceCollection services, Action<ComponentOptions> componentOptions, Action<ApplicationOptions> applicationOptions = null)
         {
             if (services == null)
             {
@@ -19,7 +19,7 @@ namespace AspectCore.APM.AspNetCore
                 throw new ArgumentNullException(nameof(componentOptions));
             }
 
-            var apmComponent = new ApmComponentOptions();
+            var apmComponent = new ComponentOptions();
             apmComponent.AddAPMCore(applicationOptions);
             componentOptions(apmComponent);
 

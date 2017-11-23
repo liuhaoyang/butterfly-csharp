@@ -1,5 +1,5 @@
 ﻿using System;
-using AspectCore.APM.Common;
+using AspectCore.APM.Core;
 using AspectCore.APM.Profiler;
 using AspectCore.Configuration;
 using AspectCore.Injector;
@@ -9,7 +9,7 @@ namespace AspectCore.APM.RedisProfiler
 {
     public static class ComponentExtensions
     {
-        public static ApmComponentOptions AddRedisProfiler(this ApmComponentOptions apmComponent,Action<RedisProfilingOptions> configure)
+        public static ComponentOptions AddRedisProfiler(this ComponentOptions apmComponent,Action<RedisProfilingOptions> configure)
         {
             if (apmComponent == null)
             {
