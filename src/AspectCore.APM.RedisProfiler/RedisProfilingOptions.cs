@@ -62,8 +62,6 @@ namespace AspectCore.APM.RedisProfiler
 
         public IReconnectRetryPolicy ReconnectRetryPolicy { get; set; }
 
-        public CommandMap CommandMap { get; set; }
-
         public RedisProfilingOptions()
         {
             Servers = new List<string>();
@@ -86,7 +84,6 @@ namespace AspectCore.APM.RedisProfiler
                 HighPrioritySocketThreads = HighPrioritySocketThreads ?? true,
                 ConfigurationChannel = ConfigChannel,
                 ResolveDns = ResolveDns.GetValueOrDefault(),
-                CommandMap = CommandMap,
                 ChannelPrefix = ChannelPrefix,
                 ConnectRetry = ConnectRetry??3,
                 ConfigCheckSeconds = ConfigCheckSeconds.GetValueOrDefault(60),

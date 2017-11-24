@@ -9,7 +9,7 @@ namespace AspectCore.APM.RedisProfiler
 {
     public static class ComponentExtensions
     {
-        public static ComponentOptions AddRedisProfiler(this ComponentOptions apmComponent,Action<RedisProfilingOptions> configure)
+        public static ComponentOptions AddRedisProfiler(this ComponentOptions apmComponent, Action<RedisProfilingOptions> configure)
         {
             if (apmComponent == null)
             {

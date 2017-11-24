@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspectCore.APM.AspNetCore.Sample.Models;
 using System.Threading;
 using AspectCore.APM.Collector;
+using AspectCore.APM.RedisProfiler;
 
 namespace AspectCore.APM.AspNetCore.Sample.Controllers
 {
@@ -17,9 +18,9 @@ namespace AspectCore.APM.AspNetCore.Sample.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult About([FromServices]IConnectionMultiplexerProvider connectionMultiplexerProvider)
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = connectionMultiplexerProvider.ConnectionMultiplexer.GetDatabase().StringGet("message");
 
             return View();
         }

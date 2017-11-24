@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AspectCore.APM.RedisProfiler;
 
 namespace AspectCore.APM.AspNetCore.Sample
 {
@@ -29,7 +30,8 @@ namespace AspectCore.APM.AspNetCore.Sample
             {
                 component.AddLineProtocolCollector(options => Configuration.GetLineProtocolSection().Bind(options))
                          .AddHttpProfiler()
-                         .AddApplicationProfiler();
+                         .AddApplicationProfiler()
+                         .AddRedisProfiler(options => Configuration.GetRedisProfilerSection().Bind(options));
             });
 
             return services.BuildAspectCoreServiceProvider();

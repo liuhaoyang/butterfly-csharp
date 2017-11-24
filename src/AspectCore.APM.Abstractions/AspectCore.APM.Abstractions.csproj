@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectCore.Core" Version="0.2.3" />
+    <PackageReference Include="AspectCore.Core" Version="0.2.4" />
   </ItemGroup>
 
 </Project>
