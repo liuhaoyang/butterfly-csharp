@@ -19,6 +19,7 @@ namespace AspectCore.APM.AspNetCore
 
         public async Task Invoke(HttpContext httpContext)
         {
+            int? statusCode = default(int?);
             var profilers = httpContext.RequestServices.ResolveMany<IProfiler<HttpProfilingContext>>();
             if (!profilers.Any())
             {
@@ -26,25 +27,37 @@ namespace AspectCore.APM.AspNetCore
                 return;
             }
             Stopwatch stopwatch = Stopwatch.StartNew();
-            await _next(httpContext);
-            stopwatch.Stop();
-            var context = new HttpProfilingContext
+            try
             {
-                Elapsed = stopwatch.ElapsedMilliseconds,
-                HttpHost = httpContext.Request.Host.Host,
-                HttpMethod = httpContext.Request.Method,
-                HttpPath = httpContext.Request.Path,
-                HttpPort = httpContext.Request.Host.Port.ToString(),
-                HttpProtocol = httpContext.Request.Protocol,
-                HttpScheme = httpContext.Request.Scheme,
-                IdentityAuthenticationType = httpContext.User.Identity.AuthenticationType,
-                IdentityName = httpContext.User.Identity.Name,
-                RequestContentType = httpContext.Request.ContentType,
-                ResponseContentType = httpContext.Response.ContentType,
-                StatusCode = httpContext.Response.StatusCode.ToString(),
-            };
-            foreach (var profiler in profilers)
-                await profiler.Invoke(context);
+                await _next(httpContext);
+                statusCode = httpContext.Response.StatusCode;
+            }
+            catch
+            {
+                statusCode = 500;
+                throw;
+            }
+            finally
+            {
+                stopwatch.Stop();
+                var context = new HttpProfilingContext
+                {
+                    Elapsed = stopwatch.ElapsedMilliseconds,
+                    HttpHost = httpContext.Request.Host.Host,
+                    HttpMethod = httpContext.Request.Method,
+                    HttpPath = httpContext.Request.Path,
+                    HttpPort = httpContext.Request.Host.Port.ToString(),
+                    HttpProtocol = httpContext.Request.Protocol,
+                    HttpScheme = httpContext.Request.Scheme,
+                    IdentityAuthenticationType = httpContext.User.Identity.AuthenticationType,
+                    IdentityName = httpContext.User.Identity.Name,
+                    RequestContentType = httpContext.Request.ContentType,
+                    ResponseContentType = httpContext.Response.ContentType,
+                    StatusCode = statusCode?.ToString(),
+                };
+                foreach (var profiler in profilers)
+                    await profiler.Invoke(context);
+            }
         }
     }
 }
