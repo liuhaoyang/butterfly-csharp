@@ -20,6 +20,7 @@ namespace AspectCore.APM.Core
             apmComponent.Services.AddType<IGlobalTagProvider, ApplicationTagsProvider>(Lifetime.Singleton);
             apmComponent.Services.AddType<IGlobalFieldReader, GlobalFieldReader>();
             apmComponent.Services.AddType<IGlobalTagReader, GlobalTagReader>();
+            apmComponent.Services.AddType<ISamplerFactory, RandomSamplerFactory>(Lifetime.Singleton);
             return apmComponent;
         }
 
