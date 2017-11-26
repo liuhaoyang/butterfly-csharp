@@ -44,10 +44,10 @@ namespace AspectCore.APM.Collector
                     _eventSlim.Wait(_cancellationTokenSource.Token);
                     _eventSlim.Reset();
                 }
-                catch (OperationCanceledException ex)
+                catch (OperationCanceledException)
                 {
                     // expected
-                    _logger?.LogError("AsyncQueueDispatcher exception.", ex);
+                    _logger?.LogWarning("AsyncQueueDispatcher cancel.");
                     break;
                 }
             }

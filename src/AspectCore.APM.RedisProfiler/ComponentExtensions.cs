@@ -48,6 +48,7 @@ namespace AspectCore.APM.RedisProfiler
                 Predicates.ForMethod(typeof(IConnectionMultiplexer).FullName, nameof(IConnectionMultiplexer.GetServer)));
             configuration.Interceptors.AddTyped<SubscriberProxyInterceptor>(
                 Predicates.ForMethod(typeof(IConnectionMultiplexer).FullName, nameof(IConnectionMultiplexer.GetSubscriber)));
+            configuration.NonAspectPredicates.AddNamespace("StackExchange.Redis");
         }
     }
 }

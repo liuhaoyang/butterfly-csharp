@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\src\AspectCore.APM.AspNetCore\AspectCore.APM.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.HttpProfiler\AspectCore.APM.HttpProfiler.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.LineProtocolCollector\AspectCore.APM.LineProtocolCollector.csproj" />
+    <ProjectReference Include="..\..\src\AspectCore.APM.MethodProfiler\AspectCore.APM.MethodProfiler.csproj" />
     <ProjectReference Include="..\..\src\AspectCore.APM.RedisProfiler\AspectCore.APM.RedisProfiler.csproj" />
   </ItemGroup>
 

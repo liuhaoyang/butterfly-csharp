@@ -1,4 +1,5 @@
-﻿using AspectCore.APM.Collector;
+﻿using System;
+using AspectCore.APM.Collector;
 using AspectCore.APM.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ namespace AspectCore.APM.AspNetCore
             return app.UseMiddleware<HttpProfilerMiddleware>();
         }
 
+        [Obsolete("AspectCoreAPM component will start automatically.")]
         public static IApplicationBuilder UseAspectCoreAPM(this IApplicationBuilder app)
         {
             var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();

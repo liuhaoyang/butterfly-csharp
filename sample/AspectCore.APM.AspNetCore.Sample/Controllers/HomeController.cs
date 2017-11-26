@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
 using AspectCore.APM.AspNetCore.Sample.Models;
-using System.Threading;
-using AspectCore.APM.Collector;
+using AspectCore.APM.AspNetCore.Sample.Services;
 using AspectCore.APM.RedisProfiler;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspectCore.APM.AspNetCore.Sample.Controllers
 {
@@ -25,9 +20,9 @@ namespace AspectCore.APM.AspNetCore.Sample.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Contact([FromServices]IContactService service)
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = service.GetMessage();
 
             return View();
         }
