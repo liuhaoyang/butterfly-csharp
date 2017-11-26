@@ -21,6 +21,7 @@ namespace AspectCore.APM.Core
             apmComponent.Services.AddType<IGlobalFieldReader, GlobalFieldReader>();
             apmComponent.Services.AddType<IGlobalTagReader, GlobalTagReader>();
             apmComponent.Services.AddType<ISamplerFactory, RandomSamplerFactory>(Lifetime.Singleton);
+            apmComponent.Services.AddType<IManualPointFactory, ManualPointFactory>();
             return apmComponent;
         }
 
@@ -64,6 +65,10 @@ namespace AspectCore.APM.Core
                 services.Add(service);
             foreach (var interceptor in apmComponent.Services.Configuration.Interceptors)
                 services.Configuration.Interceptors.Add(interceptor);
+            foreach (var nonAspectPredicate in apmComponent.Services.Configuration.NonAspectPredicates)
+                services.Configuration.NonAspectPredicates.Add(nonAspectPredicate);
+            foreach (var validationHandler in apmComponent.Services.Configuration.ValidationHandlers)
+                services.Configuration.ValidationHandlers.Add(validationHandler);
             return services;
         }
     }

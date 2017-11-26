@@ -3,6 +3,7 @@ using AspectCore.APM.Core;
 using AspectCore.Extensions.DependencyInjection;
 using AspectCore.Injector;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace AspectCore.APM.AspNetCore
 {
@@ -34,9 +35,14 @@ namespace AspectCore.APM.AspNetCore
             {
                 foreach (var interceptor in apmComponent.Services.Configuration.Interceptors)
                     config.Interceptors.Add(interceptor);
+                foreach (var nonAspectPredicate in apmComponent.Services.Configuration.NonAspectPredicates)
+                    config.NonAspectPredicates.Add(nonAspectPredicate);
+                foreach (var validationHandler in apmComponent.Services.Configuration.ValidationHandlers)
+                    config.ValidationHandlers.Add(validationHandler);
             });
 
             services.AddTransient<IInternalLogger, InternalLogger>();
+            services.AddTransient<IHostedService, ComponentHostedService>();
 
             return services;
         }

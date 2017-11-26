@@ -1,14 +1,16 @@
 ﻿using System;
-using AspectCore.APM.Collector;
+using AspectCore.APM.ApplicationProfiler;
 using AspectCore.APM.HttpProfiler;
 using AspectCore.APM.LineProtocolCollector;
+using AspectCore.APM.RedisProfiler;
+using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
-using AspectCore.APM.ApplicationProfiler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AspectCore.APM.RedisProfiler;
+using AspectCore.APM.MethodProfiler;
+using AspectCore.APM.AspNetCore.Sample.Services;
 
 namespace AspectCore.APM.AspNetCore.Sample
 {
@@ -26,12 +28,15 @@ namespace AspectCore.APM.AspNetCore.Sample
         {
             services.AddMvc();
 
+            services.AddTransient<IContactService, ContactService>();
+
             services.AddAspectCoreAPM(component =>
             {
                 component.AddLineProtocolCollector(options => Configuration.GetLineProtocolSection().Bind(options))
                          .AddHttpProfiler()
                          .AddApplicationProfiler()
                          .AddRedisProfiler(options => Configuration.GetRedisProfilerSection().Bind(options));
+                component.AddMethodProfiler();
             });
 
             return services.BuildAspectCoreServiceProvider();
