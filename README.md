@@ -1,6 +1,6 @@
 # AspectCore-APM
 
-[![Build status](https://ci.appveyor.com/api/projects/status/github/dotnet-lab/AspectCore-APM)](https://ci.appveyor.com/project/dotnet-lab/AspectCore-APM)
+[![Build status](https://ci.appveyor.com/api/projects/status/a5iq3a5m2i0d3sri?svg=true)](https://ci.appveyor.com/project/uliian/aspectcore-apm)
 
 AspectCore-APM 旨在为.NET Core 应用程序提供一套应用性能监控管理(APM)方案，当前版本使用 `InfluxDb` 作为数据存储方案 `Grafana` 作为展示方案。
 
