@@ -36,10 +36,10 @@ sudo vi /etc/grafana/grafana.ini
 
 选择添加DataSource，Type选择influxdb，并且database填入aspectcore
 
-![](https://images2018.cnblogs.com/blog/575322/201711/575322-20171125004333140-79330190.png)
+![](doc/1.png)
 
 进入Dashbord选项，导入配置：https://grafana.com/dashboards/3837
-![](https://images2018.cnblogs.com/blog/575322/201711/575322-20171125004351625-556193769.png)
+![](doc/2.png)
 
 外部环境准备就绪，创建.NET CORE应用：
 
@@ -103,4 +103,4 @@ public class Startup
 启动应用并访问页面。
 
 回到Grafana，在DataSource处选择 `aspectcore`，就能看到我们的监控数据。
-![](https://images2018.cnblogs.com/blog/575322/201711/575322-20171125004407609-2032842391.png)
+![](doc/3.png)
