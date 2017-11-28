@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+
+  <PropertyGroup>
+    <Description>Method profiler system for AspectCore APM.</Description>
+    <AssemblyTitle>AspectCore.APM.MethodProfiler</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>AspectCore.APM.MethodProfiler</AssemblyName>
+    <PackageId>AspectCore.APM.MethodProfiler</PackageId>
+    <PackageTags>Profiler;Metric;AspectCore;APM</PackageTags>
+    <PackageReleaseNotes>Method profiler system for AspectCore APM.</PackageReleaseNotes>
+    <RootNamespace>AspectCore.APM.MethodProfiler</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspectCore.APM.Abstractions\AspectCore.APM.Abstractions.csproj" />
+  </ItemGroup>
+  
+</Project>

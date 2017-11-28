@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using AspectCore.APM.Core;
 
 namespace AspectCore.APM.Collector
 {
-    public class CustomPoint : IDisposable
+    public class ManualPoint : IDisposable
     {
         private readonly ICollector _collector;
         private readonly FieldCollection _fields;
@@ -14,11 +15,11 @@ namespace AspectCore.APM.Collector
         private int _isPush;
         private long _currentTimestamp;
 
-        internal CustomPoint(ICollector collector, string measurement, DateTime? utcTimestamp)
+        internal ManualPoint(ICollector collector, string measurement, FieldCollection fields, TagCollection tags, DateTime? utcTimestamp)
         {
             _collector = collector ?? throw new ArgumentNullException(nameof(collector));
-            _tags = new TagCollection();
-            _fields = new FieldCollection();
+            _tags = tags;
+            _fields = fields;
             _measurement = measurement ?? throw new ArgumentNullException(nameof(measurement));
             _utcTimestamp = utcTimestamp;
             _isPush = 0;
@@ -34,36 +35,36 @@ namespace AspectCore.APM.Collector
         {
             if (Interlocked.CompareExchange(ref _isPush, 1, 0) == 0)
             {
-                _fields["elapsed_milliseconds"] = ((Stopwatch.GetTimestamp() - _currentTimestamp) * 1000) / (float)Stopwatch.Frequency;
+                _fields["elapsed_microseconds"] = StopwatchUtils.GetElapsedMicroseconds(_currentTimestamp);
                 _collector.Push(new Payload(new Point(_measurement, _fields, _tags, _utcTimestamp.HasValue ? _utcTimestamp : DateTime.UtcNow)));
             }
         }
 
-        public CustomPoint AddField(string key, int value)
+        public ManualPoint AddField(string key, int value)
         {
             _fields.Add(key, value);
             return this;
         }
 
-        public CustomPoint AddField(string key, long value)
+        public ManualPoint AddField(string key, long value)
         {
             _fields.Add(key, value);
             return this;
         }
 
-        public CustomPoint AddField(string key, float value)
+        public ManualPoint AddField(string key, float value)
         {
             _fields.Add(key, value);
             return this;
         }
 
-        public CustomPoint AddField(string key, double value)
+        public ManualPoint AddField(string key, double value)
         {
             _fields.Add(key, value);
             return this;
         }
 
-        public CustomPoint AddTag(string key, string value)
+        public ManualPoint AddTag(string key, string value)
         {
             _tags.Add(key, value);
             return this;
