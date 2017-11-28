@@ -6,6 +6,7 @@ skip_commits:
 build_script: 
     - dotnet restore
     - dotnet build .\AspectCore.APM.sln
-    - mkdir .\output
-    - dotnet pack -c Release -o $PWD\output
-    - dotnet nuget push $PWD\output\*.nupkg -k $mygetKey -s https://www.myget.org/F/aspectcore-apm/api/v2/package
+    - $path = (Get-Item -Path ".\" -Verbose).FullName
+    - mkdir $path\output
+    - dotnet pack -c Release -o $path\output
+    - dotnet nuget push $path\output\*.nupkg -k $mygetKey -s https://www.myget.org/F/aspectcore-apm/api/v2/package
