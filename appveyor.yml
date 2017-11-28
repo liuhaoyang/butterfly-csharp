@@ -6,3 +6,6 @@ skip_commits:
 build_script: 
     - dotnet restore
     - dotnet build .\AspectCore.APM.sln
+    - mkdir .\output
+    - dotnet pack -c Release -o .\output
+    - dotnet nuget push .\output\*.nupkg -k $mygetKey -s https://www.myget.org/F/uliian/api/v2/package 
