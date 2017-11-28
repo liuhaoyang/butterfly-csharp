@@ -7,5 +7,5 @@ build_script:
     - dotnet restore
     - dotnet build .\AspectCore.APM.sln
     - mkdir .\output
-    - dotnet pack -c Release -o .\output
-    - dotnet nuget push .\output\*.nupkg -k $mygetKey -s https://www.myget.org/F/uliian/api/v2/package 
+    - dotnet pack -c Release -o $PWD\output
+    - dotnet nuget push $PWD\output\*.nupkg -k $mygetKey -s https://www.myget.org/F/aspectcore-apm/api/v2/package
