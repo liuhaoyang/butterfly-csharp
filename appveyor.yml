@@ -5,7 +5,8 @@ skip_commits:
     - '**/*.md'
 build_script: 
     - dotnet restore
-    - dotnet build .\AspectCore.APM.sln
+    - dotnet build -c Release .\AspectCore.APM.sln
+    - dotnet pack -c Release
 artifacts:
     path: '**\*.nupkg'
     type: NuGetPackage
