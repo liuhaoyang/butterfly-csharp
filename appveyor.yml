@@ -6,6 +6,9 @@ skip_commits:
 build_script: 
     - dotnet restore
     - dotnet build .\AspectCore.APM.sln
+artifacts:
+    path: '**\*.nupkg'
+    type: NuGetPackage
 deploy: 
     provider: NuGet
     server: https://www.myget.org/F/aspectcore-apm/api/v2/package
