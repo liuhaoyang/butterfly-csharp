@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\build\common.props" />
+  <Import Project="..\..\build\net45.props" />
+  <PropertyGroup>
+    <Description>A .NET client for Butterfly.</Description>
+    <AssemblyTitle>Butterfly.Client</AssemblyTitle>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>Butterfly.Client</AssemblyName>
+    <PackageId>Butterfly.Client</PackageId>
+    <PackageTags>OpenTracing;Tracing</PackageTags>
+    <PackageReleaseNotes>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Butterfly.DataContract" Version="0.0.1" />
+    <PackageReference Include="Butterfly.OpenTracing" Version="0.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net45'" />
+  </ItemGroup>
+</Project>
