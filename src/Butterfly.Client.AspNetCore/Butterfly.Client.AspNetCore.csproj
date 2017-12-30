@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Butterfly.Client\Butterfly.Client.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" />
   </ItemGroup>
 </Project>
