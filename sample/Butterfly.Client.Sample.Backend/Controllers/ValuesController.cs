@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace Butterfly.Client.Sample.Backend.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            Thread.Sleep(new Random().Next(20, 500));
             return new string[] {"value1", "value2"};
         }
 

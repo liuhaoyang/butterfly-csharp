@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,25 +9,22 @@ namespace Butterfly.Client
 {
     public class HttpTracingHandler : DelegatingHandler
     {
-        private readonly string _serviceName;
-        private readonly ITracer _tracer;
+        private readonly IServiceTracer _tracer;
 
-        public HttpTracingHandler(ITracer tracer, string serviceName, HttpMessageHandler httpMessageHandler = null)
+        public HttpTracingHandler(IServiceTracer tracer, HttpMessageHandler httpMessageHandler = null)
         {
-            _serviceName = serviceName;
             _tracer = tracer ?? throw new ArgumentNullException(nameof(tracer));
             InnerHandler = httpMessageHandler ?? new HttpClientHandler();
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return _tracer.ChildTraceAsync($"httpclient {request.Method}", DateTimeOffset.UtcNow, (tracer, span) => TracingSendAsync(tracer, span, request, cancellationToken));
+            return _tracer.ChildTraceAsync($"httpclient {request.Method}", DateTimeOffset.UtcNow, span => TracingSendAsync(span, request, cancellationToken));
         }
 
-        protected virtual async Task<HttpResponseMessage> TracingSendAsync(ITracer tracer, ISpan span, HttpRequestMessage request, CancellationToken cancellationToken)
+        protected virtual async Task<HttpResponseMessage> TracingSendAsync(ISpan span, HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            span.Tags.Service(_serviceName)
-                .Client().Component("HttpClient")
+            span.Tags.Client().Component("HttpClient")
                 .HttpMethod(request.Method.Method)
                 .HttpUrl(request.RequestUri.OriginalString)
                 .HttpHost(request.RequestUri.Host)
@@ -35,13 +33,13 @@ namespace Butterfly.Client
                 .PeerHostName(request.RequestUri.Host)
                 .PeerPort(request.RequestUri.Port);
 
-            tracer.Inject(span.SpanContext, request.Headers, (c, k, v) => c.Add(k, v));
+            _tracer.Tracer.Inject(span.SpanContext, request.Headers, (c, k, v) => c.Add(k, v));
 
             span.Log(LogField.CreateNew().ClientSend());
 
             var responseMessage = await base.SendAsync(request, cancellationToken);
 
-            span.Log(LogField.CreateNew().ClientSend());
+            span.Log(LogField.CreateNew().ClientReceive());
 
             return responseMessage;
         }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Butterfly.Client.Sample.Frontend.Controllers
@@ -11,9 +14,16 @@ namespace Butterfly.Client.Sample.Frontend.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get([FromServices] HttpClient httpClient, [FromServices] IServiceTracer tracer)
         {
-            return new string[] {"value1", "value2"};
+
+            httpClient.GetAsync("http://localhost:5002/api/values").GetAwaiter().GetResult();
+
+            httpClient.GetAsync("https://www.baidu.com").GetAwaiter().GetResult();
+
+            httpClient.GetAsync("https://www.cnblogs.com").GetAwaiter().GetResult();
+
+            return string.Empty;
         }
 
         // GET api/values/5

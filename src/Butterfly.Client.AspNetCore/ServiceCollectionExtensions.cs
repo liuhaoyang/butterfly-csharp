@@ -25,11 +25,12 @@ namespace Butterfly.Client.AspNetCore
                 throw new ArgumentNullException(nameof(services));
             }
 
+            services.AddTransient<HttpTracingHandler>();
             services.AddSingleton<ISpanContextFactory, SpanContextFactory>();
             services.AddSingleton<ISampler, FullSampler>();
             services.AddSingleton<ITracer, Tracer>();
-            services.AddSingleton<ISpanRecorder, AsyncSpanRecorder>();
-            services.AddSingleton<HttpTracingHandler, DefaultHttpTracingHandler>();
+            services.AddSingleton<IServiceTracer, ServiceTracer>();
+            services.AddSingleton<ISpanRecorder, AsyncSpanRecorder>();     
             services.AddSingleton<IButterflyCollector, ButterflyCollector>();
             services.AddSingleton<IButterflyDispatcher, ButterflyDispatcher>();
             services.AddSingleton<IButterflySender, HttpButterflySender>();

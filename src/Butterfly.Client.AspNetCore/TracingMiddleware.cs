@@ -13,30 +13,26 @@ namespace Butterfly.Client.AspNetCore
     public class TracingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ITracer _tracer;
-        private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly ButterflyOptions _butterflyOption;
+        private readonly IServiceTracer _tracer;
 
-        public TracingMiddleware(RequestDelegate next, ITracer tracer, IHostingEnvironment hostingEnvironment, IOptions<ButterflyOptions> options)
+        public TracingMiddleware(RequestDelegate next, IServiceTracer tracer)
         {
             _next = next;
             _tracer = tracer ?? throw new ArgumentNullException(nameof(tracer));
-            _hostingEnvironment = hostingEnvironment;
-            _butterflyOption = options.Value;
         }
 
         public Task Invoke(HttpContext httpContext)
         {
             var spanBuilder = new SpanBuilder($"server {httpContext.Request.Method} {httpContext.Request.Path}");
-            if (_tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k],
+            if (_tracer.Tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k],
                 c => c.Select(x => new KeyValuePair<string, string>(x.Key, x.Value)).GetEnumerator()))
             {
                 spanBuilder.AsChildOf(spanContext);
             }
 
-            return _tracer.TraceAsync(spanBuilder, async (tracer, span) =>
+            return _tracer.TraceAsync(spanBuilder, async span =>
             {
-                span.Tags.Set("service", _butterflyOption.Service)
+                span.Tags
                     .Server().Component("AspNetCore")
                     .HttpMethod(httpContext.Request.Method)
                     .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
