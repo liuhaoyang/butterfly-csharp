@@ -20,7 +20,7 @@ namespace Butterfly.Client
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            return _tracer.ChildTraceAsync("http client", DateTimeOffset.UtcNow, (tracer, span) => TracingSendAsync(tracer, span, request, cancellationToken));
+            return _tracer.ChildTraceAsync($"httpclient {request.Method}", DateTimeOffset.UtcNow, (tracer, span) => TracingSendAsync(tracer, span, request, cancellationToken));
         }
 
         protected virtual async Task<HttpResponseMessage> TracingSendAsync(ITracer tracer, ISpan span, HttpRequestMessage request, CancellationToken cancellationToken)

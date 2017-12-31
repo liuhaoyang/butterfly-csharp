@@ -27,7 +27,7 @@ namespace Butterfly.Client.AspNetCore
 
         public Task Invoke(HttpContext httpContext)
         {
-            var spanBuilder = new SpanBuilder("http request");
+            var spanBuilder = new SpanBuilder($"server {httpContext.Request.Method} {httpContext.Request.Path}");
             if (_tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k],
                 c => c.Select(x => new KeyValuePair<string, string>(x.Key, x.Value)).GetEnumerator()))
             {
@@ -36,21 +36,21 @@ namespace Butterfly.Client.AspNetCore
 
             return _tracer.TraceAsync(spanBuilder, async (tracer, span) =>
             {
-                span.Tags.Service(_butterflyOption.Service)
+                span.Tags.Set("service", _butterflyOption.Service)
                     .Server().Component("AspNetCore")
                     .HttpMethod(httpContext.Request.Method)
                     .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
                     .HttpHost(httpContext.Request.Host.ToUriComponent())
                     .HttpPath(httpContext.Request.Path)
-                    .PeerAddress(httpContext.Connection.RemoteIpAddress.Address.ToString())
+                    .PeerAddress(httpContext.Connection.RemoteIpAddress.ToString())
                     .PeerPort(httpContext.Connection.RemotePort);
-                
+
                 span.Log(LogField.CreateNew().ServerReceive());
-                
+
                 await _next(httpContext);
-                
+
                 span.Log(LogField.CreateNew().ServerSend());
-                
+
                 span.Tags.HttpStatusCode(httpContext.Response.StatusCode);
 
             });

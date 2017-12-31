@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Butterfly.DataContract.Tracing;
+using Butterfly.OpenTracing;
 
 namespace Butterfly.Client
 {
@@ -15,7 +16,7 @@ namespace Butterfly.Client
         private readonly Task[] _consumerTasks;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public event EventHandler<DispatchEventArgs<Span>> OnSpanDispatch;
+        public event EventHandler<DispatchEventArgs<ISpan>> OnSpanDispatch;
 
         // ReSharper disable once PublicConstructorInAbstractClass
         public ButterflyDispatcherBase(int boundedCapacity, int consumerCount)
@@ -30,7 +31,7 @@ namespace Butterfly.Client
             }
         }
 
-        public bool DispatchInternal(Span span)
+        public bool Dispatch(ISpan span)
         {
             if (span == null)
             {
@@ -57,9 +58,9 @@ namespace Butterfly.Client
             {
                 switch (consumingItem)
                 {
-                    case Span span:
+                    case ISpan span:
                         var onSpanDispatch = OnSpanDispatch;
-                        onSpanDispatch?.Invoke(this, new DispatchEventArgs<Span>(span));
+                        onSpanDispatch?.Invoke(this, new DispatchEventArgs<ISpan>(span));
                         break;
                     default:
                         throw new NotSupportedException();

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Butterfly.DataContract.Tracing;
+using Butterfly.OpenTracing;
 
 namespace Butterfly.Client
 {
@@ -22,9 +23,9 @@ namespace Butterfly.Client
             return Task.FromResult(0);
         }
 
-        private void DispatcherOnOnSpanDispatch(object sender, DispatchEventArgs<Span> dispatchEventArgs)
+        private void DispatcherOnOnSpanDispatch(object sender, DispatchEventArgs<ISpan> dispatchEventArgs)
         {
-            _sender.SendSpanAsync(new Span[] {dispatchEventArgs.Data});
+            _sender.SendSpanAsync(new Span[] {dispatchEventArgs.Data.MapToSpanContract()});
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

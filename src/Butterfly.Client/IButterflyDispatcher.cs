@@ -1,12 +1,12 @@
 ﻿using System;
-using Butterfly.DataContract.Tracing;
+using Butterfly.OpenTracing;
 
 namespace Butterfly.Client
 {
     public interface IButterflyDispatcher : IDisposable
     {
-        event EventHandler<DispatchEventArgs<Span>> OnSpanDispatch;
+        event EventHandler<DispatchEventArgs<ISpan>> OnSpanDispatch;
 
-        bool DispatchInternal(Span span);
+        bool Dispatch(ISpan span);
     }
 }
