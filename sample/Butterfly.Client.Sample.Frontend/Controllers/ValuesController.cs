@@ -14,14 +14,14 @@ namespace Butterfly.Client.Sample.Frontend.Controllers
     {
         // GET api/values
         [HttpGet]
-        public string Get([FromServices] HttpClient httpClient, [FromServices] IServiceTracer tracer)
+        public async Task<string> Get([FromServices] HttpClient httpClient, [FromServices] IServiceTracer tracer)
         {
 
-            httpClient.GetAsync("http://localhost:5002/api/values").GetAwaiter().GetResult();
+            await httpClient.GetStringAsync("http://localhost:5002/api/values");
 
-            httpClient.GetAsync("https://www.baidu.com").GetAwaiter().GetResult();
+            await httpClient.GetStringAsync("http://localhost:5002/api/values");
 
-            httpClient.GetAsync("https://www.cnblogs.com").GetAwaiter().GetResult();
+            await httpClient.GetStringAsync("http://localhost:5002/api/values");
 
             return string.Empty;
         }
