@@ -16,14 +16,7 @@ namespace Butterfly.Client.Sample.Frontend.Controllers
         [HttpGet]
         public async Task<string> Get([FromServices] HttpClient httpClient, [FromServices] IServiceTracer tracer)
         {
-
-            await httpClient.GetStringAsync("http://localhost:5002/api/values");
-
-            await httpClient.GetStringAsync("http://localhost:5002/api/values");
-
-            await httpClient.GetStringAsync("http://localhost:5002/api/values");
-
-            return string.Empty;
+            return await httpClient.GetStringAsync("http://localhost:5002/api/values");
         }
 
         // GET api/values/5

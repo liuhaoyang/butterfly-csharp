@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Butterfly.Client.Sample.Backend.Controllers
@@ -12,9 +13,14 @@ namespace Butterfly.Client.Sample.Backend.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> Get([FromServices] IServiceTracer tracer)
         {
-            Thread.Sleep(new Random().Next(20, 500));
+            using (var span = tracer.StartChild("redis GET"))
+            {
+                span.Tags.Service("Redis");
+                span.Tags.Component("StackExcnange.Redis");
+                Thread.Sleep(new Random().Next(20, 135));
+            }
             return new string[] {"value1", "value2"};
         }
 
