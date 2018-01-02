@@ -14,10 +14,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Butterfly.DataContract" Version="0.0.2" />
-    <PackageReference Include="Butterfly.OpenTracing" Version="0.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net45'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj" />
   </ItemGroup>
 </Project>
