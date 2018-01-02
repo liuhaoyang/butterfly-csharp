@@ -71,5 +71,24 @@ namespace Butterfly.OpenTracing
         {
             span?.Finish(DateTimeOffset.UtcNow);
         }
+
+        public static ISpan Exception(this ISpan span, Exception exception)
+        {
+            if (span == null)
+            {
+                return span;
+            }
+
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
+
+            span.Tags.Error(true);
+
+            span.Log(LogField.CreateNew().EventError().ErrorKind(exception).Message(exception.Message).Stack(exception.StackTrace));
+            
+            return span;
+        }
     }
 }

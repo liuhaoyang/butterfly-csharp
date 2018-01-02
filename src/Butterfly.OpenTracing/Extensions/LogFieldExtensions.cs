@@ -10,6 +10,7 @@ namespace Butterfly.OpenTracing
             {
                 throw new ArgumentNullException(nameof(logField));
             }
+
             logField[key] = value;
             return logField;
         }
@@ -41,12 +42,37 @@ namespace Butterfly.OpenTracing
 
         public static LogField ErrorObject(this LogField logField, Exception exception)
         {
-            return logField.Set(LogFields.ErrorObject, exception);
+            return logField.Set(LogFields.ErrorObject, exception.Message);
         }
 
         public static LogField ErrorKind<TException>(this LogField logField) where TException : Exception
         {
-            return logField.ErrorKind(typeof(TException).Name);
+            return logField.ErrorKind(typeof(TException).FullName);
+        }
+
+        public static LogField ErrorKind<TException>(this LogField logField, TException exception) where TException : Exception
+        {
+            return logField.ErrorKind(exception?.GetType()?.FullName);
+        }
+        
+        public static LogField ClientSend(this LogField logField)
+        {
+            return logField?.Event("client send");
+        }
+        
+        public static LogField ClientReceive(this LogField logField)
+        {
+            return logField?.Event("client receive");
+        }
+        
+        public static LogField ServerSend(this LogField logField)
+        {
+            return logField?.Event("server send");
+        }
+        
+        public static LogField ServerReceive(this LogField logField)
+        {
+            return logField?.Event("server receive");
         }
     }
 }

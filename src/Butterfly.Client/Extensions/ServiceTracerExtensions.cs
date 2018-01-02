@@ -1,13 +1,91 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Butterfly.OpenTracing;
-using Butterfly.OpenTracing.Extensions;
 
 namespace Butterfly.Client
 {
     public static class ServiceTracerExtensions
     {
+        public static void ChildTrace(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp, Action<ISpan> operation)
+        {
+            if (tracer == null)
+            {
+                throw new ArgumentNullException(nameof(tracer));
+            }
+
+            Trace(tracer, CreateChildSpanBuilder(tracer, operationName, startTimestamp), operation);
+        }
+
+        public static TResult ChildTrace<TResult>(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp, Func<ISpan, TResult> operation)
+        {
+            if (tracer == null)
+            {
+                throw new ArgumentNullException(nameof(tracer));
+            }
+
+            return Trace(tracer, CreateChildSpanBuilder(tracer, operationName, startTimestamp), operation);
+        }
+
+        public static void Trace(this IServiceTracer tracer, ISpanBuilder spanBuilder, Action<ISpan> operation)
+        {
+            if (tracer == null)
+            {
+                throw new ArgumentNullException(nameof(tracer));
+            }
+
+            var span = tracer.Start(spanBuilder);
+
+            var curr = tracer.Tracer.GetCurrentSpan();
+            try
+            {
+                tracer.Tracer.SetCurrentSpan(span);
+                operation?.Invoke(span);
+            }
+            catch (Exception exception)
+            {
+                span.Exception(exception);
+                throw;
+            }
+            finally
+            {
+                span.Finish(DateTimeOffset.UtcNow);
+                tracer.Tracer.SetCurrentSpan(curr);
+            }
+        }
+
+        public static TResult Trace<TResult>(this IServiceTracer tracer, ISpanBuilder spanBuilder, Func<ISpan, TResult> operation)
+        {
+            if (tracer == null)
+            {
+                throw new ArgumentNullException(nameof(tracer));
+            }
+
+            var span = tracer.Start(spanBuilder);
+
+            var curr = tracer.Tracer.GetCurrentSpan();
+            try
+            {
+                tracer.Tracer.SetCurrentSpan(span);
+
+                if (operation == null)
+                {
+                    return default(TResult);
+                }
+
+                return operation(span);
+            }
+            catch (Exception exception)
+            {
+                span.Exception(exception);
+                throw;
+            }
+            finally
+            {
+                span.Finish(DateTimeOffset.UtcNow);
+                tracer.Tracer.SetCurrentSpan(curr);
+            }
+        }
+
         public static Task ChildTraceAsync(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp, Func<ISpan, Task> operation)
         {
             if (tracer == null)
@@ -15,14 +93,7 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var spanBuilder = new SpanBuilder(operationName, startTimestamp);
-            var spanContext = tracer.Tracer.GetCurrentSpan()?.SpanContext;
-            if (spanContext != null)
-            {
-                spanBuilder.AsChildOf(spanContext);
-            }
-
-            return TraceAsync(tracer, spanBuilder, operation);
+            return TraceAsync(tracer, CreateChildSpanBuilder(tracer, operationName, startTimestamp), operation);
         }
 
         public static Task<TResult> ChildTraceAsync<TResult>(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp, Func<ISpan, Task<TResult>> operation)
@@ -32,14 +103,7 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var spanBuilder = new SpanBuilder(operationName, startTimestamp);
-            var spanContext = tracer.Tracer.GetCurrentSpan()?.SpanContext;
-            if (spanContext != null)
-            {
-                spanBuilder.AsChildOf(spanContext);
-            }
-
-            return TraceAsync(tracer, spanBuilder, operation);
+            return TraceAsync(tracer, CreateChildSpanBuilder(tracer, operationName, startTimestamp), operation);
         }
 
         public static async Task TraceAsync(this IServiceTracer tracer, ISpanBuilder spanBuilder, Func<ISpan, Task> operation)
@@ -59,8 +123,7 @@ namespace Butterfly.Client
             }
             catch (Exception exception)
             {
-                span.Tags.Error(true);
-                span.Log(LogField.CreateNew().EventError().ErrorKind(exception.GetType().Name).ErrorObject(exception));
+                span.Exception(exception);
                 throw;
             }
             finally
@@ -87,18 +150,22 @@ namespace Butterfly.Client
             }
             catch (Exception exception)
             {
-                span.Tags.Error(true);
-                span.Log(LogField.CreateNew().EventError().ErrorKind(exception.GetType().Name).ErrorObject(exception));
+                span.Exception(exception);
                 throw;
             }
             finally
             {
                 span.Finish(DateTimeOffset.UtcNow);
                 tracer.Tracer.SetCurrentSpan(curr);
-            }   
+            }
         }
 
         public static ISpan StartChild(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp = null)
+        {
+            return tracer.Start(CreateChildSpanBuilder(tracer, operationName, startTimestamp));
+        }
+
+        private static ISpanBuilder CreateChildSpanBuilder(IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp = null)
         {
             var spanBuilder = new SpanBuilder(operationName, startTimestamp);
             var spanContext = tracer.Tracer.GetCurrentSpan()?.SpanContext;
@@ -107,7 +174,7 @@ namespace Butterfly.Client
                 spanBuilder.AsChildOf(spanContext);
             }
 
-            return tracer.Start(spanBuilder);
+            return spanBuilder;
         }
     }
 }

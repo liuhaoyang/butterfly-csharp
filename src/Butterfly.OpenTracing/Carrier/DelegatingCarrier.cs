@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.OpenTracing
 {
     public class DelegatingCarrier<T> : ITextMapCarrier where T : class, IEnumerable
     {

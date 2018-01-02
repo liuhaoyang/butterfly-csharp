@@ -127,6 +127,16 @@ namespace Butterfly.OpenTracing
         {
             return Set(tagCollection, Tags.HttpUrl, httpUrl);
         }
+        
+        public static TagCollection HttpHost(this TagCollection tagCollection, string host)
+        {
+            return tagCollection.Set("http.host", host);
+        }
+        
+        public static TagCollection HttpPath(this TagCollection tagCollection, string path)
+        {
+            return tagCollection.Set("http.path", path);
+        }
            
         /// <summary>
         /// An address at which messages can be exchanged. E.g. A Kafka record has an associated "topic name"
