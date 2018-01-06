@@ -16,7 +16,7 @@ namespace Butterfly.Client
         private readonly Task[] _consumerTasks;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        public event EventHandler<DispatchEventArgs<ISpan>> OnSpanDispatch;
+        public event EventHandler<DispatchEventArgs<Span>> OnSpanDispatch;
 
         // ReSharper disable once PublicConstructorInAbstractClass
         public ButterflyDispatcherBase(int boundedCapacity, int consumerCount)
@@ -31,7 +31,7 @@ namespace Butterfly.Client
             }
         }
 
-        public bool Dispatch(ISpan span)
+        public bool Dispatch(Span span)
         {
             if (span == null)
             {
@@ -58,9 +58,9 @@ namespace Butterfly.Client
             {
                 switch (consumingItem)
                 {
-                    case ISpan span:
+                    case Span span:
                         var onSpanDispatch = OnSpanDispatch;
-                        onSpanDispatch?.Invoke(this, new DispatchEventArgs<ISpan>(span));
+                        onSpanDispatch?.Invoke(this, new DispatchEventArgs<Span>(span));
                         break;
                     default:
                         throw new NotSupportedException();

@@ -23,9 +23,9 @@ namespace Butterfly.Client
             return Task.FromResult(0);
         }
 
-        private void DispatcherOnOnSpanDispatch(object sender, DispatchEventArgs<ISpan> dispatchEventArgs)
+        private void DispatcherOnOnSpanDispatch(object sender, DispatchEventArgs<Span> dispatchEventArgs)
         {
-            _sender.SendSpanAsync(new Span[] {dispatchEventArgs.Data.MapToSpanContract()});
+            _sender.SendSpanAsync(new Span[] {dispatchEventArgs.Data});
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
