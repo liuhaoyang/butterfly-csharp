@@ -8,7 +8,7 @@ using Butterfly.OpenTracing;
 
 namespace Butterfly.Client
 {
-    public abstract class ButterflyDispatcherBase : IButterflyDispatcher
+    public class ButterflyDispatcher : IButterflyDispatcher
     {
         private const int BoundedCapacity = 1000000;
         private const int ConsumerCount = 2;
@@ -19,7 +19,7 @@ namespace Butterfly.Client
         public event EventHandler<DispatchEventArgs<Span>> OnSpanDispatch;
 
         // ReSharper disable once PublicConstructorInAbstractClass
-        public ButterflyDispatcherBase(int boundedCapacity, int consumerCount)
+        public ButterflyDispatcher(int boundedCapacity, int consumerCount)
         {
             _cancellationTokenSource = new CancellationTokenSource();
             _blockingCollection = new BlockingCollection<object>(boundedCapacity <= 0 ? BoundedCapacity : boundedCapacity);

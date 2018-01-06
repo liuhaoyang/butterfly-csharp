@@ -2,7 +2,7 @@
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class ButterflyDispatcher :ButterflyDispatcherBase
+    public class ButterflyDispatcher :Client.ButterflyDispatcher
     {
         public ButterflyDispatcher(IOptions<ButterflyOptions> options) 
             : base(options.Value.BoundedCapacity, options.Value.ConsumerCount)

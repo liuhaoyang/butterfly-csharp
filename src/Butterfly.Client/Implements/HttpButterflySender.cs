@@ -9,20 +9,20 @@ using Newtonsoft.Json;
 
 namespace Butterfly.Client
 {
-    public abstract class HttpButterflySenderBase : IButterflySender
+    public class HttpButterflySender : IButterflySender
     {
         protected const string spanUrl = "/api/span";
 
         private readonly HttpClient _httpClient;
 
         // ReSharper disable once PublicConstructorInAbstractClass
-        public HttpButterflySenderBase(string collectorUrl)
+        public HttpButterflySender(string collectorUrl)
             : this(new HttpClient(), collectorUrl)
         {
         }
 
         // ReSharper disable once PublicConstructorInAbstractClass
-        public HttpButterflySenderBase(HttpClient httpClient, string collectorUrl)
+        public HttpButterflySender(HttpClient httpClient, string collectorUrl)
         {
             if (collectorUrl == null)
             {
