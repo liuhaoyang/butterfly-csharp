@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics;
 
 namespace Butterfly.Client.AspNetCore
 {
@@ -8,11 +10,15 @@ namespace Butterfly.Client.AspNetCore
     {
         private readonly IButterflyCollector _collector;
 
-        public ButterflyHostedService(IButterflyCollector collector)
+        public ButterflyHostedService(IButterflyCollector collector, IEnumerable<ITracingDiagnosticListener> tracingDiagnosticListeners, DiagnosticListener diagnosticListener)
         {
             _collector = collector;
+            foreach (var tracingDiagnosticListener in tracingDiagnosticListeners)
+            {
+                diagnosticListener.SubscribeWithAdapter(tracingDiagnosticListener);
+            }
         }
-        
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             return _collector.StartAsync(cancellationToken);

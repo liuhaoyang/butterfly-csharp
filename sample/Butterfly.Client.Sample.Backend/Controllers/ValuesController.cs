@@ -28,6 +28,7 @@ namespace Butterfly.Client.Sample.Backend.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
+            throw new Exception("test");
             return "value";
         }
 

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace Butterfly.Client.AspNetCore
 {
+    [Obsolete]
     public class TracingMiddleware
     {
         private readonly RequestDelegate _next;
