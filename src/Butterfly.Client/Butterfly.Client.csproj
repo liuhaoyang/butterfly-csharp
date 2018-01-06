@@ -22,7 +22,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abstractions" />
-  </ItemGroup>
 </Project>
