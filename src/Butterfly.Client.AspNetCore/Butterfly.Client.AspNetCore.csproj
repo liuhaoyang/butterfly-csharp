@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\build\common.props" />
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>A Asp.Net Core client for Butterfly.</Description>
     <AssemblyTitle>Butterfly.Client.AspNetCore</AssemblyTitle>
     <AssemblyName>Butterfly.Client.AspNetCore</AssemblyName>
@@ -9,6 +8,7 @@
     <PackageTags>OpenTracing;Tracing</PackageTags>
     <PackageReleaseNotes>
     </PackageReleaseNotes>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Butterfly.Client\Butterfly.Client.csproj" />
