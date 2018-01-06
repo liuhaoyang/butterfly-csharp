@@ -14,7 +14,7 @@ namespace Butterfly.Client
 
         public void Record(ISpan span)
         {
-            _dispatcher.Dispatch(span.MapToSpanContract());
+            _dispatcher.Dispatch(SpanContractUtils.CreateFromSpan(span));
         }
     }
 }

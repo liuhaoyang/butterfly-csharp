@@ -7,9 +7,9 @@ using SpanReferenceContract = Butterfly.DataContract.Tracing.SpanReference;
 
 namespace Butterfly.Client
 {
-    public static class SpanExtensions
+    public static class SpanContractUtils
     {
-        public static Span MapToSpanContract(this ISpan span)
+        public static Span CreateFromSpan(ISpan span)
         {
             var spanContract = new Span
             {
