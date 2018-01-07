@@ -13,11 +13,11 @@ namespace Butterfly.Client
     {
         protected const string spanUrl = "/api/span";
 
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
 
         // ReSharper disable once PublicConstructorInAbstractClass
         public HttpButterflySender(string collectorUrl)
-            : this(new HttpClient(), collectorUrl)
+            : this(new HttpClient(new HttpClientHandler() {UseProxy = false}), collectorUrl)
         {
         }
 

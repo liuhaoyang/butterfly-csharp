@@ -32,7 +32,6 @@ namespace Butterfly.Client.AspNetCore
             services.AddSingleton<ITracer, Tracer>();
             services.AddSingleton<IServiceTracer, ServiceTracer>();
             services.AddSingleton<ISpanRecorder, AsyncSpanRecorder>();
-            services.AddSingleton<IButterflyCollector, ButterflyCollector>();
             services.AddSingleton<IButterflyDispatcher, ButterflyDispatcher>();
             services.AddSingleton<IButterflySender, QueueHttpButterflySender>();
             services.AddSingleton<IHostedService, ButterflyHostedService>();

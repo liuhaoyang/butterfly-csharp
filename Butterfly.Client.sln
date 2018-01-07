@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Sample.Bac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.OpenTracing", "src\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj", "{05FCBDB6-F6C8-4435-B685-67F23B034C99}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution item", "solution item", "{262F187C-E204-42CB-94DC-E25386976C75}"
+ProjectSection(SolutionItems) = preProject
+	build\version.props = build\version.props
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

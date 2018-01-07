@@ -6,11 +6,8 @@ namespace Butterfly.Client.AspNetCore
 {
     public interface IRequestTracer
     {
-        ISpan Span { get; }
 
-        string TraceId { get; }
-
-        void OnBeginRequest(HttpContext httpContext);
+        ISpan OnBeginRequest(HttpContext httpContext);
 
         void OnEndRequest(HttpContext httpContext);
 

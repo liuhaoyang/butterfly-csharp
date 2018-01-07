@@ -15,12 +15,6 @@ namespace Butterfly.Client.Sample.Backend.Controllers
         [HttpGet]
         public IEnumerable<string> Get([FromServices] IServiceTracer tracer)
         {
-            using (var span = tracer.StartChild("redis GET"))
-            {
-                span.Tags.Service("Redis");
-                span.Tags.Component("StackExcnange.Redis");
-                Thread.Sleep(new Random().Next(20, 135));
-            }
             return new string[] {"value1", "value2"};
         }
 
@@ -28,7 +22,6 @@ namespace Butterfly.Client.Sample.Backend.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            throw new Exception("test");
             return "value";
         }
 

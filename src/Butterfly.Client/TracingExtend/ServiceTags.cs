@@ -2,7 +2,7 @@
 {
     public static class ServiceTags
     {
-        public const string ServiceApplicationName = "service.applicatioName";
+        public const string ServiceApplicationName = "service.applicationName";
 
         public const string ServiceEnvironment = "service.environment";
 

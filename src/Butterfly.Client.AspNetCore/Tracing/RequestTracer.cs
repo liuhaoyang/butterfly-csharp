@@ -15,14 +15,7 @@ namespace Butterfly.Client.AspNetCore
             _tracer = tracer;
         }
 
-        public ISpan Span { get; private set; }
-
-        public string TraceId
-        {
-            get { return Span?.SpanContext?.TraceId; }
-        }
-
-        public void OnBeginRequest(HttpContext httpContext)
+        public ISpan OnBeginRequest(HttpContext httpContext)
         {
             var spanBuilder = new SpanBuilder($"server {httpContext.Request.Method} {httpContext.Request.Path}");
             if (_tracer.Tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k],
@@ -30,22 +23,23 @@ namespace Butterfly.Client.AspNetCore
             {
                 spanBuilder.AsChildOf(spanContext);
             }
-
-            Span = _tracer.Start(spanBuilder);
-            Span.Log(LogField.CreateNew().ServerReceive());
-            Span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.BeginRequest"));
-            _tracer.Tracer.SetCurrentSpan(Span);
-            httpContext.SetSpan(Span);
+            var span = _tracer.Start(spanBuilder);        
+            httpContext.SetSpan(span);         
+            span.Log(LogField.CreateNew().ServerReceive());
+            span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.BeginRequest"));
+            _tracer.Tracer.SetCurrentSpan(span);
+            return span;
         }
 
         public void OnEndRequest(HttpContext httpContext)
         {
-            if (Span == null)
+            var span = httpContext.GetSpan();
+            if (span == null)
             {
                 return;
             }
 
-            Span.Tags
+            span.Tags
                 .RequestMetrics().Server().Component("AspNetCore")
                 .HttpMethod(httpContext.Request.Method)
                 .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
@@ -54,16 +48,21 @@ namespace Butterfly.Client.AspNetCore
                 .HttpStatusCode(httpContext.Response.StatusCode)
                 .PeerAddress(httpContext.Connection.RemoteIpAddress.ToString())
                 .PeerPort(httpContext.Connection.RemotePort);
-            Span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.EndRequest"));
-            Span.Log(LogField.CreateNew().ServerSend());
-            Span.Finish();
+            span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.EndRequest"));
+            span.Log(LogField.CreateNew().ServerSend());
+            span.Finish();
             _tracer.Tracer.SetCurrentSpan(null);
         }
 
         public void OnException(HttpContext httpContext, Exception exception, string @event)
         {
-            Span?.Log(LogField.CreateNew().Event(@event));
-            Span?.Exception(exception);
+            var span = httpContext.GetSpan();
+            if (span == null)
+            {
+                return;
+            }
+            span?.Log(LogField.CreateNew().Event(@event));
+            span?.Exception(exception);
         }
     }
 }

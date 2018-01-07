@@ -19,19 +19,19 @@ namespace Butterfly.Client.AspNetCore
         public string ListenerName { get; } = "Microsoft.AspNetCore";
         
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn")]
-        public void OnHttpRequestIn()
+        public void HttpRequestIn()
         {
             // do nothing, just enable the diagnotic source
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn.Start")]
-        public void OnHttpRequestInStart(HttpContext httpContext)
+        public void HttpRequestInStart(HttpContext httpContext)
         {
             _requestTracer.OnBeginRequest(httpContext);
         }
         
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop")]
-        public void OnHttpRequestInStop(HttpContext httpContext)
+        public void HttpRequestInStop(HttpContext httpContext)
         {
             _requestTracer.OnEndRequest(httpContext);
         }

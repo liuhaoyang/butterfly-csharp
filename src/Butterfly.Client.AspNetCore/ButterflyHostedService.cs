@@ -8,11 +8,11 @@ namespace Butterfly.Client.AspNetCore
 {
     public class ButterflyHostedService : IHostedService
     {
-        private readonly IButterflyCollector _collector;
+        private readonly IButterflyDispatcher _dispatcher;
 
-        public ButterflyHostedService(IButterflyCollector collector, IEnumerable<ITracingDiagnosticListener> tracingDiagnosticListeners, DiagnosticListener diagnosticListener)
+        public ButterflyHostedService(IButterflyDispatcher dispatcher, IEnumerable<ITracingDiagnosticListener> tracingDiagnosticListeners, DiagnosticListener diagnosticListener)
         {
-            _collector = collector;
+            _dispatcher = dispatcher;
             foreach (var tracingDiagnosticListener in tracingDiagnosticListeners)
             {
                 diagnosticListener.SubscribeWithAdapter(tracingDiagnosticListener);
@@ -21,12 +21,13 @@ namespace Butterfly.Client.AspNetCore
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return _collector.StartAsync(cancellationToken);
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            return _collector.StopAsync(cancellationToken);
+            _dispatcher.Dispose();
+            return Task.CompletedTask;
         }
     }
 }
