@@ -34,7 +34,7 @@ namespace Butterfly.Client.AspNetCore
                 .ServiceEnvironment(_hostingEnvironment.EnvironmentName)
                 .ServiceHost(_hostName);
 
-            return span;
+            return new ChildSpan(span, _tracer);
         }
     }
 }
