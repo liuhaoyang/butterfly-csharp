@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Http;
 
@@ -40,7 +41,7 @@ namespace Butterfly.Client.AspNetCore
             }
 
             span.Tags
-                .RequestMetrics().Server().Component("AspNetCore")
+                .Server().Component("AspNetCore")
                 .HttpMethod(httpContext.Request.Method)
                 .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
                 .HttpHost(httpContext.Request.Host.ToUriComponent())

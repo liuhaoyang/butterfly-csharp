@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public static class ServiceTracerExtensions
     {
@@ -33,23 +33,17 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var span = tracer.Start(spanBuilder);
-
-            var curr = tracer.Tracer.GetCurrentSpan();
-            try
+            using (var span = tracer.Start(spanBuilder))
             {
-                tracer.Tracer.SetCurrentSpan(span);
-                operation?.Invoke(span);
-            }
-            catch (Exception exception)
-            {
-                span.Exception(exception);
-                throw;
-            }
-            finally
-            {
-                span.Finish(DateTimeOffset.UtcNow);
-                tracer.Tracer.SetCurrentSpan(curr);
+                try
+                {
+                    operation?.Invoke(span);
+                }
+                catch (Exception exception)
+                {
+                    span.Exception(exception);
+                    throw;
+                }
             }
         }
 
@@ -60,29 +54,22 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var span = tracer.Start(spanBuilder);
-
-            var curr = tracer.Tracer.GetCurrentSpan();
-            try
+            using (var span = tracer.Start(spanBuilder))
             {
-                tracer.Tracer.SetCurrentSpan(span);
-
-                if (operation == null)
+                try
                 {
-                    return default(TResult);
-                }
+                    if (operation == null)
+                    {
+                        return default(TResult);
+                    }
 
-                return operation(span);
-            }
-            catch (Exception exception)
-            {
-                span.Exception(exception);
-                throw;
-            }
-            finally
-            {
-                span.Finish(DateTimeOffset.UtcNow);
-                tracer.Tracer.SetCurrentSpan(curr);
+                    return operation(span);
+                }
+                catch (Exception exception)
+                {
+                    span.Exception(exception);
+                    throw;
+                }
             }
         }
 
@@ -113,23 +100,17 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var span = tracer.Start(spanBuilder);
-
-            var curr = tracer.Tracer.GetCurrentSpan();
-            try
+            using (var span = tracer.Start(spanBuilder))
             {
-                tracer.Tracer.SetCurrentSpan(span);
-                await operation?.Invoke(span);
-            }
-            catch (Exception exception)
-            {
-                span.Exception(exception);
-                throw;
-            }
-            finally
-            {
-                span.Finish(DateTimeOffset.UtcNow);
-                tracer.Tracer.SetCurrentSpan(curr);
+                try
+                {
+                    await operation?.Invoke(span);
+                }
+                catch (Exception exception)
+                {
+                    span.Exception(exception);
+                    throw;
+                }
             }
         }
 
@@ -140,23 +121,17 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(tracer));
             }
 
-            var span = tracer.Start(spanBuilder);
-
-            var curr = tracer.Tracer.GetCurrentSpan();
-            try
+            using (var span = tracer.Start(spanBuilder))
             {
-                tracer.Tracer.SetCurrentSpan(span);
-                return await operation?.Invoke(span);
-            }
-            catch (Exception exception)
-            {
-                span.Exception(exception);
-                throw;
-            }
-            finally
-            {
-                span.Finish(DateTimeOffset.UtcNow);
-                tracer.Tracer.SetCurrentSpan(curr);
+                try
+                {
+                    return await operation?.Invoke(span);
+                }
+                catch (Exception exception)
+                {
+                    span.Exception(exception);
+                    throw;
+                }
             }
         }
 

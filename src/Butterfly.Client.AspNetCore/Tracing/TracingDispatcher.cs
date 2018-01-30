@@ -2,12 +2,13 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using Butterfly.Client.Tracing;
 using Butterfly.DataContract.Tracing;
 using Microsoft.Extensions.Options;
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class ButterflyDispatcher : IButterflyDispatcher
+    public class TracingDispatcher : IButterflyDispatcher
     {
         private const int BoundedCapacity = 500000;
         private readonly BlockingCollection<object> _blockingCollection;
@@ -15,7 +16,7 @@ namespace Butterfly.Client.AspNetCore
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IButterflySender _sender;
 
-        public ButterflyDispatcher(IButterflySender sender, IOptions<ButterflyOptions> options)
+        public TracingDispatcher(IButterflySender sender, IOptions<ButterflyOptions> options)
         {
             _sender = sender ?? throw new ArgumentNullException(nameof(sender));
             _cancellationTokenSource = new CancellationTokenSource();

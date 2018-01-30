@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Threading;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
-    public class ChildSpan : ISpan
+    public class ServiceSpan : ISpan
     {
         private readonly ISpan _span;
         private readonly ISpan _parent;
         private readonly ITracer _tracer;
-        private int _state;
 
         public DateTimeOffset StartTimestamp => _span.StartTimestamp;
 
@@ -23,7 +21,7 @@ namespace Butterfly.Client
 
         public LogCollection Logs => _span.Logs;
 
-        public ChildSpan(ISpan span, ITracer tracer)
+        public ServiceSpan(ISpan span, ITracer tracer)
         {
             _span = span;
             _tracer = tracer;
@@ -38,11 +36,8 @@ namespace Butterfly.Client
 
         public void Finish(DateTimeOffset finishTimestamp)
         {
-            if (Interlocked.CompareExchange(ref _state, 1, 0) != 1)
-            {
-                _span.Finish(finishTimestamp);
-                _tracer.SetCurrentSpan(_parent);
-            }
+            _span.Finish(finishTimestamp);
+            _tracer.SetCurrentSpan(_parent);
         }
     }
 }
