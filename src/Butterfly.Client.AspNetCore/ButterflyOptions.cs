@@ -11,7 +11,9 @@ namespace Butterfly.Client.AspNetCore
         public string CollectorUrl { get; set; }
 
         public int BoundedCapacity { get; set; }
-        
+
         public int ConsumerCount { get; set; }
+
+        public int FlushInterval { get; set; }
     }
 }

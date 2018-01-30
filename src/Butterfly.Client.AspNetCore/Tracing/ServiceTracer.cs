@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;

@@ -1,7 +1,7 @@
 ﻿using System;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public class AsyncSpanRecorder : ISpanRecorder
     {

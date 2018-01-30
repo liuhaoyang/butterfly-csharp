@@ -69,8 +69,7 @@ namespace Butterfly.OpenTracing
                 throw new ArgumentNullException(nameof(spanBuilder));
             }
 
-            var traceId = spanBuilder.References?.FirstOrDefault()?.SpanContext?.TraceId ?? Guid.NewGuid().ToString();
-            var spanId = Guid.NewGuid().ToString();
+            var traceId = spanBuilder.References?.FirstOrDefault()?.SpanContext?.TraceId;
 
             var baggage = new Baggage();
 
@@ -81,7 +80,7 @@ namespace Butterfly.OpenTracing
                 }
 
             var sampled = spanBuilder.Sampled ?? _sampler?.ShouldSample();
-            var spanContext = _spanContextFactory.Create(new SpanContextPackage(traceId, spanId, sampled.GetValueOrDefault(true), baggage, spanBuilder.References));
+            var spanContext = _spanContextFactory.Create(new SpanContextPackage(traceId, null, sampled.GetValueOrDefault(true), baggage, spanBuilder.References));
             return new Span(spanBuilder.OperationName, spanBuilder.StartTimestamp ?? DateTimeOffset.UtcNow, spanContext, _spanRecorder);
         }
     }

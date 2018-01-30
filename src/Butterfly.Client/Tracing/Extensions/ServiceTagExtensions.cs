@@ -1,6 +1,6 @@
 ﻿using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public static class ServiceTagExtensions
     {
@@ -18,15 +18,10 @@ namespace Butterfly.Client
         {
             return  tags?.Set(ServiceTags.ServiceHost, host);
         }
-        
+
         public static TagCollection ServiceMetrics(this TagCollection tags, string metricsType)
         {
-            return  tags?.Set(ServiceTags.ServiceMetrics, metricsType);
-        }
-        
-        public static TagCollection RequestMetrics(this TagCollection tags)
-        {
-            return tags?.ServiceMetrics(ServiceTags.RequestMetrics);
+            return tags?.Set(ServiceTags.ServiceMetrics, metricsType);
         }
     }
 }

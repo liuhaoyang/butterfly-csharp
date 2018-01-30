@@ -4,6 +4,7 @@ using Butterfly.OpenTracing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Butterfly.Client.Tracing;
 
 namespace Butterfly.Client.AspNetCore
 {
@@ -32,9 +33,9 @@ namespace Butterfly.Client.AspNetCore
             services.AddSingleton<ITracer, Tracer>();
             services.AddSingleton<IServiceTracer, ServiceTracer>();
             services.AddSingleton<ISpanRecorder, AsyncSpanRecorder>();
-            services.AddSingleton<IButterflyDispatcher, ButterflyDispatcher>();
+            services.AddSingleton<IButterflyDispatcher, TracingDispatcher>();
             services.AddSingleton<IButterflySender, QueueHttpButterflySender>();
-            services.AddSingleton<IHostedService, ButterflyHostedService>();
+            services.AddSingleton<IHostedService, TracingHostedService>();
             services.AddSingleton<ITracingDiagnosticListener, TracingDiagnosticListener>();
             services.AddSingleton<ITracingDiagnosticListener, MvcTracingDiagnosticListener>();
             services.AddSingleton<IRequestTracer, RequestTracer>();

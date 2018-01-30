@@ -1,4 +1,4 @@
-﻿namespace Butterfly.Client
+﻿namespace Butterfly.Client.Tracing
 {
     public static class ServiceTags
     {
@@ -7,9 +7,6 @@
         public const string ServiceEnvironment = "service.environment";
 
         public const string ServiceHost = "service.host";
-
-        public const string ServiceMetrics = "service.metrics";
-        
-        public const string RequestMetrics = "request";
+      
     }
 }

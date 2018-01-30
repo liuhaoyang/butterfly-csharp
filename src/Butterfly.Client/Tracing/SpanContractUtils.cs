@@ -5,7 +5,7 @@ using BaggageContract = Butterfly.DataContract.Tracing.Baggage;
 using LogFieldContract = Butterfly.DataContract.Tracing.LogField;
 using SpanReferenceContract = Butterfly.DataContract.Tracing.SpanReference;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public static class SpanContractUtils
     {

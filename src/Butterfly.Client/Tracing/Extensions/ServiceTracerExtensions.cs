@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public static class ServiceTracerExtensions
     {

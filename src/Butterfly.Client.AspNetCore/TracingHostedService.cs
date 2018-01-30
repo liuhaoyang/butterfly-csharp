@@ -6,11 +6,11 @@ using System.Diagnostics;
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class ButterflyHostedService : IHostedService
+    public class TracingHostedService : IHostedService
     {
         private readonly IButterflyDispatcher _dispatcher;
 
-        public ButterflyHostedService(IButterflyDispatcher dispatcher, IEnumerable<ITracingDiagnosticListener> tracingDiagnosticListeners, DiagnosticListener diagnosticListener)
+        public TracingHostedService(IButterflyDispatcher dispatcher, IEnumerable<ITracingDiagnosticListener> tracingDiagnosticListeners, DiagnosticListener diagnosticListener)
         {
             _dispatcher = dispatcher;
             foreach (var tracingDiagnosticListener in tracingDiagnosticListeners)

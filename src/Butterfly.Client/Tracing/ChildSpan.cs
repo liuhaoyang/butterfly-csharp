@@ -2,7 +2,7 @@
 using System.Threading;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public class ChildSpan : ISpan
     {

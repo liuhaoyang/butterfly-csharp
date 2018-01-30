@@ -13,7 +13,7 @@
     </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Butterfly.DataContract" Version="0.0.2" />
+    <PackageReference Include="Butterfly.DataContract" Version="0.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta2" />
   </ItemGroup>
   <ItemGroup>

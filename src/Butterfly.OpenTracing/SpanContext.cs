@@ -2,7 +2,7 @@
 
 namespace Butterfly.OpenTracing
 {
-    internal class SpanContext : ISpanContext
+    public class SpanContext : ISpanContext
     {
         public string TraceId { get; }
 

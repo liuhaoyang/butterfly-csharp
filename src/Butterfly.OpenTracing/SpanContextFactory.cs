@@ -2,7 +2,7 @@
 
 namespace Butterfly.OpenTracing
 {
-    public class SpanContextFactory : ISpanContextFactory
+    internal class SpanContextFactory : ISpanContextFactory
     {
         public ISpanContext Create(SpanContextPackage spanContextPackage)
         {

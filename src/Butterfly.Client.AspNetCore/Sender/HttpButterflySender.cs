@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
+using Butterfly.Client.Tracing;
 using Butterfly.DataContract.Tracing;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class QueueHttpButterflySender : HttpButterflySender,IDisposable
+    public class QueueHttpButterflySender : HttpButterflySender, IDisposable
     {
         const int _defaultInterval = 15;
-        const int _defaultBlockCapacity = 100;
+        const int _defaultBlockCapacity = 200;
 
         private readonly ConcurrentDictionary<Span, SpanState> _queue;
         private readonly Timer _timer;
-        private readonly ILogger<QueueHttpButterflySender> _logger;
 
         public QueueHttpButterflySender(IOptions<ButterflyOptions> options, ILogger<QueueHttpButterflySender> logger) : base(options.Value.CollectorUrl)
         {
@@ -69,7 +68,7 @@ namespace Butterfly.Client.AspNetCore
 
             foreach (var span in oldSpans)
             {
-                if (span.Value.State == SpanSendState.Sended || span.Value.ErrorCount >= 3)
+                if (span.Value.State == SpanSendState.Sended || span.Value.ErrorCount >= 2)
                     _queue.TryRemove(span.Key, out _);
             }
         }

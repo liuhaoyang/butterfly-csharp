@@ -1,6 +1,6 @@
 ﻿using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public interface IServiceTracer
     {
