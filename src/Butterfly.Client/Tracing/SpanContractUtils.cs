@@ -5,7 +5,7 @@ using BaggageContract = Butterfly.DataContract.Tracing.Baggage;
 using LogFieldContract = Butterfly.DataContract.Tracing.LogField;
 using SpanReferenceContract = Butterfly.DataContract.Tracing.SpanReference;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public static class SpanContractUtils
     {
@@ -22,19 +22,18 @@ namespace Butterfly.Client
                 Duration = (span.FinishTimestamp - span.StartTimestamp).GetMicroseconds()
             };
 
-            spanContract.Baggages = span.SpanContext.Baggage?.Select(x => new BaggageContract {Key = x.Key, Value = x.Value, SpanId = spanContract.SpanId}).ToList();
+            spanContract.Baggages = span.SpanContext.Baggage?.Select(x => new BaggageContract { Key = x.Key, Value = x.Value }).ToList();
             spanContract.Logs = span.Logs?.Select(x =>
                 new Log
                 {
-                    SpanId = spanContract.SpanId,
                     Timestamp = x.Timestamp,
-                    Fields = x.Fields.Select(f => new LogFieldContract {Key = f.Key, Value = f.Value?.ToString()}).ToList()
+                    Fields = x.Fields.Select(f => new LogFieldContract { Key = f.Key, Value = f.Value?.ToString() }).ToList()
                 }).ToList();
 
-            spanContract.Tags = span.Tags?.Select(x => new Tag {SpanId = spanContract.SpanId, Key = x.Key, Value = x.Value}).ToList();
+            spanContract.Tags = span.Tags?.Select(x => new Tag { Key = x.Key, Value = x.Value }).ToList();
 
             spanContract.References = span.SpanContext.References?.Select(x =>
-                new SpanReferenceContract {SpanId = spanContract.SpanId, ParentId = x.SpanContext.SpanId, Reference = x.SpanReferenceOptions.ToString()}).ToList();
+                new SpanReferenceContract { ParentId = x.SpanContext.SpanId, Reference = x.SpanReferenceOptions.ToString() }).ToList();
 
             return spanContract;
         }

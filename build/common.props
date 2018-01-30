@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Authors>Lemon</Authors>
     <Product>AspectCore Framework</Product>
-    <PackageIconUrl>https://avatars1.githubusercontent.com/u/19426425?v=3&amp;s=200</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/dotnet-lab/AspectCore-APM</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/dotnet-lab/AspectCore-APM/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageProjectUrl>https://github.com/ButterflyAPM/butterfly-csharp</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ButterflyAPM/butterfly-csharp/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/dotnet-lab/AspectCore-APM</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ButterflyAPM/butterfly-csharp</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

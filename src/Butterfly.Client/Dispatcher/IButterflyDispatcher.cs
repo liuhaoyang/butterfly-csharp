@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Butterfly.DataContract.Tracing;
-using Butterfly.OpenTracing;
 
 namespace Butterfly.Client
 {

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Butterfly.OpenTracing;
+using Butterfly.Client.Tracing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Butterfly.Client.Sample.Frontend.Controllers

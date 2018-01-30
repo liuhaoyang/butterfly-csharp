@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Butterfly.OpenTracing;
 
-namespace Butterfly.Client
+namespace Butterfly.Client.Tracing
 {
     public class HttpTracingHandler : DelegatingHandler
     {
