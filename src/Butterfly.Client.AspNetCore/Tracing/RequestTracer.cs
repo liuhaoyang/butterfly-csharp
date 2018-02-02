@@ -28,6 +28,15 @@ namespace Butterfly.Client.AspNetCore
             httpContext.SetSpan(span);         
             span.Log(LogField.CreateNew().ServerReceive());
             span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.BeginRequest"));
+            span.Tags
+             .Server().Component("AspNetCore")
+             .HttpMethod(httpContext.Request.Method)
+             .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
+             .HttpHost(httpContext.Request.Host.ToUriComponent())
+             .HttpPath(httpContext.Request.Path)
+             .HttpStatusCode(httpContext.Response.StatusCode)
+             .PeerAddress(httpContext.Connection.RemoteIpAddress.ToString())
+             .PeerPort(httpContext.Connection.RemotePort);
             _tracer.Tracer.SetCurrentSpan(span);
             return span;
         }
@@ -40,15 +49,8 @@ namespace Butterfly.Client.AspNetCore
                 return;
             }
 
-            span.Tags
-                .Server().Component("AspNetCore")
-                .HttpMethod(httpContext.Request.Method)
-                .HttpUrl($"{httpContext.Request.Scheme}://{httpContext.Request.Host.ToUriComponent()}{httpContext.Request.Path}{httpContext.Request.QueryString}")
-                .HttpHost(httpContext.Request.Host.ToUriComponent())
-                .HttpPath(httpContext.Request.Path)
-                .HttpStatusCode(httpContext.Response.StatusCode)
-                .PeerAddress(httpContext.Connection.RemoteIpAddress.ToString())
-                .PeerPort(httpContext.Connection.RemotePort);
+            span.Tags.HttpStatusCode(httpContext.Response.StatusCode);
+
             span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.EndRequest"));
             span.Log(LogField.CreateNew().ServerSend());
             span.Finish();

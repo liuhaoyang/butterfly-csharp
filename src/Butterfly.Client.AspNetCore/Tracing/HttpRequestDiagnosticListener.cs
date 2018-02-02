@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DiagnosticAdapter;
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class TracingDiagnosticListener : ITracingDiagnosticListener
+    public class HttpRequestDiagnosticListener : ITracingDiagnosticListener
     {
         private readonly IRequestTracer _requestTracer;
 
-        public TracingDiagnosticListener(IRequestTracer requestTracer)
+        public HttpRequestDiagnosticListener(IRequestTracer requestTracer)
         {
             _requestTracer = requestTracer;
         }
 
         public string ListenerName { get; } = "Microsoft.AspNetCore";
-        
+
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn")]
         public void HttpRequestIn()
         {
@@ -29,7 +26,7 @@ namespace Butterfly.Client.AspNetCore
         {
             _requestTracer.OnBeginRequest(httpContext);
         }
-        
+
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop")]
         public void HttpRequestInStop(HttpContext httpContext)
         {
