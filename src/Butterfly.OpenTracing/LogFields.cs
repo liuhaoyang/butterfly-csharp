@@ -12,6 +12,6 @@
         
         public const string Stack = "stack";
 
-        public const string Error = "error";
+        public const string Error = "Error";
     }
 }

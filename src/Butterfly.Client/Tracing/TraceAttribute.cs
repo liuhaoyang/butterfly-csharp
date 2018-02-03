@@ -16,11 +16,11 @@ namespace Butterfly.Client.Tracing
         {
             return ServiceTracer?.ChildTraceAsync(context.ServiceMethod.GetReflector().DisplayName, DateTimeOffset.UtcNow, async span =>
                {
-                   span.Log(LogField.CreateNew().Event("method executing"));
+                   span.Log(LogField.CreateNew().MethodExecuting());
                    span.Tags.Set("ServiceType", context.ServiceMethod.DeclaringType.GetReflector().FullDisplayName);
                    span.Tags.Set("ImplementationType", context.ImplementationMethod.DeclaringType.GetReflector().FullDisplayName);
                    await context.Invoke(next);
-                   span.Log(LogField.CreateNew().Event("method executed"));
+                   span.Log(LogField.CreateNew().MethodExecuted());
                });
         }
     }

@@ -36,19 +36,19 @@ namespace Butterfly.Client.AspNetCore
         [DiagnosticName("Microsoft.AspNetCore.Diagnostics.HandledException")]
         public void DiagnosticHandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Diagnostics.HandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore HandledException");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Diagnostics.UnhandledException")]
         public void DiagnosticUnhandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Diagnostics.UnhandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore UnhandledException");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Hosting.UnhandledException")]
         public void HostingUnhandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Hosting.UnhandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore UnhandledException");
         }
     }
 }

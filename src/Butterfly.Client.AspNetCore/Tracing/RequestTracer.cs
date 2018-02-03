@@ -27,7 +27,7 @@ namespace Butterfly.Client.AspNetCore
             var span = _tracer.Start(spanBuilder);        
             httpContext.SetSpan(span);         
             span.Log(LogField.CreateNew().ServerReceive());
-            span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.BeginRequest"));
+            span.Log(LogField.CreateNew().Event("AspNetCore BeginRequest"));
             span.Tags
              .Server().Component("AspNetCore")
              .HttpMethod(httpContext.Request.Method)
@@ -51,7 +51,7 @@ namespace Butterfly.Client.AspNetCore
 
             span.Tags.HttpStatusCode(httpContext.Response.StatusCode);
 
-            span.Log(LogField.CreateNew().Event("Microsoft.AspNetCore.Hosting.EndRequest"));
+            span.Log(LogField.CreateNew().Event("AspNetCore EndRequest"));
             span.Log(LogField.CreateNew().ServerSend());
             span.Finish();
             _tracer.Tracer.SetCurrentSpan(null);
