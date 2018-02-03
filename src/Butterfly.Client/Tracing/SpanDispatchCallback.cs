@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Butterfly.Client.Logging;
 using Butterfly.DataContract.Tracing;
 
 namespace Butterfly.Client
@@ -11,9 +12,12 @@ namespace Butterfly.Client
         private const int DefaultChunked = 200;
         private readonly IButterflySender _butterflySender;
         private readonly Func<DispatchableToken, bool> _filter;
-        public SpanDispatchCallback(IButterflySenderProvider senderProvider)
+        private readonly ILogger _logger;
+
+        public SpanDispatchCallback(IButterflySenderProvider senderProvider, ILoggerFactory loggerFactory)
         {
             _butterflySender = senderProvider.GetSender();
+            _logger = loggerFactory.CreateLogger(typeof(SpanDispatchCallback));
             _filter = token => token == DispatchableToken.SpanToken;
         }
 
@@ -27,14 +31,14 @@ namespace Butterfly.Client
                 {
                     await _butterflySender.SendSpanAsync(block.Select(x => x.RawInstance).OfType<Span>().ToArray());
                 }
-                catch
+                catch(Exception exception)
                 {
                     foreach(var item in block)
                     {
                         item.State = SendState.Untreated;
                         item.Error();
                     }
-                    throw;
+                    _logger.Error("Flush span to collector error.", exception);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
+using Butterfly.Client.Logging;
 using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +45,7 @@ namespace Butterfly.Client.AspNetCore
             services.AddSingleton<IRequestTracer, RequestTracer>();
             services.AddSingleton<IDispatchCallback, SpanDispatchCallback>();
             services.AddSingleton<ITraceIdGenerator, TraceIdGenerator>();
+            services.AddSingleton<ILoggerFactory, ButterflyLoggerFactory>();
 
             services.AddDynamicProxy(option =>
             {

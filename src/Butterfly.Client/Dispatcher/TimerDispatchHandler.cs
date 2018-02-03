@@ -4,21 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Butterfly.Client.Logging;
 
 namespace Butterfly.Client
 {
-    internal class TimerDispatchHandler
+    internal class TimerDispatchHandler : IDisposable
     {
-        private const int DefaultInterval = 5;
         private readonly int _flushInterval;
         private readonly Timer _timer;
         private readonly IEnumerable<IDispatchCallback> _callbacks;
         private readonly ConcurrentDictionary<IDispatchable, object> _state;
+        private readonly ILogger _logger;
 
-        public TimerDispatchHandler(IEnumerable<IDispatchCallback> callbacks, int flushInterval)
+        public TimerDispatchHandler(IEnumerable<IDispatchCallback> callbacks, ILoggerFactory loggerFactory, int flushInterval)
         {
             _callbacks = callbacks;
-            _flushInterval = flushInterval <= 0 ? DefaultInterval : flushInterval;
+            _flushInterval = flushInterval;
+            _logger = loggerFactory.CreateLogger(typeof(TimerDispatchHandler));
             _state = new ConcurrentDictionary<IDispatchable, object>();
             _timer = new Timer(async s => await FlushCallback(DateTimeOffset.UtcNow), null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(_flushInterval));
         }
@@ -33,11 +35,11 @@ namespace Butterfly.Client
                 var states = tokendState.Select(x => x).ToList();
                 try
                 {
-                    foreach(var callback in _callbacks)
+                    foreach (var callback in _callbacks)
                     {
                         if (callback.Filter(tokendState.Key))
                         {
-                           await callback.Accept(states);
+                            await callback.Accept(states);
                         }
                     }
                     foreach (var item in states)
@@ -46,14 +48,14 @@ namespace Butterfly.Client
                             item.State = SendState.Sended;
                     }
                 }
-                catch
+                catch (Exception exception)
                 {
-                    foreach (var item in states)
+                    foreach (var item in states.Where(x => x.State == SendState.Sending))
                     {
                         item.Error();
                         item.State = SendState.Untreated;
                     }
-                    throw;
+                    _logger.Error("Flush data to collector error.", exception);
                 }
                 finally
                 {
@@ -69,6 +71,12 @@ namespace Butterfly.Client
         public bool Post(IDispatchable val)
         {
             return _state.TryAdd(val, null);
+        }
+
+        public void Dispose()
+        {
+            _timer.Dispose();
+            _state.Clear();
         }
     }
 }

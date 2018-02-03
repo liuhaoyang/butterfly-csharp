@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Butterfly.Client.Logging;
 using Butterfly.DataContract.Tracing;
 
 namespace Butterfly.Client
@@ -10,30 +11,50 @@ namespace Butterfly.Client
     {
         private const int DefaultBoundedCapacity = 1000000;
         private const int DefaultConsumerCount = 2;
-        private readonly BlockingCollection<IDispatchable> _limitCollection;
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly TimerDispatchHandler _timerDispatchHandler;
-        private readonly ICollection<Task> _consumerTask;
+        private const int DefaultInterval = 5;
         private readonly int _boundedCapacity;
         private readonly int _consumerCount;
+        private readonly int _flushInterval;
+        private BlockingCollection<IDispatchable> _limitCollection;
+        private CancellationTokenSource _cancellationTokenSource;
+        private IEnumerable<IDispatchCallback> _callbacks;
+        private ICollection<Task> _consumerTasks;
+        private ILoggerFactory _loggerFactory;
+        private ILogger _logger;
 
-        public ButterflyDispatcher(IEnumerable<IDispatchCallback> callbacks, int flushInterval, int boundedCapacity, int consumerCount)
+
+        public ButterflyDispatcher(IEnumerable<IDispatchCallback> callbacks, ILoggerFactory loggerFactory, int flushInterval, int boundedCapacity, int consumerCount)
         {
+            _callbacks = callbacks;
             _consumerCount = consumerCount <= 0 ? DefaultConsumerCount : consumerCount;
             _boundedCapacity = boundedCapacity <= 0 ? DefaultBoundedCapacity : boundedCapacity;
-            _limitCollection = new BlockingCollection<IDispatchable>(_boundedCapacity);
+            _flushInterval = flushInterval <= 0 ? DefaultInterval : flushInterval;
+            _loggerFactory = loggerFactory;
+            _logger = loggerFactory.CreateLogger(typeof(ButterflyDispatcher));
             _cancellationTokenSource = new CancellationTokenSource();
-            _timerDispatchHandler = new TimerDispatchHandler(callbacks, flushInterval);
-            _consumerTask = new List<Task>(_consumerCount);
-            InitializationConsumer();
         }
 
-        private void InitializationConsumer()
-        {     
+        public Task Initialization()
+        {
+            _limitCollection = InitializationLimitCollection(_boundedCapacity);
+            _consumerTasks = InitializationConsumer(_consumerCount);
+            return Task.FromResult(0);
+        }
+
+        private BlockingCollection<IDispatchable> InitializationLimitCollection(int boundedCapacity)
+        {
+            _logger.Info($"Start limit queue with boundedCapacity {boundedCapacity}.");
+            return new BlockingCollection<IDispatchable>(boundedCapacity);
+        }
+
+        private ICollection<Task> InitializationConsumer(int consumerCount)
+        {
+            var consumerList = new List<Task>(consumerCount);
             for (var i = 0; i < _consumerCount; i++)
             {
-                _consumerTask.Add(CreateConsumer());
+                consumerList.Add(CreateConsumer());
             }
+            return consumerList;
         }
 
         private Task CreateConsumer()
@@ -48,21 +69,25 @@ namespace Butterfly.Client
             {
                 return false;
             }
-             
+
             _limitCollection.Add(new Dispatchable<Span>(DispatchableToken.SpanToken, span));
             return true;
         }
 
         private void Consumer()
         {
-            foreach (var consumingItem in _limitCollection.GetConsumingEnumerable())
-                _timerDispatchHandler.Post(consumingItem);
+            using (var handler = new TimerDispatchHandler(_callbacks, _loggerFactory, _flushInterval))
+            {
+                _logger.Info($"Start TimerDispatchHandler with flush interval {_flushInterval} s.");
+                foreach (var consumingItem in _limitCollection.GetConsumingEnumerable(_cancellationTokenSource.Token))
+                    handler.Post(consumingItem);
+            }
         }
 
         public void Dispose()
         {
-            _cancellationTokenSource.Cancel();
-            _limitCollection.CompleteAdding();
+            _cancellationTokenSource?.Cancel();
+            _limitCollection?.CompleteAdding();
         }
     }
 }
