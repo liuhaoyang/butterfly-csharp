@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Butterfly.DataContract.Tracing;
+using MessagePack;
 using Newtonsoft.Json;
 
 namespace Butterfly.Client
@@ -40,7 +42,9 @@ namespace Butterfly.Client
                 throw new ArgumentNullException(nameof(spans));
             }
 
-            var content = new StringContent(JsonConvert.SerializeObject(spans), Encoding.UTF8, "application/json");
+            //var content = new StringContent(JsonConvert.SerializeObject(spans), Encoding.UTF8, "application/json");
+            var content = new ByteArrayContent(MessagePackSerializer.Serialize(spans));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-msgpack");
             return _httpClient.PostAsync(spanUrl, content, cancellationToken);
         }
     }

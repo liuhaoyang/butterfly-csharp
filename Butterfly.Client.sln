@@ -1,26 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60E5B67A-0F2D-4263-A126-98A05FEA8E47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client", "src\Butterfly.Client\Butterfly.Client.csproj", "{8CCAA8EF-6315-48D9-81EA-2778FF63D0FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client", "src\Butterfly.Client\Butterfly.Client.csproj", "{8CCAA8EF-6315-48D9-81EA-2778FF63D0FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.AspNetCore", "src\Butterfly.Client.AspNetCore\Butterfly.Client.AspNetCore.csproj", "{ED1E8B88-8B6E-4E36-BCCA-F6A61FF8019B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.AspNetCore", "src\Butterfly.Client.AspNetCore\Butterfly.Client.AspNetCore.csproj", "{ED1E8B88-8B6E-4E36-BCCA-F6A61FF8019B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{DC3BF245-DD53-4030-8C2C-2E7D32F0942C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Sample.Frontend", "sample\Butterfly.Client.Sample.Frontend\Butterfly.Client.Sample.Frontend.csproj", "{70C89F17-3737-4ECB-B7E2-D57BFFD27E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.Sample.Frontend", "sample\Butterfly.Client.Sample.Frontend\Butterfly.Client.Sample.Frontend.csproj", "{70C89F17-3737-4ECB-B7E2-D57BFFD27E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Sample.Backend", "sample\Butterfly.Client.Sample.Backend\Butterfly.Client.Sample.Backend.csproj", "{39D5F180-84EB-4C96-A00A-270965A3F0D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.Sample.Backend", "sample\Butterfly.Client.Sample.Backend\Butterfly.Client.Sample.Backend.csproj", "{39D5F180-84EB-4C96-A00A-270965A3F0D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.OpenTracing", "src\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj", "{05FCBDB6-F6C8-4435-B685-67F23B034C99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.OpenTracing", "src\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj", "{05FCBDB6-F6C8-4435-B685-67F23B034C99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution item", "solution item", "{262F187C-E204-42CB-94DC-E25386976C75}"
-ProjectSection(SolutionItems) = preProject
-	build\version.props = build\version.props
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		build\version.props = build\version.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{D5DE4CA0-3F7E-4AAB-B016-BDCBE533FE5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Benckmark.Formatter", "benckmark\Butterfly.Client.Benckmark.Formatter\Butterfly.Client.Benckmark.Formatter.csproj", "{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +52,10 @@ Global
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +66,7 @@ Global
 		{70C89F17-3737-4ECB-B7E2-D57BFFD27E4D} = {DC3BF245-DD53-4030-8C2C-2E7D32F0942C}
 		{39D5F180-84EB-4C96-A00A-270965A3F0D6} = {DC3BF245-DD53-4030-8C2C-2E7D32F0942C}
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99} = {60E5B67A-0F2D-4263-A126-98A05FEA8E47}
+		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C} = {D5DE4CA0-3F7E-4AAB-B016-BDCBE533FE5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E1F027E-2094-4470-A38D-80F94C836A4C}

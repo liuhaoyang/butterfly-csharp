@@ -9,7 +9,7 @@ namespace Butterfly.Client
 {
     public class SpanDispatchCallback : IDispatchCallback
     {
-        private const int DefaultChunked = 200;
+        private const int DefaultChunked = 500;
         private readonly IButterflySender _butterflySender;
         private readonly Func<DispatchableToken, bool> _filter;
         private readonly ILogger _logger;

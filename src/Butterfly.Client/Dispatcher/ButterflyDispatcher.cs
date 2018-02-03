@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace Butterfly.Client
 {
     public class ButterflyDispatcher : IButterflyDispatcher
     {
-        private const int DefaultBoundedCapacity = 1000000;
-        private const int DefaultConsumerCount = 2;
+        private const int DefaultBoundedCapacity = 1000000;  
         private const int DefaultInterval = 5;
+        private readonly int DefaultConsumerCount = Environment.ProcessorCount;
         private readonly int _boundedCapacity;
         private readonly int _consumerCount;
         private readonly int _flushInterval;
@@ -43,7 +44,7 @@ namespace Butterfly.Client
 
         private BlockingCollection<IDispatchable> InitializationLimitCollection(int boundedCapacity)
         {
-            _logger.Info($"Start limit queue with boundedCapacity {boundedCapacity}.");
+            _logger.Info($"Butterfly Client initialized LimitQueue with options: BoundedCapacity={boundedCapacity}");
             return new BlockingCollection<IDispatchable>(boundedCapacity);
         }
 
@@ -54,6 +55,7 @@ namespace Butterfly.Client
             {
                 consumerList.Add(CreateConsumer());
             }
+            _logger.Info($"Butterfly Client initialized ConsumerTasks with options: ConsumerCount={_consumerCount} FlushInterval={_flushInterval}");
             return consumerList;
         }
 
@@ -78,7 +80,6 @@ namespace Butterfly.Client
         {
             using (var handler = new TimerDispatchHandler(_callbacks, _loggerFactory, _flushInterval))
             {
-                _logger.Info($"Start TimerDispatchHandler with flush interval {_flushInterval} s.");
                 foreach (var consumingItem in _limitCollection.GetConsumingEnumerable(_cancellationTokenSource.Token))
                     handler.Post(consumingItem);
             }
