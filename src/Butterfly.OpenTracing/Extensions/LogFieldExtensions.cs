@@ -57,22 +57,22 @@ namespace Butterfly.OpenTracing
         
         public static LogField ClientSend(this LogField logField)
         {
-            return logField?.Event("client send");
+            return logField?.Event("Client Send");
         }
         
         public static LogField ClientReceive(this LogField logField)
         {
-            return logField?.Event("client receive");
+            return logField?.Event("Client Receive");
         }
         
         public static LogField ServerSend(this LogField logField)
         {
-            return logField?.Event("server send");
+            return logField?.Event("Server Send");
         }
         
         public static LogField ServerReceive(this LogField logField)
         {
-            return logField?.Event("server receive");
+            return logField?.Event("Server Receive");
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
-using System.IO;
-using Butterfly.OpenTracing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using AspectCore.Configuration;
+using AspectCore.Extensions.DependencyInjection;
+using Butterfly.Client.Logging;
 using Butterfly.Client.Tracing;
+using Butterfly.OpenTracing;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Butterfly.Client.AspNetCore
 {
@@ -38,11 +40,18 @@ namespace Butterfly.Client.AspNetCore
             services.AddSingleton<IButterflyDispatcher>(provider => provider.GetRequiredService<IButterflyDispatcherProvider>().GetDispatcher());
             services.AddSingleton<IButterflySenderProvider, ButterflySenderProvider>();
             services.AddSingleton<IHostedService, ButterflyHostedService>();
-            services.AddSingleton<ITracingDiagnosticListener, TracingDiagnosticListener>();
+            services.AddSingleton<ITracingDiagnosticListener, HttpRequestDiagnosticListener>();
             services.AddSingleton<ITracingDiagnosticListener, MvcTracingDiagnosticListener>();
             services.AddSingleton<IRequestTracer, RequestTracer>();
             services.AddSingleton<IDispatchCallback, SpanDispatchCallback>();
             services.AddSingleton<ITraceIdGenerator, TraceIdGenerator>();
+            services.AddSingleton<ILoggerFactory, ButterflyLoggerFactory>();
+
+            services.AddDynamicProxy(option =>
+            {
+                option.NonAspectPredicates.AddNamespace("Butterfly.*");
+            });
+
             return services;
         }
     }

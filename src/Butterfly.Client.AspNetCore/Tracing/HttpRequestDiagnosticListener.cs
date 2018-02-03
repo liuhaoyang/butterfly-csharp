@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DiagnosticAdapter;
 
 namespace Butterfly.Client.AspNetCore
 {
-    public class TracingDiagnosticListener : ITracingDiagnosticListener
+    public class HttpRequestDiagnosticListener : ITracingDiagnosticListener
     {
         private readonly IRequestTracer _requestTracer;
 
-        public TracingDiagnosticListener(IRequestTracer requestTracer)
+        public HttpRequestDiagnosticListener(IRequestTracer requestTracer)
         {
             _requestTracer = requestTracer;
         }
 
         public string ListenerName { get; } = "Microsoft.AspNetCore";
-        
+
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn")]
         public void HttpRequestIn()
         {
@@ -29,7 +26,7 @@ namespace Butterfly.Client.AspNetCore
         {
             _requestTracer.OnBeginRequest(httpContext);
         }
-        
+
         [DiagnosticName("Microsoft.AspNetCore.Hosting.HttpRequestIn.Stop")]
         public void HttpRequestInStop(HttpContext httpContext)
         {
@@ -39,19 +36,19 @@ namespace Butterfly.Client.AspNetCore
         [DiagnosticName("Microsoft.AspNetCore.Diagnostics.HandledException")]
         public void DiagnosticHandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Diagnostics.HandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore HandledException");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Diagnostics.UnhandledException")]
         public void DiagnosticUnhandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Diagnostics.UnhandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore UnhandledException");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Hosting.UnhandledException")]
         public void HostingUnhandledException(HttpContext httpContext, Exception exception)
         {
-            _requestTracer.OnException(httpContext, exception, "Microsoft.AspNetCore.Hosting.UnhandledException");
+            _requestTracer.OnException(httpContext, exception, "AspNetCore UnhandledException");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Butterfly.OpenTracing
         public Tracer(ISpanRecorder spanRecorder, ISampler sampler = null, ISpanContextFactory spanContextFactory = null)
         {
             _spanRecorder = spanRecorder ?? throw new ArgumentNullException(nameof(spanRecorder));
-            _sampler = sampler;
+            _sampler = sampler ?? new FullSampler();
             _spanContextFactory = spanContextFactory ?? new SpanContextFactory();
         }
 

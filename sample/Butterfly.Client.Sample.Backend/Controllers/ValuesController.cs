@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Butterfly.Client.Sample.Backend.Services;
 using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,18 @@ namespace Butterfly.Client.Sample.Backend.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly IValuesService _valuesService;
+
+        public ValuesController(IValuesService valuesService)
+        {
+            _valuesService = valuesService;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get([FromServices] IServiceTracer tracer)
+        public IEnumerable<string> Get()
         {
-            return new string[] {"value1", "value2"};
+            return _valuesService.GetValues();
         }
 
         // GET api/values/5

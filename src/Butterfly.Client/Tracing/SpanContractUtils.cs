@@ -1,17 +1,19 @@
 ﻿using System.Linq;
-using Butterfly.DataContract.Tracing;
 using Butterfly.OpenTracing;
 using BaggageContract = Butterfly.DataContract.Tracing.Baggage;
 using LogFieldContract = Butterfly.DataContract.Tracing.LogField;
 using SpanReferenceContract = Butterfly.DataContract.Tracing.SpanReference;
+using SpanContract = Butterfly.DataContract.Tracing.Span;
+using LogContract = Butterfly.DataContract.Tracing.Log;
+using TagContract = Butterfly.DataContract.Tracing.Tag;
 
 namespace Butterfly.Client.Tracing
 {
     public static class SpanContractUtils
     {
-        public static Span CreateFromSpan(ISpan span)
+        public static SpanContract CreateFromSpan(ISpan span)
         {
-            var spanContract = new Span
+            var spanContract = new SpanContract
             {
                 FinishTimestamp = span.FinishTimestamp,
                 StartTimestamp = span.StartTimestamp,
@@ -24,13 +26,13 @@ namespace Butterfly.Client.Tracing
 
             spanContract.Baggages = span.SpanContext.Baggage?.Select(x => new BaggageContract { Key = x.Key, Value = x.Value }).ToList();
             spanContract.Logs = span.Logs?.Select(x =>
-                new Log
+                new LogContract
                 {
                     Timestamp = x.Timestamp,
                     Fields = x.Fields.Select(f => new LogFieldContract { Key = f.Key, Value = f.Value?.ToString() }).ToList()
                 }).ToList();
 
-            spanContract.Tags = span.Tags?.Select(x => new Tag { Key = x.Key, Value = x.Value }).ToList();
+            spanContract.Tags = span.Tags?.Select(x => new TagContract { Key = x.Key, Value = x.Value }).ToList();
 
             spanContract.References = span.SpanContext.References?.Select(x =>
                 new SpanReferenceContract { ParentId = x.SpanContext.SpanId, Reference = x.SpanReferenceOptions.ToString() }).ToList();

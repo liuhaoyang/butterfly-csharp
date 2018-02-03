@@ -14,28 +14,28 @@ namespace Butterfly.Client.AspNetCore
         [DiagnosticName("Microsoft.AspNetCore.Mvc.BeforeAction")]
         public void BeforeAction(ActionDescriptor actionDescriptor, HttpContext httpContext, RouteData routeData)
         {
-            Event(httpContext, "Microsoft.AspNetCore.Mvc.BeforeAction");
+            Event(httpContext, "AspNetCore.Mvc BeforeAction");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Mvc.AfterAction")]
         public void AfterAction(ActionDescriptor actionDescriptor, HttpContext httpContext, RouteData routeData)
         {
-            Event(httpContext, "Microsoft.AspNetCore.Mvc.AfterAction");
+            Event(httpContext, "AspNetCore.Mvc AfterAction");
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Mvc.BeforeOnException")]
         public void BeforeOnException(ExceptionContext exceptionContext)
         {
             var httpContext = exceptionContext.HttpContext;
-            Event(httpContext, "Microsoft.AspNetCore.Mvc.BeforeOnException");
+            Event(httpContext, "AspNetCore.Mvc BeforeOnException");
             var span = httpContext.GetSpan();
-            span?.Log(LogField.CreateNew().EventError().ErrorKind(exceptionContext.Exception).ErrorObject(exceptionContext.Exception).Stack(exceptionContext.Exception.StackTrace));
+            span?.Exception(exceptionContext.Exception);
         }
 
         [DiagnosticName("Microsoft.AspNetCore.Mvc.AfterOnException")]
         public void AfterOnException(ExceptionContext exceptionContext)
         {
-            Event(exceptionContext.HttpContext, "Microsoft.AspNetCore.Mvc.AfterOnException");
+            Event(exceptionContext.HttpContext, "AspNetCore.Mvc AfterOnException");
         }
 
         private void Event(HttpContext httpContext, string @event)

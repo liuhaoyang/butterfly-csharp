@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Butterfly.Client.Tracing
+namespace Butterfly.OpenTracing
 {
     /// <summary>
     /// Thread-safe random long generator.
@@ -9,7 +9,7 @@ namespace Butterfly.Client.Tracing
     /// See "Correct way to use Random in multithread application"
     /// http://stackoverflow.com/questions/19270507/correct-way-to-use-random-in-multithread-application
     /// </summary>
-    internal static class RandomUtils
+    public static class RandomUtils
     {
         private static int _seed = Guid.NewGuid().GetHashCode();
 
@@ -24,7 +24,9 @@ namespace Butterfly.Client.Tracing
             EnsureInitialized();
 
             _localRandom.NextBytes(_buffer);
-            return BitConverter.ToInt64(_buffer, 0);
+            var next = BitConverter.ToInt64(_buffer, 0);
+            if (next < 0) next = Math.Abs(next);
+            return next;
         }
 
         private static void EnsureInitialized()

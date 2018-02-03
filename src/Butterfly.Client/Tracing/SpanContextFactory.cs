@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Butterfly.OpenTracing;
+﻿using Butterfly.OpenTracing;
 
 namespace Butterfly.Client.Tracing
 {

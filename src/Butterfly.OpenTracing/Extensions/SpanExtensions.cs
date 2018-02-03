@@ -86,7 +86,7 @@ namespace Butterfly.OpenTracing
 
             span.Tags.Error(true);
 
-            span.Log(LogField.CreateNew().EventError().ErrorKind(exception).Message(exception.Message).Stack(exception.StackTrace));
+            span.Log(LogField.CreateNew().EventError().ErrorKind(exception).Message(exception.Message));
             
             return span;
         }

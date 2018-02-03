@@ -140,6 +140,13 @@ namespace Butterfly.Client.Tracing
             return tracer.Start(CreateChildSpanBuilder(tracer, operationName, startTimestamp));
         }
 
+        public static ISpan Start(this IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp = null)
+        {
+            var spanBuilder = new SpanBuilder(operationName, startTimestamp);
+            return tracer.Start(spanBuilder);
+        }
+
+
         private static ISpanBuilder CreateChildSpanBuilder(IServiceTracer tracer, string operationName, DateTimeOffset? startTimestamp = null)
         {
             var spanBuilder = new SpanBuilder(operationName, startTimestamp);
