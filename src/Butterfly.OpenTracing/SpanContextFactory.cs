@@ -7,8 +7,8 @@ namespace Butterfly.OpenTracing
         public ISpanContext Create(SpanContextPackage spanContextPackage)
         {
             return new SpanContext(
-                spanContextPackage.TraceId ?? Guid.NewGuid().ToString(),
-                spanContextPackage.SpanId ?? Guid.NewGuid().ToString(),
+                spanContextPackage.TraceId ?? RandomUtils.NextLong().ToString(),
+                spanContextPackage.SpanId ?? RandomUtils.NextLong().ToString(),
                 spanContextPackage.Sampled,
                 spanContextPackage.Baggage ?? new Baggage(),
                 spanContextPackage.References);

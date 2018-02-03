@@ -1,4 +1,6 @@
-﻿namespace Butterfly.Client.Tracing
+﻿using Butterfly.OpenTracing;
+
+namespace Butterfly.Client.Tracing
 {
     public class TraceIdGenerator : ITraceIdGenerator
     {

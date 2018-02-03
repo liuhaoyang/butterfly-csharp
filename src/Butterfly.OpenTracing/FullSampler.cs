@@ -1,6 +1,6 @@
 ﻿using Butterfly.OpenTracing;
 
-namespace Butterfly.Client.Tracing
+namespace Butterfly.OpenTracing
 {
     public class FullSampler : ISampler
     {
