@@ -7,7 +7,7 @@ A .NET client for Butterfly-APM.
 * `git clone https://github.com/ButterflyAPM/butterfly-csharp.git`
 * `cd butterfly-csharp`
 * `dotnet run -p sample/Butterfly.Client.Sample.Frontend` and `dotnet run -p sample/Butterfly.Client.Sample.Backend`
-* browse to [http://localhost:5001](http://localhost:5001)
+* browse to [http://localhost:5001/api/values](http://localhost:5001/api/values)
 * browse to [http://localhost:9618](http://localhost:9618) to view traces
 
 # Quickstart
