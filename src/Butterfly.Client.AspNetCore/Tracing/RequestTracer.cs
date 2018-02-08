@@ -64,8 +64,8 @@ namespace Butterfly.Client.AspNetCore
             {
                 return;
             }
-            span?.Log(LogField.CreateNew().Event(@event));
-            span?.Exception(exception);
+            span.Log(LogField.CreateNew().Event(@event));
+            span.Exception(exception);
         }
     }
 }
