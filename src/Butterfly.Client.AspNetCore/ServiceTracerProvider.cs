@@ -23,7 +23,7 @@ namespace Butterfly.Client.AspNetCore
         {
             var environmentName = _hostingEnvironment.EnvironmentName;
             var host = Dns.GetHostName();
-            var identity = string.IsNullOrEmpty(_options.ServiceIdentity) ? $"{host}@{_hostingEnvironment.ApplicationName}" : _options.ServiceIdentity;
+            var identity = string.IsNullOrEmpty(_options.ServiceIdentity) ? $"{_hostingEnvironment.ApplicationName}@{host}" : _options.ServiceIdentity;
             return new ServiceTracer(_tracer, _options.Service, environmentName, identity, host);
         }
     }
