@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Abstractions" Version="0.2.4" />
     <PackageReference Include="AspectCore.Extensions.Reflection" Version="0.2.4" />
-    <PackageReference Include="Butterfly.DataContract" Version="0.0.5" />
+    <PackageReference Include="Butterfly.DataContract" Version="0.0.6" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
