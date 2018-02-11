@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60E5B67A-0F2D-4263-A126-98A05FEA8E47}"
 EndProject
@@ -24,7 +24,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution item", "solution i
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{D5DE4CA0-3F7E-4AAB-B016-BDCBE533FE5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Benckmark.Formatter", "benckmark\Butterfly.Client.Benckmark.Formatter\Butterfly.Client.Benckmark.Formatter.csproj", "{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.Benckmark.Formatter", "benckmark\Butterfly.Client.Benckmark.Formatter\Butterfly.Client.Benckmark.Formatter.csproj", "{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.Console", "src\Butterfly.Client.Console\Butterfly.Client.Console.csproj", "{F8DE42BF-2B87-43E6-80B8-3E6C36E17253}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Butterfly.Client.Sample.Console", "sample\Butterfly.Client.Sample.Console\Butterfly.Client.Sample.Console.csproj", "{A291B718-EF46-422A-BF02-542F4EE17F20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +60,14 @@ Global
 		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8DE42BF-2B87-43E6-80B8-3E6C36E17253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DE42BF-2B87-43E6-80B8-3E6C36E17253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DE42BF-2B87-43E6-80B8-3E6C36E17253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DE42BF-2B87-43E6-80B8-3E6C36E17253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A291B718-EF46-422A-BF02-542F4EE17F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A291B718-EF46-422A-BF02-542F4EE17F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A291B718-EF46-422A-BF02-542F4EE17F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A291B718-EF46-422A-BF02-542F4EE17F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +79,8 @@ Global
 		{39D5F180-84EB-4C96-A00A-270965A3F0D6} = {DC3BF245-DD53-4030-8C2C-2E7D32F0942C}
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99} = {60E5B67A-0F2D-4263-A126-98A05FEA8E47}
 		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C} = {D5DE4CA0-3F7E-4AAB-B016-BDCBE533FE5F}
+		{F8DE42BF-2B87-43E6-80B8-3E6C36E17253} = {60E5B67A-0F2D-4263-A126-98A05FEA8E47}
+		{A291B718-EF46-422A-BF02-542F4EE17F20} = {DC3BF245-DD53-4030-8C2C-2E7D32F0942C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E1F027E-2094-4470-A38D-80F94C836A4C}
