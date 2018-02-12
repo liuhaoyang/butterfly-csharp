@@ -23,7 +23,6 @@ namespace Butterfly.Client
         private ILoggerFactory _loggerFactory;
         private ILogger _logger;
 
-
         public ButterflyDispatcher(IEnumerable<IDispatchCallback> callbacks, ILoggerFactory loggerFactory, int flushInterval, int boundedCapacity, int consumerCount)
         {
             _callbacks = callbacks;
@@ -33,13 +32,8 @@ namespace Butterfly.Client
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger(typeof(ButterflyDispatcher));
             _cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        public Task Initialization()
-        {
             _limitCollection = InitializationLimitCollection(_boundedCapacity);
             _consumerTasks = InitializationConsumer(_consumerCount);
-            return Task.FromResult(0);
         }
 
         private BlockingCollection<IDispatchable> InitializationLimitCollection(int boundedCapacity)

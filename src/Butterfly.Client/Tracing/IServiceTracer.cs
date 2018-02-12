@@ -1,7 +1,9 @@
-﻿using Butterfly.OpenTracing;
+﻿using AspectCore.DynamicProxy;
+using Butterfly.OpenTracing;
 
 namespace Butterfly.Client.Tracing
 {
+    [NonAspect]
     public interface IServiceTracer
     {
         ITracer Tracer { get; }

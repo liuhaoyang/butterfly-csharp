@@ -21,10 +21,11 @@ namespace Butterfly.Client.AspNetCore
 
         public IServiceTracer GetServiceTracer()
         {
+            var service = _options.Service ?? _hostingEnvironment.ApplicationName;
             var environmentName = _hostingEnvironment.EnvironmentName;
             var host = Dns.GetHostName();
-            var identity = string.IsNullOrEmpty(_options.ServiceIdentity) ? $"{_hostingEnvironment.ApplicationName}@{host}" : _options.ServiceIdentity;
-            return new ServiceTracer(_tracer, _options.Service, environmentName, identity, host);
+            var identity = string.IsNullOrEmpty(_options.ServiceIdentity) ? $"{service}@{host}" : _options.ServiceIdentity;
+            return new ServiceTracer(_tracer, service, environmentName, identity, host);
         }
     }
 }

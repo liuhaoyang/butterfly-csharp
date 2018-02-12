@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using System.Diagnostics;
 
 namespace Butterfly.Client.AspNetCore
 {
@@ -21,7 +21,7 @@ namespace Butterfly.Client.AspNetCore
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return _dispatcher.Initialization();
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
