@@ -1,11 +1,10 @@
-﻿using System.Security.Authentication.ExtendedProtection;
-using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Net.Http;
+using AspectCore.Extensions.DependencyInjection;
 using Butterfly.Client.Console;
-using System.Net.Http;
 using Butterfly.Client.Tracing;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Butterfly.Client.Sample.Console
+namespace Butterfly.Client.Sample.ConsoleApp
 {
     internal class Program
     {
@@ -20,12 +19,12 @@ namespace Butterfly.Client.Sample.Console
             });
 
             services.AddSingleton<HttpClient>(p => new HttpClient(p.GetService<HttpTracingHandler>()));
+            services.AddSingleton<IFooService, FooService>();
 
-            var provider = services.BuildServiceProvider();
+            var provider = services.BuildAspectCoreServiceProvider();
 
-            var httpClient = provider.GetService<HttpClient>();
-
-            var result = httpClient.GetStringAsync("http://localhost:5002/api/values").Result;
+            var fooService = provider.GetService<IFooService>();
+            var result = fooService.GetValues();
 
             System.Console.WriteLine($"Get result from backend:{result}");
 

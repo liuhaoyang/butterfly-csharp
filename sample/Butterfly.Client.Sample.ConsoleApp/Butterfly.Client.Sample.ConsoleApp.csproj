@@ -9,5 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Butterfly.Client.Console\Butterfly.Client.Console.csproj" />
+    <ProjectReference Include="..\..\src\Butterfly.Client\Butterfly.Client.csproj" />
   </ItemGroup>
 </Project>
