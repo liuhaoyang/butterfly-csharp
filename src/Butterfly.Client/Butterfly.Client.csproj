@@ -16,10 +16,10 @@
     <PackageReference Include="AspectCore.Abstractions" Version="0.2.4" />
     <PackageReference Include="AspectCore.Extensions.Reflection" Version="0.2.4" />
     <PackageReference Include="Butterfly.DataContract" Version="0.0.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net45'" />
+    <Reference Include="System.Net.NameResolution" Condition="'$(TargetFramework)' == 'netstandard1.6'" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj" />
