@@ -4,9 +4,9 @@ namespace Butterfly.Client.Tracing
 {
     public static class ServiceTagExtensions
     {
-        public static TagCollection ServiceApplicationName(this TagCollection tags, string applicationName)
+        public static TagCollection ServiceIdentity(this TagCollection tags, string applicationName)
         {
-          return  tags?.Set(ServiceTags.ServiceApplicationName, applicationName);
+          return  tags?.Set(ServiceTags.ServiceIdentity, applicationName);
         }
         
         public static TagCollection ServiceEnvironment(this TagCollection tags, string environment)

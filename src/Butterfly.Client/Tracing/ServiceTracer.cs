@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 
 namespace Butterfly.Client.Tracing
@@ -9,23 +7,23 @@ namespace Butterfly.Client.Tracing
     {
         private readonly ITracer _tracer;
         private readonly string _service;
-        private readonly string _environmentName;
-        private readonly string _applicationName;
+        private readonly string _environment;
+        private readonly string _identity;
         private readonly string _hostName;
 
-        public ServiceTracer(ITracer tracer, string service, string environmentName, string applicationName, string hostName = null)
+        public ServiceTracer(ITracer tracer, string service, string environment, string identity, string hostName = null)
         {
             if (string.IsNullOrEmpty(service))
             {
                 throw new ArgumentNullException(nameof(service));
             }
-            if (string.IsNullOrEmpty(environmentName))
+            if (string.IsNullOrEmpty(environment))
             {
-                throw new ArgumentNullException(nameof(environmentName));
+                throw new ArgumentNullException(nameof(environment));
             }
-            if (string.IsNullOrEmpty(applicationName))
+            if (string.IsNullOrEmpty(identity))
             {
-                throw new ArgumentNullException(nameof(applicationName));
+                throw new ArgumentNullException(nameof(identity));
             }
             if (tracer == null)
             {
@@ -33,8 +31,8 @@ namespace Butterfly.Client.Tracing
             }
             _tracer = tracer;
             _service = service;
-            _environmentName = environmentName;
-            _applicationName = applicationName;
+            _environment = environment;
+            _identity = identity;
             _hostName = hostName;
         }
 
@@ -42,15 +40,17 @@ namespace Butterfly.Client.Tracing
 
         public string ServiceName => _service;
 
-        public string EnvironmentName => throw new NotImplementedException();
+        public string Environment => _environment;
+
+        public string Identity => _identity;
 
         public ISpan Start(ISpanBuilder spanBuilder)
         {
             var span = _tracer.Start(spanBuilder);
 
             span.Tags.Service(_service)
-                .ServiceApplicationName(_applicationName)
-                .ServiceEnvironment(_environmentName)
+                .ServiceIdentity(_identity)
+                .ServiceEnvironment(_environment)
                 .ServiceHost(_hostName);
 
             return new ServiceSpan(span, _tracer);

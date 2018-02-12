@@ -1,4 +1,5 @@
 ﻿using System;
+using AspectCore.DynamicProxy;
 
 namespace Butterfly.Client.Logging
 {
