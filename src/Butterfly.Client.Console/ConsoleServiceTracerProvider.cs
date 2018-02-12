@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.Extensions.Options;
 using System.Net;
+using System.Reflection;
 
 namespace Butterfly.Client.Console
 {
@@ -19,7 +21,8 @@ namespace Butterfly.Client.Console
 
         public IServiceTracer GetServiceTracer()
         {
-            var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? Environment.MachineName;
+            var environmentName = Assembly.GetEntryAssembly().GetCustomAttribute<DebuggableAttribute>().IsJITTrackingEnabled ? "Development" : "Production";
+
             return new ServiceTracer(_tracer, _options.Service, environmentName, AppDomain.CurrentDomain.FriendlyName, Dns.GetHostName());
         }
     }

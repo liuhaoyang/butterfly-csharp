@@ -21,7 +21,7 @@ namespace Butterfly.Client.AspNetCore
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return _dispatcher.Initialization();
+            return _dispatcher.InitializationAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

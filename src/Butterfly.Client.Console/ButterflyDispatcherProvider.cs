@@ -20,7 +20,7 @@ namespace Butterfly.Client.Console
         public IButterflyDispatcher GetDispatcher()
         {
             var dispatcher = new ButterflyDispatcher(_dispatchCallbacks, _loggerFactory, _options.FlushInterval, _options.BoundedCapacity, _options.ConsumerCount);
-            dispatcher.Initialization().Wait();
+            dispatcher.Initialization();
             return dispatcher;
         }
     }

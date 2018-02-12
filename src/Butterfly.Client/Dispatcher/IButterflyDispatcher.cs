@@ -6,7 +6,10 @@ namespace Butterfly.Client
 {
     public interface IButterflyDispatcher : IDisposable
     {
-        Task Initialization();
+        Task InitializationAsync();
+
+        void Initialization();
+
         bool Dispatch(Span span);
     }
 }

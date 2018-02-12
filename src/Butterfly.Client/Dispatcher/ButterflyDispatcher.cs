@@ -10,7 +10,7 @@ namespace Butterfly.Client
 {
     public class ButterflyDispatcher : IButterflyDispatcher
     {
-        private const int DefaultBoundedCapacity = 1000000;  
+        private const int DefaultBoundedCapacity = 1000000;
         private const int DefaultInterval = 5;
         private readonly int DefaultConsumerCount = Environment.ProcessorCount;
         private readonly int _boundedCapacity;
@@ -23,7 +23,6 @@ namespace Butterfly.Client
         private ILoggerFactory _loggerFactory;
         private ILogger _logger;
 
-
         public ButterflyDispatcher(IEnumerable<IDispatchCallback> callbacks, ILoggerFactory loggerFactory, int flushInterval, int boundedCapacity, int consumerCount)
         {
             _callbacks = callbacks;
@@ -35,11 +34,16 @@ namespace Butterfly.Client
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        public Task Initialization()
+        public Task InitializationAsync()
+        {
+            Initialization();
+            return Task.FromResult(0);
+        }
+
+        public void Initialization()
         {
             _limitCollection = InitializationLimitCollection(_boundedCapacity);
             _consumerTasks = InitializationConsumer(_consumerCount);
-            return Task.FromResult(0);
         }
 
         private BlockingCollection<IDispatchable> InitializationLimitCollection(int boundedCapacity)
