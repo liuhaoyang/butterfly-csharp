@@ -34,7 +34,11 @@ namespace Butterfly.Client.Tracing
 #else
             var environmentName = Assembly.GetEntryAssembly().GetCustomAttribute<DebuggableAttribute>().IsJITTrackingEnabled ? "Development" : "Production";
 #endif
-            ServiceTracer = new ServiceTracer(tracer, options.Service, environmentName, Assembly.GetEntryAssembly().GetName().Name, Dns.GetHostName());
+            var service = options.Service ?? Assembly.GetEntryAssembly().GetName().Name;
+            var host = Dns.GetHostName();
+            var identity = string.IsNullOrEmpty(options.ServiceIdentity) ? $"{service}@{host}" : options.ServiceIdentity;
+
+            ServiceTracer = new ServiceTracer(tracer, service, environmentName, identity, host);
         }
     }
 }

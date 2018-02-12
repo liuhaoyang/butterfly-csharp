@@ -22,8 +22,11 @@ namespace Butterfly.Client.Console
         public IServiceTracer GetServiceTracer()
         {
             var environmentName = Assembly.GetEntryAssembly().GetCustomAttribute<DebuggableAttribute>().IsJITTrackingEnabled ? "Development" : "Production";
+            var service = _options.Service ?? Assembly.GetEntryAssembly().GetName().Name;
+            var host = Dns.GetHostName();
+            var identity = string.IsNullOrEmpty(_options.ServiceIdentity) ? $"{service}@{host}" : _options.ServiceIdentity;
 
-            return new ServiceTracer(_tracer, _options.Service, environmentName, AppDomain.CurrentDomain.FriendlyName, Dns.GetHostName());
+            return new ServiceTracer(_tracer, service, environmentName, identity, host);
         }
     }
 }

@@ -7,11 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.10.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Butterfly.Client\Butterfly.Client.csproj" />
   </ItemGroup>
-
 </Project>
