@@ -8,6 +8,8 @@ namespace Butterfly.Client.AspNetCore
 
         public string Service { get; set; }
 
+        public string ServiceIdentity { get; set; }
+
         public string CollectorUrl { get; set; }
 
         public int BoundedCapacity { get; set; }

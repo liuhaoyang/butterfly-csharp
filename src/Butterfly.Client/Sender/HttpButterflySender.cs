@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Butterfly.DataContract.Tracing;
 using MessagePack;
-using Newtonsoft.Json;
 
 namespace Butterfly.Client
 {
@@ -19,7 +16,7 @@ namespace Butterfly.Client
 
         // ReSharper disable once PublicConstructorInAbstractClass
         public HttpButterflySender(string collectorUrl)
-            : this(new HttpClient(new HttpClientHandler() {UseProxy = false}), collectorUrl)
+            : this(new HttpClient(new HttpClientHandler() { UseProxy = false }), collectorUrl)
         {
         }
 

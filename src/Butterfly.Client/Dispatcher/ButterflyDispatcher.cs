@@ -32,16 +32,6 @@ namespace Butterfly.Client
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger(typeof(ButterflyDispatcher));
             _cancellationTokenSource = new CancellationTokenSource();
-        }
-
-        public Task InitializationAsync()
-        {
-            Initialization();
-            return Task.FromResult(0);
-        }
-
-        public void Initialization()
-        {
             _limitCollection = InitializationLimitCollection(_boundedCapacity);
             _consumerTasks = InitializationConsumer(_consumerCount);
         }

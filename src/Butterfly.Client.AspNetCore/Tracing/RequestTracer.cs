@@ -19,8 +19,8 @@ namespace Butterfly.Client.AspNetCore
         public ISpan OnBeginRequest(HttpContext httpContext)
         {
             var spanBuilder = new SpanBuilder($"server {httpContext.Request.Method} {httpContext.Request.Path}");
-            if (_tracer.Tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k],
-                c => c.Select(x => new KeyValuePair<string, string>(x.Key, x.Value)).GetEnumerator()))
+            if (_tracer.Tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k].GetValue(),
+                c => c.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.GetValue())).GetEnumerator()))
             {
                 spanBuilder.AsChildOf(spanContext);
             }

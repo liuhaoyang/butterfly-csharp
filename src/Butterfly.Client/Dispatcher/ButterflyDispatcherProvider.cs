@@ -18,9 +18,7 @@ namespace Butterfly.Client
 
         public IButterflyDispatcher GetDispatcher()
         {
-            var dispatcher = new ButterflyDispatcher(_dispatchCallbacks, _loggerFactory, _options.FlushInterval, _options.BoundedCapacity, _options.ConsumerCount);
-            dispatcher.Initialization();
-            return dispatcher;
+            return new ButterflyDispatcher(_dispatchCallbacks, _loggerFactory, _options.FlushInterval, _options.BoundedCapacity, _options.ConsumerCount);
         }
     }
 }

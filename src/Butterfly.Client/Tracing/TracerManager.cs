@@ -26,8 +26,6 @@ namespace Butterfly.Client.Tracing
             var callback = new SpanDispatchCallback(senderProvider, loggerFactory);
             var dispatcher = new ButterflyDispatcher(new IDispatchCallback[] { callback }, loggerFactory, 0, 0, 0);
 
-            dispatcher.Initialization();
-
             var spanRecorder = new AsyncSpanRecorder(dispatcher);
             var tracer = new Tracer(spanRecorder);
 
