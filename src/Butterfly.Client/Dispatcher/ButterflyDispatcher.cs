@@ -10,7 +10,7 @@ namespace Butterfly.Client
 {
     public class ButterflyDispatcher : IButterflyDispatcher
     {
-        private const int DefaultBoundedCapacity = 1000000;  
+        private const int DefaultBoundedCapacity = 1000000;
         private const int DefaultInterval = 5;
         private readonly int DefaultConsumerCount = Environment.ProcessorCount;
         private readonly int _boundedCapacity;

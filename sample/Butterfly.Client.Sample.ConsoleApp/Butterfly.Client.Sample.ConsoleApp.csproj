@@ -4,12 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.8" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="0.2.4" />
   </ItemGroup>
-
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Butterfly.Client.Console\Butterfly.Client.Console.csproj" />
     <ProjectReference Include="..\..\src\Butterfly.Client\Butterfly.Client.csproj" />
   </ItemGroup>
 </Project>

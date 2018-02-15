@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Butterfly.Client.AspNetCore
+namespace Butterfly.Client.Console
 {
     public class ButterflyOptions : Client.ButterflyOptions, IOptions<ButterflyOptions>
     {

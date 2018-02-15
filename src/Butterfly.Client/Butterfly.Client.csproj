@@ -18,9 +18,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net45'" />
+    <ProjectReference Include="..\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Butterfly.OpenTracing\Butterfly.OpenTracing.csproj" />
+    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net45'" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
   </ItemGroup>
 </Project>
