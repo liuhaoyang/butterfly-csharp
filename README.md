@@ -1,4 +1,5 @@
 # butterfly-csharp
+[![Build status](https://ci.appveyor.com/api/projects/status/2t22kvna6nokj80n?svg=true)](https://ci.appveyor.com/project/liuhaoyang/butterfly-csharp)  
 
 A .NET client for Butterfly-APM.  
 
