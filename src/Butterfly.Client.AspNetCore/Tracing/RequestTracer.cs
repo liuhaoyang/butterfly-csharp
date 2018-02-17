@@ -1,23 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Butterfly.Client.Tracing;
 using Butterfly.OpenTracing;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace Butterfly.Client.AspNetCore
 {
     public class RequestTracer : IRequestTracer
     {
         private readonly IServiceTracer _tracer;
+        private readonly ButterflyOptions _options;
 
-        public RequestTracer(IServiceTracer tracer)
+        public RequestTracer(IServiceTracer tracer,IOptions<ButterflyOptions> options)
         {
             _tracer = tracer;
+            _options = options.Value;
         }
 
         public ISpan OnBeginRequest(HttpContext httpContext)
         {
+            var patterns = _options.IgnoredRoutesRegexPatterns;
+            if (patterns == null || patterns.Any(x => Regex.IsMatch(httpContext.Request.Path, x)))
+            {
+                return null;
+            }
+
             var spanBuilder = new SpanBuilder($"server {httpContext.Request.Method} {httpContext.Request.Path}");
             if (_tracer.Tracer.TryExtract(out var spanContext, httpContext.Request.Headers, (c, k) => c[k].GetValue(),
                 c => c.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.GetValue())).GetEnumerator()))
@@ -64,8 +74,8 @@ namespace Butterfly.Client.AspNetCore
             {
                 return;
             }
-            span?.Log(LogField.CreateNew().Event(@event));
-            span?.Exception(exception);
+            span.Log(LogField.CreateNew().Event(@event));
+            span.Exception(exception);
         }
     }
 }

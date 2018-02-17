@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C386FA23-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.Tests", "test\Butterfly.Client.Tests\Butterfly.Client.Tests.csproj", "{311E6781-F263-470F-9708-238CE3804F9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Butterfly.Client.AspNetCore.Tests", "test\Butterfly.Client.AspNetCore.Tests\Butterfly.Client.AspNetCore.Tests.csproj", "{F7084249-0BC7-417D-A6BA-2646E6847471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{311E6781-F263-470F-9708-238CE3804F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{311E6781-F263-470F-9708-238CE3804F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{311E6781-F263-470F-9708-238CE3804F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7084249-0BC7-417D-A6BA-2646E6847471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7084249-0BC7-417D-A6BA-2646E6847471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7084249-0BC7-417D-A6BA-2646E6847471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7084249-0BC7-417D-A6BA-2646E6847471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{05FCBDB6-F6C8-4435-B685-67F23B034C99} = {60E5B67A-0F2D-4263-A126-98A05FEA8E47}
 		{4EFA5C5C-73D1-4494-B388-66E0A3B39A4C} = {D5DE4CA0-3F7E-4AAB-B016-BDCBE533FE5F}
 		{311E6781-F263-470F-9708-238CE3804F9A} = {C386FA23-EAC6-4ADD-9345-04BC0433A211}
+		{F7084249-0BC7-417D-A6BA-2646E6847471} = {C386FA23-EAC6-4ADD-9345-04BC0433A211}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E1F027E-2094-4470-A38D-80F94C836A4C}

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AspectCore.Configuration;
 using AspectCore.DynamicProxy;
 using AspectCore.Extensions.Reflection;
-using AspectCore.Injector;
 using Butterfly.OpenTracing;
 
 namespace Butterfly.Client.Tracing
@@ -25,10 +24,7 @@ namespace Butterfly.Client.Tracing
             "Butterfly.*"
         };
 
-        [FromContainer]
-        public IServiceTracer ServiceTracer { get; set; }
-
-        public async override Task Invoke(AspectContext context, AspectDelegate next)
+        public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
             var serviceType = context.ServiceMethod.DeclaringType;
             if (excepts.Any(x => serviceType.Name.Matches(x)) || excepts.Any(x => serviceType.Namespace.Matches(x)) || context.Implementation is IServiceTracer)
@@ -36,7 +32,9 @@ namespace Butterfly.Client.Tracing
                 await context.Invoke(next);
                 return;
             }
-            await ServiceTracer?.ChildTraceAsync(context.ServiceMethod.GetReflector().DisplayName, DateTimeOffset.UtcNow, async span =>
+
+            var serviceTracer = context.ServiceProvider.GetService(typeof(IServiceTracer)) as IServiceTracer;
+            await serviceTracer?.ChildTraceAsync(context.ServiceMethod.GetReflector().DisplayName, DateTimeOffset.UtcNow, async span =>
                {
                    span.Log(LogField.CreateNew().MethodExecuting());
                    span.Tags.Set("ServiceType", context.ServiceMethod.DeclaringType.GetReflector().FullDisplayName);
