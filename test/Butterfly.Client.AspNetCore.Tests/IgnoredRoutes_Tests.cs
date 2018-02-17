@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace Butterfly.Client.AspNetCore.Tests
@@ -18,12 +19,23 @@ namespace Butterfly.Client.AspNetCore.Tests
         public void IgnoredRoutes_Regex_Test()
         {
             var config = new ButterflyConfig();
-            config.IgnoredRoutesRegexPatterns = new string[] {"[home]"};
-            var routes = new string[] {"/home/index", "/user/about"};
-            var result = Regex.IsMatch(config.IgnoredRoutesRegexPatterns[0], routes[0]);
+            config.IgnoredRoutesRegexPatterns = new string[] {"/status"};
+            var routes = new string[] {"/status", "/administration/status"};
+            var result = IsMatch(config.IgnoredRoutesRegexPatterns, routes[0]);
             Assert.True(result);
-            result = Regex.IsMatch(config.IgnoredRoutesRegexPatterns[0], routes[1]);
-            Assert.False(result);
+            result = result = IsMatch(config.IgnoredRoutesRegexPatterns, routes[1]);
+            Assert.True(result);
         }
+
+        private bool IsMatch(string[] patterns, string path)
+        {
+            if (patterns == null || patterns.Any(x => Regex.IsMatch(path, x)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
