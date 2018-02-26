@@ -34,7 +34,7 @@ namespace Butterfly.Client.Sample.Backend
             {
                 option.CollectorUrl = "http://localhost:9618";
                 option.Service = "Backend";
-                option.IgnoredRoutesRegexPatterns = new string[] { "/values/" };
+                //option.IgnoredRoutesRegexPatterns = new string[] { "/values/" };
             });
 
             return services.BuildAspectCoreServiceProvider();
