@@ -23,7 +23,7 @@ namespace Butterfly.Client.AspNetCore
         public ISpan OnBeginRequest(HttpContext httpContext)
         {
             var patterns = _options.IgnoredRoutesRegexPatterns;
-            if (patterns == null || patterns.Any(x => Regex.IsMatch(httpContext.Request.Path, x)))
+            if (patterns != null && patterns.Any(x => Regex.IsMatch(httpContext.Request.Path, x)))
             {
                 return null;
             }
